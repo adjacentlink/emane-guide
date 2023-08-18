@@ -1,0 +1,7 @@
+#!/bin/bash -
+
+node_name=$1
+
+${__top_dir}/../scripts/flask-batman-originators-server.py \
+    &> \
+    ../persist/$node_name/var/log/flask-batman-originators-server.log &

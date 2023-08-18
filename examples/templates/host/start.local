@@ -1,0 +1,45 @@
+#!/bin/bash -
+
+top_dir=$1
+start_time=$2
+
+cd "$top_dir/host"
+
+# load common functions
+. ./functions
+
+if [ -f eventservice.xml ] &&
+       [ ! -f NO-emaneeventservice ]
+then
+    start_emaneeventservice \
+        'host' \
+        eventservice.xml \
+        $top_dir/persist/host/var/log/emaneeventservice.log \
+        $top_dir/persist/host/var/run/emaneeventservice.pid \
+        $top_dir/persist/host/var/run/emaneeventservice.uuid \
+        "$start_time"
+fi
+
+if [ -f otestpoint-broker.xml ] &&
+       [ ! -f NO-otestpoint-broker ]
+then
+    start_otestpoint_broker \
+        'host' \
+        otestpoint-broker.xml \
+        $top_dir/persist/host/var/log/otestpoint-broker.log \
+        $top_dir/persist/host/var/run/otestpoint-broker.pid \
+        $top_dir/persist/host/var/run/otestpoint-broker.uuid
+fi
+
+if [ -f schedule.xml ]
+   then
+       now=$(date "+%s")
+       start=$(date --date "$start_time"  "+%s")
+
+       if [[ $start > $now ]]
+       then
+           echo "host: TDMA schedule publish delayed until $start"
+           sleep $(($start - $now))
+           emaneevent-tdmaschedule schedule.xml -i ${experiment_control_interface}
+       fi
+fi

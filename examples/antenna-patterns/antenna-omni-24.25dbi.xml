@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE antennaprofile SYSTEM "file:///usr/share/emane/dtd/antennaprofile.dtd">
+
+<!-- omni antenna pattern-->
+<antennaprofile>
+  <antennapattern>
+    <elevation min='-90' max='0'>
+      <bearing min='0' max='359'>
+        <gain value='24.25'/>
+      </bearing>
+    </elevation>
+  </antennapattern>
+</antennaprofile>

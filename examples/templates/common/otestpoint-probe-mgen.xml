@@ -1,0 +1,1 @@
+<otestpoint-probe-mgen monitor-address='localhost' monitor-port='${mgen_monitor_listen_port}'/>

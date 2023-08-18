@@ -1,0 +1,571 @@
+~{{frontmatter
+layout: default
+title: Bent Pipe Radio Model
+nav_order: 13
+permalink: /bent-pipe-radio-model}}~
+
+~{{layout type=newpage}}~
+# Bent Pipe Radio Model
+
+The Bent Pipe radio model is a generic regenerative bent-pipe (u-bend)
+satellite model. The model supports configuration of one or more
+transponders, where each transponder may operate in `ubend` or
+`process` mode. A transponder operating in `ubend` mode will relay any
+successfully received over-the-air uplink frame over its downlink
+channel. A transponder operating in `process` mode will forward any
+successfully received over-the-air frame up the stack for processing.
+Bent Pipe differentiates between operating as a satellite or ground
+station solely based on transponder configuration, specifically the
+configuration parameter `transponder.receive.action` either set to
+`ubend` or `process`, and can be configured as a satellite with
+inter-satellite links by using a combination of `ubend` and `process`
+transponders.
+
+## Features
+
+The Bent Pipe radio model provides the following set of features:
+[Multiple Transponders](#multiple-transponders), [Configurable Channel
+Access](#configurable-channel-access), [Multiple
+Antenna](#multiple-antenna), [Aggregation and
+Fragmentation](#aggregation-and-fragmentation), [Boundary Transponder
+Selection](#boundary-transponder-selection), and [Packet Completion
+Rate Curves](#packet-completion-rate-curves).
+
+### Multiple Transponders
+
+The Bent Pipe radio model can be configured with multiple transponders
+where each is configured using a set of configuration parameters with
+a `<transponder index>:<value>` format. Where `<transponder index>` is
+a 0 based sequential index used to identify the transponders
+instantiated by the model.
+
+Each transponder needs both receive and transmit configuration and
+must be included as an entry in each of the `transponder.receiver.*`
+and `transponder.transmit.*` configuration parameter values.
+
+Failure to include a referenced transponder in any of the required
+configuration, using non-sequential transponder indices, or mixing
+`na` and non-`na` values for the same transponder in
+`transponder.transmit.*` TDMA channel access parameters, will result
+in a configuration exception at emulator start.
+
+The below radio model XML snippet from `node-1` in the `bentpipe-01`
+example shows `transponder.receiver.*` configuration for a Bent Pipe
+model configured with a single transponder in `process` mode.
+
+~{{snippet path="../examples/bentpipe-01/node-1/emane-bentpipe-radiomodel.xml"
+type=xml
+start-regex="\s*<!-- syntax: '<transponder id>:<rx freqeuncy Hz>' -->.*"
+stop-regex="\s* <!-- syntax: '<transponder id>:<tx freqeuncy Hz>' -->.*"
+showname=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+Comparing the above snippet with the following from `node-2` in the
+`bentpipe-02` example, highlights the `transponder.receiver.*`
+similarities and differences when configuring multiple transponders
+and operating in `ubend` mode -- mainly the number of `<paramlist>`
+items with unique transponder indices.
+
+~{{snippet path="../examples/bentpipe-02/node-2/emane-bentpipe-radiomodel.xml"
+type=xml
+start-regex="\s*<!-- syntax: '<transponder id>:<rx freqeuncy Hz>' -->.*"
+stop-regex="\s* <!-- syntax: '<transponder id>:<tx freqeuncy Hz>' -->.*"
+showname=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+### Configurable Channel Access
+
+A transponder can be configured to use either TDMA or No-Protocol (no
+channel access) channel access when transmitting. Specifying a
+non-`na` value for `transponder.transmit.slotsize`,
+`transponder.transmit.slotperframe`, and
+`transponder.transmit.txslots` configuration parameters selects TDMA
+channel access. Transponders instantiated by a Bent Pipe instance may
+have different slot and frame sizes, and different tx slot
+allocations.
+
+The following snippet from `node-1` in the `bentpipe-02` example
+illustrates the configuration necessary for a TDMA transmit channel
+with 10 1000 msec slots per frame and the assigning of individual
+transmit slots to `node-1`.
+
+~{{snippet path="../examples/bentpipe-02/node-1/emane-bentpipe-radiomodel.xml"
+type=xml
+start-regex="\s*<!-- syntax: '<transponder id>:<tx slots | na>' -->.*"
+stop-regex="\s*<!-- syntax: '<transponder id>:<tx mtu bytes | na>' -->.*"
+showname=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+Specifying those same configuration parameters as `na`, as does
+`node-3` in the `bentpipe-02` example, selects no-protocol channel
+access, which is functionally equivalent to the ~{{link name="RF Pipe
+Model" file="rf-pipe-radio-model.md"
+section="#rf-pipe-radio-model"}}~.
+
+~{{snippet path="../examples/bentpipe-02/node-3/emane-bentpipe-radiomodel.xml"
+type=xml
+start-regex="\s*<!-- syntax: '<transponder id>:<tx slots | na>' -->.*"
+stop-regex="\s*<!-- syntax: '<transponder id>:<tx mtu bytes | na>' -->.*"
+showname=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+
+### Multiple Antenna
+
+The Bent Pipe radio model can be configured with multiple antennas
+using the configuration parameter `antenna.defines`. Each antenna is
+defined as a parameter value entry using the format `<antenna
+index>:<antenna definition>`. Where `<antenna index>` is a 0 based
+unique index used to identify a specific antenna.
+
+Ideal omni antennas are defined using the following format:
+
+`<antenna index>:omni;<fixed antenna gain dbi>;<spectral mask index>`
+
+
+Profile defined antennas are defined using the following format:
+
+
+`<antenna index>:<antenna profile>;<azimuth degrees>;<elevation degrees>;<spectral mask index>`
+
+Below is the antenna definition used by the `node-2` in the
+`bentpipe-02` example showing the definition for three profile defined
+antennas:
+
+~{{snippet path="../examples/bentpipe-02/node-2/emane-bentpipe-radiomodel.xml"
+type=xml
+start-regex="\s*.*antenna.defines.*"
+stop-regex="^\s*$"
+showname=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+A transponder must be associated with a receive and transmit antenna,
+which may be the same, using the configuration parameters
+`transponder.receive.antenna` and `transponder.transmit.antenna`,
+respectively. An antenna is identified by the *antenna index* used in
+`antenna.defines`.
+
+Below is the transponder receive and transmit antenna mappings for
+`node-2` in the `bentpipe-02` example.
+
+~{{snippet path="../examples/bentpipe-02/node-2/emane-bentpipe-radiomodel.xml"
+type=xml
+start-regex="\s*.*transponder\.receive.antenna\.*"
+stop-regex="\s*<!-- syntax: '<transponder id>:<on | off>' -->.*"
+showname=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+~{{snippet path="../examples/bentpipe-02/node-2/emane-bentpipe-radiomodel.xml"
+type=xml
+start-regex="\s*.*transponder\.transmit.antenna\.*"
+stop-regex="\s*<!-- syntax: '<transponder id>:<antenna index>' -->.*"
+showname=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+### Aggregation and Fragmentation
+
+The Bent Pipe radio model can be configured to aggregate small
+over-the-air messages up to a certain maximum transmission unit (MTU)
+and/or fragment ones larger than the same MTU. Aggregation is enabled
+using the configuration parameter
+`queue.aggregationenable`. Fragmentation is enabled using the
+configuration parameter `queue.fragmentationenable`.
+
+MTU definition is transponder specific. When using TDMA channel
+access, the MTU is calculated using the
+`transponder.transmit.slotsize` and `transponder.transmit.datarate`
+configuration parameters. When using no-protocol channel access the
+MTU is specified using the configuration parameter
+`transponder.transmit.mtu`.
+
+### Boundary Transponder Selection
+
+When using `process` mode, downstream messages that are communicated
+to the Bent Pipe model for over-the-air transmission use a TOS or DSCP
+mapping to transponder index in order to direct over-the-air messages,
+depending on what is provided by the boundary component in use. Both
+the ~{{link name="Raw Transport" file="raw-transport.md"
+section="#raw-transport"}}~ and ~{{link name="Virtual Transport"
+file="virtual-transport.md" section="#virtual-transport"}}~ use DSCP.
+
+The below configuration from `node-1` in the `bentpipe-01` example
+directs all downstream over-the-air messages to *transponder 0*.
+
+~{{snippet path="../examples/bentpipe-01/node-1/emane-bentpipe-radiomodel.xml"
+type=xml
+start-regex="\s*.*transponder\.transmit\.tosmap.*"
+stop-regex="^\s*$"
+showname=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+### Packet Completion Rate Curves
+
+The Bent Pipe radio model Packet Completion Rate is specified as
+curves defined via XML. The curve definitions are composed of a series
+of SINR values along with their corresponding probability of reception
+for a given index which is assigned to a transponder using the
+configuration parameter `transponder.transmit.pcrcurveindex`.
+
+A curve definition must contain a minimum of two points with one SINR
+representing *POR = 0* and one SINR representing *POR = 100*. Linear
+interpolation is preformed when an exact SINR match is not found.
+
+Specifying a packet size (`<bentpipe-model-pcr>` attribute
+`packetsize`) in the curve file will adjust the POR based on received
+packet size. Specifying a `packetsize` of 0 disregards received packet
+size when computing the POR.
+
+The POR is obtained using the following calculation when a non-zero
+`packetsize` is specified:
+
+~{{math POR = POR_0 ^ {S_1/S_0}}}~
+
+Where,
+
+~{{math POR_0}}~ is the POR value determined from the PCR curve for the given SINR value
+
+~{{math S_0}}~ is the packet size specified in the curve file `packetsize`
+
+~{{math S_1}}~ is the received packet size
+
+The below PCR curve file is used by all nodes in
+the `bentpipe-01` example. These curves are for illustrative
+purposes only. Packet Completion Rate curves should be representative
+of the waveform being emulated.
+
+~{{file path="../examples/bentpipe-01/node-1/emane-bentpipe-pcr.xml"
+type=xml
+showname=true
+blank=false
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+~{{imagemagick
+   file="images/pcr-representation.png"
+   scale=75
+   images/exclamation.png -resize 20% \( -size 800x -font DejaVu-Sans-Mono-Bold
+   -gravity east label:" PCR curves should be representative of the waveform being emulated. " \)
+   +append -transparent white}}~
+
+## Configuration
+~{{emaneinfo plugin=emane-model-bentpipe type=config}}~
+
+## Statistics
+~{{emaneinfo plugin=emane-model-bentpipe type=stat}}~
+
+## Statistic Tables
+~{{emaneinfo plugin=emane-model-bentpipe type=table}}~
+
+## Examples
+
+This guide includes two Bent Pipe examples:
+
+1. `bentpipe-01`: A two node example where both nodes use a single
+   transponder in `process` mode.
+
+2. `bentpipe-02`: A three node example where two ground stations, each
+   with a single transponder in `process` mode, communicate through a
+   satellite with three transponders in `ubend` mode.
+
+### bentpipe-01
+
+~{{graphviz
+   file="images/topology-bentpipe-01" scale=65 caption="bentpipe-01 experiment components" --
+   digraph hierarchy {
+rankdir="LR";
+node[shape=circle,style=filled]
+"OTA" [image="images/cloud.png",shape=none,fillcolor=none]
+"node-1" [fillcolor=green]
+"node-2" [fillcolor=green]
+"host-1" [fillcolor=gray,shape=square]
+"host-2" [fillcolor=gray,shape=square]
+"host-1"->"node-1" [dir="both",label="[.2]  10.98.1.0/24  [.1]"] 
+"node-1"->OTA [dir="both",label="10.100.0.1/24"]
+OTA->"node-2" [dir="both",label="10.100.0.2/24"]
+"node-2"->"host-2" [dir="both",label="[.2]  10.98.2.0/24  [.1]"]
+}
+}}~
+
+The `bentpipe-01` example contains two ground nodes, each with a host
+hanging off their respective `lan0` interface. Both nodes use a single
+transponder in `process` mode.
+
+All physical layers are configured to use the `precomputed` propagation
+model and `emaneeventservice` publishes ~{{link
+name="`PathlossEvents`" file="events.md" section="#pathlossevent"}}~
+using the values in `pathloss.eel`.
+
+~{{file path="../examples/bentpipe-01/pathloss.eel"
+type=txt
+showname=true
+blank=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+This experiment illustrates the versatility of the Bent Pipe model in
+`process` mode, allowing its use in a similar fashion as you would the
+ ~{{link name="RF Pipe" file="rf-pipe-radio-model.md"
+section="#rf-pipe-radio-model"}}~ radio model.
+
+~{{imagemagick
+    file="images/run-bentpipe-01.png"
+    scale=75
+images/pointing-finger.png -resize 25% \( -size 800x -font DejaVu-Sans-Mono-Bold
+-gravity east label:" Run emane-guide/examples/bentpipe-01 and give it a try. " \)
++append -transparent white}}~
+
+With `emane-guide/examples/bentpipe-01` running, we can query `node-1` to
+take a look at its transponder configuration.
+
+~{{verbatim type=txt --
+$ emanesh node-1 get table nems mac TransponderStatusTable TransponderStatusExTable  AntennaStatusTable
+nem 1   mac AntennaStatusTable
+| Index | Profile | Bandwidth | Rx Frequency | Fixed Gain | Azimuth | Elevation | Mask |
+| 0     | NA      | 150000000 | 29910000000  | 0.5        | NA      | NA        | 0    |
+
+nem 1   mac TransponderStatusExTable
+| Idx | Tx U_Delay | Tx Slots/Frame | Tx Slot Size | MTU  |
+| 0   | 0          | 0              | 0            | 2048 |
+
+nem 1   mac TransponderStatusTable
+|Idx|Rx Hz      |Rx Bw    |Rx Ant|Rx Enable|Action |Tx Hz      |Tx Bw    |Tx Bps   |Tx Ant|Tx dBm|Tx Enable|
+|0  |29910000000|150000000|0     |on       |process|29910000000|150000000|200000000|0     |0.0   |on       |}}~
+
+From these tables we see that `node-1` has an ideal omni antenna with
+a fixed gain of 0.5 dBi using the default spectral mask; a single
+transponder tuned to transmit and receive at 29.910 GHz with both a
+transmit and receive bandwidth of 150 MHz; receives and transmits
+using the same antenna; uses no-protocol channel access, and is
+configured in `process` mode. Querying `node-2` will show similar
+configuration.
+
+We can verify connectivity between the attached `lan0` hosts using `ping`:
+
+~{{verbatim type=txt --
+$ ssh host-1 ping -R -c 5  host-2-lan
+PING host-2-lan (10.98.2.2) 56(124) bytes of data.
+64 bytes from host-2-lan (10.98.2.2): icmp_seq=1 ttl=62 time=1.23 ms
+RR:     host-1-lan (10.98.1.2)
+        radio-1 (10.100.0.1)
+        radio-2-lan (10.98.2.1)
+        host-2-lan (10.98.2.2)
+        host-2-lan (10.98.2.2)
+        radio-2 (10.100.0.2)
+        radio-1-lan (10.98.1.1)
+        host-1-lan (10.98.1.2)
+
+64 bytes from host-2-lan (10.98.2.2): icmp_seq=2 ttl=62 time=2.23 ms    (same route)
+64 bytes from host-2-lan (10.98.2.2): icmp_seq=3 ttl=62 time=2.33 ms    (same route)
+64 bytes from host-2-lan (10.98.2.2): icmp_seq=4 ttl=62 time=2.15 ms    (same route)
+64 bytes from host-2-lan (10.98.2.2): icmp_seq=5 ttl=62 time=2.18 ms    (same route)
+
+--- host-2-lan ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4006ms
+rtt min/avg/max/mdev = 1.231/2.023/2.325/0.400 ms}}~
+
+
+### bentpipe-02
+
+~{{graphviz
+   file="images/topology-bentpipe-02" scale=65 caption="bentpipe-02 experiment components" --
+   digraph hierarchy {
+rankdir="TB";
+node[shape=circle,style=filled]
+"node-2" [fillcolor=green, xlabel="satellite"]
+"OTA" [image="images/cloud.png",shape=none,fillcolor=none]
+"node-1" [fillcolor=green, xlabel="ground"]
+"node-3" [fillcolor=green, xlabel="ground"]
+"host-1" [fillcolor=gray,shape=square]
+"host-3" [fillcolor=gray,shape=square]
+"host-1"->"node-1" [dir="both",label="[.2]  10.98.1.0/24  [.1]"] 
+"node-1"->OTA [dir="both",label="10.100.0.1/24"]
+OTA->"node-3" [dir="both",label="10.100.0.3/24"]
+"node-3"->"host-3" [dir="both",label="[.2]  10.98.3.0/24  [.1]"]
+OTA->"node-2" [dir="both"]
+
+{rank = min; "node-2";}
+{rank = same; "node-1"; "node-3"; OTA; "host-1"; "host-3";}
+}
+}}~
+
+The `bentpipe-02` example experiment contains two ground nodes, each
+with a host hanging off their respective `lan0` interface, and one
+satellite node.
+
+The ground nodes have a single transponder, with `node-1` using TDMA
+channel access and `node-3` using no-protocol channel access. The
+satellite node has three transponders and three antennas. *Transponder
+0* uses a profile defined omni antenna, and *transponder 1* and
+*transponder 2* both make use of the other two directional antennas,
+where one antenna points at `node-1` and the other at `node-3`. All
+satellite transponders use no-protocol channel access.
+
+All physical layers are configured to use the `freespace` propagation
+model and `emaneeventservice` publishes ~{{link
+name="`LocationEvents`" file="events.md" section="#locationevent"}}~
+using the locations in `locations.eel`.
+
+~{{file path="../examples/bentpipe-02/locations.eel"
+type=txt
+showname=true
+blank=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+~{{imagemagick
+    file="images/run-bentpipe-02.png"
+    scale=75
+images/pointing-finger.png -resize 25% \( -size 800x -font DejaVu-Sans-Mono-Bold
+-gravity east label:" Run emane-guide/examples/bentpipe-02 and give it a try. " \)
++append -transparent white}}~
+
+With `emane-guide/examples/bentpipe-02` running, we can query `node-2` to
+take a look at its transponder configuration. 
+
+~{{verbatim type=txt --
+$ emanesh node-2 get table nems mac TransponderStatusTable TransponderStatusExTable  AntennaStatusTable
+nem 2   mac AntennaStatusTable
+| Index | Profile | Bandwidth | Rx Frequency | Fixed Gain | Azimuth           | Elevation          | Mask |
+| 0     | 2       | 150000000 | 29910000000  | NA         | 0.0               | 0.0                | 0    |
+| 1     | 1       | 150000000 | 29745000000  | NA         | 94.34439424144891 | -86.98230090133954 | 0    |
+| 2     | 1       | 150000000 | 29580000000  | NA         | 237.5217814216051 | -87.42647720511944 | 0    |
+
+nem 2   mac TransponderStatusExTable
+| Idx | Tx U_Delay | Tx Slots/Frame | Tx Slot Size | MTU  |
+| 0   | 0          | 0              | 0            | 2048 |
+| 1   | 0          | 0              | 0            | 2048 |
+| 2   | 0          | 0              | 0            | 2048 |
+
+nem 2   mac TransponderStatusTable
+|Idx|Rx Hz      |Rx Bw    |Rx Ant|Rx Enable|Action|Tx Hz      |Tx Bw    |Tx Bps   |Tx Ant|Tx dBm|Tx Enable|
+|0  |29910000000|150000000|0     |on       |ubend |20175000000|150000000|100000000|0     |54.0  |on       |
+|1  |29745000000|150000000|1     |on       |ubend |20340000000|150000000|100000000|2     |54.0  |on       |
+|2  |29580000000|150000000|2     |on       |ubend |20505000000|150000000|100000000|1     |54.0  |on       |}}~
+
+From these three tables we see that `node-2` has three antennas, all
+of which are profile defined and use the default spectral mask; three
+transponders in `ubend` mode, where *transponder 0* uses *antenna 0*
+for receive and transmit, *transponder 1* receives on *antenna 1* and
+transmits on *antenna 2*, and *transponder 2* receives on *antenna 2*
+and transmits on *antenna 1*; and all transponders use no-protocol
+channel access.
+
+The satellite node, `node-2`, does not have an attached host. Any
+over-the-air message it receives on a transponder will be relayed
+(*bent*) back over-the-air using the transponder's associated transmit
+antenna.
+
+Using `ping` to verify connectivity the same way we did in the
+`bentpipe-01` example shows a less than complete topology picture due
+to the fact that the relay occurs in the radio model not `node-2`'s
+kernel space, so route records for `node-2` are not added to the ICMP
+messages.
+
+~{{verbatim type=txt --
+$ ssh host-1 ping -R -c 5  host-3-lan
+PING host-3-lan (10.98.3.2) 56(124) bytes of data.
+64 bytes from host-3-lan (10.98.3.2): icmp_seq=1 ttl=62 time=967 ms
+RR:     host-1-lan (10.98.1.2)
+        radio-1 (10.100.0.1)
+        radio-3-lan (10.98.3.1)
+        host-3-lan (10.98.3.2)
+        host-3-lan (10.98.3.2)
+        radio-3 (10.100.0.3)
+        radio-1-lan (10.98.1.1)
+        host-1-lan (10.98.1.2)
+
+64 bytes from host-3-lan (10.98.3.2): icmp_seq=2 ttl=62 time=484 ms     (same route)
+64 bytes from host-3-lan (10.98.3.2): icmp_seq=3 ttl=62 time=482 ms     (same route)
+64 bytes from host-3-lan (10.98.3.2): icmp_seq=4 ttl=62 time=484 ms     (same route)
+64 bytes from host-3-lan (10.98.3.2): icmp_seq=5 ttl=62 time=483 ms     (same route)
+
+--- host-3-lan ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4002ms
+rtt min/avg/max/mdev = 482.364/580.068/966.982/193.458 ms}}~
+
+We can verify the topology using the `NeighborStatusTable` for all 3 nodes.
+
+~{{verbatim type=txt --
+$ for i in $(seq 1 3); do emanesh node-$i get table nems mac NeighborStatusTable; done
+nem 1   mac NeighborStatusTable
+|NEM|Transponder|SINR_wma         |NF_wma             |Samples|SINR_avg         |NF_avg             |Timestamp       |
+|2  |0          |11.29777283855799|-118.63908740944319|7      |11.29777283855799|-118.63908740944318|1686943938679630|
+
+nem 2   mac NeighborStatusTable
+|NEM|Transponder|SINR_wma         |NF_wma             |Samples|SINR_avg         |NF_avg             |Timestamp       |
+|1  |1          |8.066688845808386|-118.63908740944319|7      |8.066688845808386|-118.63908740944318|1686943938801503|
+|3  |2          |8.137849777137916|-118.63908740944319|7      |8.137849777137916|-118.63908740944318|1686943938558921|
+
+nem 3   mac NeighborStatusTable
+|NEM|Transponder|SINR_wma          |NF_wma             |Samples|SINR_avg          |NF_avg             |Timestamp       |
+|2  |0          |11.390794198620853|-118.63908740944319|7      |11.390794198620853|-118.63908740944318|1686943938921888|}}~
+
+Taking a look at `node-2`, we see that it sees `node-1` on
+*transponder 1* and `node-3` on *transponder 2*. Both `node-1` and
+`node-2` see `node-3` on their respective *transponder 0*.
+
+We can use `emanesh` and change the frequencies of all three nodes in
+order to switch the `ubend` on node-2 to *transponder 0*, which uses
+the profile defined omni antenna, *antenna 0*.
+
+~{{verbatim type=txt --
+$ emanesh node-1 set config nems mac \
+   transponder.receive.frequency=0:29.910G \
+   transponder.transmit.frequency=0:29.910G
+nem 1   mac  configuration updated
+
+$ emanesh node-2 set config nems mac \
+    transponder.receive.frequency="0:29.910G,1:29.745G,2:29.580G" \
+    transponder.transmit.frequency="0:29.910G,1:20.340G,2:20.505G"
+nem 2   mac  configuration updated
+
+$ emanesh node-3 set config nems mac \
+    transponder.receive.frequency=0:29.910G \
+    transponder.transmit.frequency=0:29.910G
+nem 3   mac  configuration updated}}~
+
+Notice how even though we only want to change the frequency of
+`node-2`'s *transponder 0*, we still have to specify values for all
+three transponders since `transponder.receive.frequency` and
+`transponder.transmit.frequency` are configuration parameters that
+hold multiple values.
+
+Similarly, if we want to change the antenna associated with `node-2`'s
+*transponder 0* to an ideal omni, we need to specify the other antenna
+defines still in use:
+
+~{{verbatim type=txt --
+$ emanesh node-2 set config nems mac
+    antenna.defines="0:omni;24.25;0,1:1;94.34439424144891;-86.98230090133954;0,2:1;237.5217814216051;-87.42647720511944;0"}}~
+
+Looking at `node-2`'s `AntennaStatusTable` and `NeighborStatusTable`,
+we can see that *antenna 0* is now an ideal omni indicated by the `NA`
+in the `Profile` column, and `node-2` sees `node-1` and `node-3` via
+*transponder 0*.
+
+~{{verbatim type=txt --
+$ emanesh node-2 get table nems mac NeighborStatusTable AntennaStatusTable
+nem 2   mac AntennaStatusTable
+| Index | Profile | Bandwidth | Rx Frequency | Fixed Gain | Azimuth           | Elevation          | Mask |
+| 0     | NA      | 150000000 | 29910000000  | 24.25      | NA                | NA                 | 0    |
+| 1     | 1       | 150000000 | 29745000000  | NA         | 94.34439424144891 | -86.98230090133954 | 0    |
+| 2     | 1       | 150000000 | 29580000000  | NA         | 237.5217814216051 | -87.42647720511944 | 0    |
+
+nem 2   mac NeighborStatusTable
+|NEM| Transponder| SINR_wma         | NF_wma             | Samples| SINR_avg         | NF_avg             | Timestamp       |
+|1  | 0          | 8.018640050401672| -118.63908740944318| 908    | 8.018640050401698| -118.63908740944602| 1687204399299503|
+|1  | 1          | 8.066688845808386| -118.63908740944318| 38     | 8.06668884580838 | -118.63908740944319| 1687203545323503|
+|3  | 0          | 8.041484909729036| -118.63908740944318| 909    | 8.041484909728947| -118.63908740944602| 1687204400057385|
+|3  | 2          | 8.137849777137916| -118.63908740944318| 38     | 8.137849777137921| -118.63908740944319| 1687203545081237|}}~
+
+The `NeighborStatusTable` does not delete entries. Use the `Timestamp`
+column value to determine an entry has gone stale, i.e. not updated in
+some time.

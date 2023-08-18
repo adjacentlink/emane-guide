@@ -1,0 +1,49 @@
+#!/bin/bash -
+
+top_dir=$1
+node_name=$2
+start_time=$3
+
+echo "top_dir: $top_dir"
+echo "node_name: $node_name"
+echo "start_time: $start_time"
+
+cd "$top_dir/$node_name"
+
+# load common functions
+. ./functions
+
+if [ -f emane-spectrum-monitor.xml ] &&
+       [ ! -f NO-emane-spectrum-monitor ]
+then
+    start_emane_spectrum_monitor \
+        $node_name \
+        emane-spectrum-monitor.xml \
+        $top_dir/persist/$node_name/var/log/emane-spectrum-monitor.log \
+        $top_dir/persist/$node_name/var/run/emane-spectrum-monitor.pid \
+        $top_dir/persist/$node_name/var/run/emane-spectrum-monitor.uuid
+fi
+
+if [ -f otestpoint-recorder.xml ] &&
+       [ ! -f NO-otestpoint-recorder ]
+then
+    start_otestpoint_recorder \
+        $node_name \
+        otestpoint-recorder.xml \
+        $top_dir/persist/$node_name/var/log/otestpoint-recorder.log \
+        $top_dir/persist/$node_name/var/run/otestpoint-recorder.pid \
+        $top_dir/persist/$node_name/var/run/otestpoint-recorder.uuid
+fi
+
+if [ -f otestpoint.xml ] &&
+       [ ! -f NO-otestpointd ]
+then
+    start_otestpointd \
+        $node_name \
+        otestpoint.xml \
+        $top_dir/persist/$node_name/var/log/otestpoint.log \
+        $top_dir/persist/$node_name/var/run/otestpoint.pid \
+        $top_dir/persist/$node_name/var/run/otestpoint.uuid
+fi
+
+    

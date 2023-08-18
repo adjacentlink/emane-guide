@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<%
+from letce2.utils.network import CIDRNotation
+%>
+<!DOCTYPE platform  SYSTEM 'file:///usr/share/emane/dtd/platform.dtd'>
+<platform>
+  <param name="otamanagerchannelenable" value="on"/>
+  <param name="otamanagerdevice" value="${control_interface}"/>
+  <param name="otamanagergroup" value="224.1.2.8:45702"/>
+  <param name="eventservicegroup" value="224.1.2.8:45703"/>
+  <param name="eventservicedevice" value="${control_interface}"/>
+  <param name="controlportendpoint" value="0.0.0.0:47000"/>
+
+  <nem definition="emane-tdma-nem.xml" id="${nem_id}">
+    <transport definition="emane-transvirtual.xml">
+      <param name="device" value="${waveform_interface}"/>
+      <param name="address" value="${CIDRNotation.address(radio_ip_addr)}"/>
+      <param name="mask" value="${CIDRNotation.netmask(radio_ip_addr)}"/>
+    </transport>
+  </nem>
+</platform>

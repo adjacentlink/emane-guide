@@ -1,0 +1,24 @@
+<%
+from letce2.utils.network import CIDRNotation
+%>
+<otestpoint id="${__node_name}"
+            discovery="${CIDRNotation.address(control_ip_addr)}:8881"
+            publish="${CIDRNotation.address(control_ip_addr)}:8882">
+  <probe configuration="otestpoint-probe-emane-physicallayer.xml">
+    <python module="otestpoint.emane.physicallayer"
+            class="PhysicalLayer"/>
+  </probe>
+
+  <probe configuration="otestpoint-probe-emane-rfpipe.xml">
+    <python module="otestpoint.emane.rfpipe"
+            class="RFPipe"/>
+  </probe>
+
+  <probe configuration="otestpoint-probe-emane-virtualtransport.xml">
+    <python module="otestpoint.emane.virtualtransport"
+            class="VirtualTransport"/>
+  </probe>
+    <probe configuration="otestpoint-probe-mgen.xml">
+    <python module="otestpoint.mgen.flows" class="Flows"/>
+  </probe>
+</otestpoint>

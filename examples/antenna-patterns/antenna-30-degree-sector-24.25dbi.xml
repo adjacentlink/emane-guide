@@ -1,0 +1,26 @@
+<!DOCTYPE antennaprofile SYSTEM "file:///usr/share/emane/dtd/antennaprofile.dtd">
+<antennaprofile>
+  <antennapattern>
+    <elevation min="-90" max="-16">
+      <bearing min="0" max="359">
+        <gain value="-200.0"/>
+      </bearing>
+    </elevation>
+    <elevation min="-15" max="15">
+      <bearing min="0" max="15">
+        <gain value="24.25"/>
+      </bearing>
+      <bearing min="16" max="344">
+        <gain value="-200.0"/>
+      </bearing>
+      <bearing min="345" max="359">
+        <gain value="24.25"/>
+      </bearing>
+    </elevation>
+    <elevation min="16" max="90">
+      <bearing min="0" max="359">
+        <gain value="-200.0"/>
+      </bearing>
+    </elevation>
+  </antennapattern>
+</antennaprofile>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nem SYSTEM "file:///usr/share/emane/dtd/nem.dtd">
+<nem type="unstructured">
+  <transport definition="emane-transraw.xml"/>
+  <shim definition="emane-commeffect-utilitymodel.xml"/>
+</nem>

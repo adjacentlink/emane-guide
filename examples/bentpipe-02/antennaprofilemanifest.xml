@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+profile_dir=__top_dir + '/../antenna-patterns'
+%>
+<!DOCTYPE profiles SYSTEM "file:///usr/share/emane/dtd/antennaprofile.dtd">
+<profiles>
+  <profile id='1'
+	   antennapatternuri='${profile_dir}/antenna-30-degree-sector-24.25dbi.xml'>
+    <placement north='0' east='0' up='0'/>
+  </profile>
+  <profile id='2'
+	   antennapatternuri='${profile_dir}/antenna-omni-24.25dbi.xml'>
+    <placement north='0' east='0' up='0'/>
+  </profile>
+</profiles>

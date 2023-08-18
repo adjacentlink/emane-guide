@@ -1,0 +1,11 @@
+<probe-emane-BentPipe address='localhost' nem='${nem_id}'>
+  <probes>
+    <EMANE.BentPipe.Counters.General enable="yes"/>
+    <EMANE.BentPipe.Tables.Events enable="yes"/>
+    <EMANE.BentPipe.Tables.Status.Antenna enable="yes"/>
+    <EMANE.BentPipe.Tables.Status.Neighbor enable="yes"/>
+    <EMANE.BentPipe.Tables.Status.Queue enable="yes"/>
+    <EMANE.BentPipe.Tables.Status.Slot enable="yes"/>
+    <EMANE.BentPipe.Tables.Status.Transponder enable="yes"/>
+  </probes>
+</probe-emane-BentPipe>

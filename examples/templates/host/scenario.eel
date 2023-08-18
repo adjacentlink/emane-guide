@@ -1,0 +1,18 @@
+<%
+import re
+nems=set()
+for node,items in __share.items():
+    for item in items:
+        if item == 'nem_id':
+            nems.add(items[item])
+
+targets=set(nems)
+%>
+% for a in sorted(list(nems)):
+<%
+      targets.remove(a)
+%>
+%     for b in sorted(list(targets)):
+<%block>0.0  nem:${a} pathloss nem:${b},${scenario_all_nodes_pathloss_db}</%block>
+%     endfor
+% endfor

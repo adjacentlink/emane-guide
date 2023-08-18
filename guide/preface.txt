@@ -1,0 +1,91 @@
+~{{frontmatter
+layout: default
+title: Home
+nav_order: 1
+permalink: /}}~
+
+~{{layout type=newpage}}~
+~{{unnumberedchapter title="About The EMANE Guide"}}~
+
+## Who This Guide Is For
+
+The *emane-guide* is for anyone interested in using the [*Extendable
+Mobile Ad-hoc Network
+Emulator*](https://github.com/adjacentlink/emane) (*EMANE*) for
+research and/or development of wireless communication systems.
+
+This guide assumes that you are familiar with basic wireless
+communication concepts and have a working knowledge of the Linux
+command line. The material presented throughout this guide is done in
+a broadly accessible manner. Networking tools and operating system
+components, such as Linux Containers, are used throughout the examples
+that accompany this guide. If you find that you require more
+information or direction using any of these, there is ample
+documentation readily available on the Internet.
+
+## How to Use This Guide
+
+This guide is designed to be read in sequence, with each chapter
+building on the previous. This guide comes with a set of examples, so
+you will want to clone the latest version from
+[GitHub](https://github.com) and try each of the examples yourself.
+
+~{{verbatim type=txt --
+$ git clone https://github.com/adjacentlink/emane-guide}}~
+
+Some sections of this guide that focus on internal and external APIs
+will make more sense if you have a programming background,
+specifically experience with C++, Python, and Google Protocol
+Buffers. None of which are a prerequisite for using *EMANE*, but if
+you want to develop radio models or tools that interact with *EMANE*,
+proficiency with each will be helpful.
+
+## Resources and Contributions
+
+All [Adjacent Link](https://adjacentlink.com) FOSS, including this
+guide, is available on [Adjacent Link's
+GitHub](https://github.com/adjacentlink) organization page. Each
+project has its own *Issues* and *Pull Requests*. Please use these to
+report any application specific bugs or questions.
+
+There are other Adjacent Link tutorials that cover in more detail
+areas used in this guide.
+
+* The
+  [*emane-control-port-tutorial*](https://github.com/adjacentlink/emane-control-port-tutorial)
+  is a deep-dive into understanding how to interface with the *EMANE*
+  Control Port.
+  
+  [https://github.com/adjacentlink/emane-control-port-tutorial](https://github.com/adjacentlink/emane-control-port-tutorial)
+
+* The
+  (*letce2-tutorial*)[https://github.com/adjacentlink/letce2-tutorial]
+  provides an overview of the *Lightweight Experiment Template
+  Configuration Environment* (*letce2*) and covers how to define and
+  execute experiments.
+
+  [https://github.com/adjacentlink/letce2-tutorial](https://github.com/adjacentlink/letce2-tutorial)
+
+* The
+  [*python-etce-tutorial*](https://github.com/adjacentlink/python-etce-tutorial)
+  provides an overview of the *Extendable Test Control Environment*
+  (*ETCE*). *ETCE* concepts are introduced through a sequence of
+  examples. The tutorial aims to explain ETCE with enough detail so
+  that users can effectively write, execute and automate their own
+  *EMANE* emulations upon completion.
+  
+  [https://github.com/adjacentlink/python-etce-tutorial](https://github.com/adjacentlink/python-etce-tutorial)
+
+
+* The [*EMANE*
+  Wiki](https://https://github.com/adjacentlink/emane/wiki) and
+  [*emane-tutorial*](https://github.com/adjacentlink/emane-tutorial)
+  are the original *EMANE* guide. Both of which have been replaced
+  with this guide. However this guide is still in its infancy, so
+  there may be material in the wiki and tutorial that is not yet
+  included in this guide.
+
+  [https://https://github.com/adjacentlink/emane/wiki](https://https://github.com/adjacentlink/emane/wiki)
+  
+  [https://github.com/adjacentlink/emane-tutorial](https://github.com/adjacentlink/emane-tutorial)
+  

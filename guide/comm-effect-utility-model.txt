@@ -1,0 +1,437 @@
+~{{frontmatter
+layout: default
+title: Comm Effect Utility Model
+nav_order: 14
+permalink: /comm-effect-utility-model}}~
+
+~{{layout type=newpage}}~
+# Comm Effect Utility Model
+
+The Comm Effect Utility Model allows emane to function and an IPv4
+network impairment tool.
+
+## Features
+
+The Comm Effect utility model provides the following features:
+[Network Impairments](#network-impairments) and [Static
+Filters](#static-filters).
+
+### Network Impairments
+
+The Comm Effect Utility Model supports the following network
+impairments controlled via ~{{link name="`CommEffectEvents`"
+file="comm-effect-utility-model.md" section="#commeffectevent"}}~ or
+[static filter](#static-filters):
+
+1. Loss: The percentage of packets that will be dropped utilizing a
+   uniform distribution model.
+
+2. Latency: The average delay for a packet to traverse the
+   network. The total delay is composed of a fixed and variable
+   component. The fixed amount of the delay is defined via a latency
+   parameter and the variable amount via a jitter parameter. Both
+   parameters are defined via ~{{link name="`CommEffectEvent`"
+   file="comm-effect-utility-model.md" section="#commeffectevent"}}~
+   or [static filter](#static-filters). The jitter component to
+   latency is determined randomly by applying a value pulled from a
+   uniform random distribution of +/- the jitter parameter value. The
+   randomly generated jitter value is then added to the fixed latency
+   to determine the total delay.
+
+3. Duplicates: The percentage of packets that will be duplicated at
+   the receiver.
+
+4. Unicast Bitrate: The bitrate for packets destined for the *NEM* or
+   handled in promiscuous mode.
+
+5. Broadcast Bitrate: The bitrate for packets destined for the *NEM*
+   broadcast address.
+
+## Static Filters
+
+The Comm Effect Utility Model supports the ability to define static
+filters to control network impairments. Filters are defined via an XML
+configuration file and have the following characteristics:
+
+1. The filter file used by a given *NEM* within the emulation is
+   identified at initialization time via the *NEM*'s `filterfile`
+   configuration parameter. Each filter defined in the `filterfile` is
+   characterized by one or more target elements and a single effect
+   element.
+
+2. Currently only IPv4 Ethernet packet filter targets are
+   supported. The target element has the following format within the
+   filter XML file:
+
+   ~{{verbatim type=xml --
+   <target>
+     <ipv4 src='0.0.0.0' dst='0.0.0.0' len='0' ttl='0' tos='0'>
+       <udp sport='0' dport='0'/>
+       <protocol type='0'/>
+     </ipv4>
+   </target>}}~
+
+3. All of the `<ipv4>`  attributes are optional:
+
+   1. `src`: Source address in IPv4 header. Valid range 0.0.0.0 -
+      255.255.255.255, where 0.0.0.0 implies don't care.
+   
+   2. `dst`: Destination address in IPv4 header. Valid range 0.0.0.0 -
+      255.255.255.255, where 0.0.0.0 implies don't care.
+
+   3. `len`: Total length in IPv4 header. Valid range 0 - 65535, where
+      0 implies don't care.
+   
+   4. `ttl`: Time to live in IPv4 header. Valid range 0 - 255, where 0
+      implies don't care.
+   
+   5. `tos`: Type of Service/Differentiated Services in IPv4
+   header. Valid range 0-255, where 0 implies don't care.
+
+   In addition, a filter can be defined via the IPv4 protocol field in
+   the header. The communication protocol can be defined by name or
+   numerical value. Currently, udp is the only protocol that can be
+   defined by name. All other protocols must be identified via
+   numerical value.
+
+    1. `<udp>`: Used to identify UDP protocol by name. When using this
+       mechanism to define the udp protocol, sport and/or dport can
+       also be identified for the udp protocol header. The valid range
+       for sport and dport are 0 to 65535, where 0 implies don't care.
+
+       ~{{verbatim type=xml --
+        <target>
+          <ipv4 dst='224.1.2.3'>
+            <udp sport='12345' dport='12346'/>
+          </ipv4>
+        </target>}}~
+
+    2. `<protocol>`: Used when identifying the communication protocol
+       based on numerical value. The type attribute identifies the
+       numerical value for the IPv4 communication protocol with a
+       valid range from 0 to 255.
+
+       ~{{verbatim type=xml --
+        <target>
+          <ipv4 dst='224.1.2.3'>
+            <protocol type='89'/>
+          </ipv4>
+        </target>}}~
+
+4. Each filter is assigned static network impairments (loss, latency,
+   jitter, duplicates, unicastbitrate and broadcastbitrate).
+
+   ~{{verbatim type=xml --
+   <effect>
+     <loss>20</loss>
+     <duplicate>0</duplicate>
+     <latency sec='0' usec='200000'/>
+     <jitter sec='0' usec='0'/>
+     <broadcastbitrate>1024</broadcastbitrate>
+     <unicastbitrate>8096</unicastbitrate>
+   </effect>}}~
+
+   The effect element has the following format:
+
+   1. `<loss>`: The loss 0 to 100 in percentage to be applied to the
+      packets that match the associated target.
+    
+   2. `<duplicate>`: The duplicates 0 to 100 in percentage to be applied
+      to the packets that match the associated target.
+    
+   3. `<latency>`: The fixed average delay to be applied to the packets
+      that match the associated target.
+      
+      *sec*: Seconds have a valid range 0 to 65535.  
+      *usec*: Microseconds have a valid range 0 to 999999.  
+
+   4. `<jitter>`: The random variation applied to the packets that match
+      the associated target.
+
+      *sec*: Seconds have a valid range 0 to 65535.  
+      *usec*: Microseconds have a valid range 0 to 999999.  
+       
+   5. `<unicastbitrate>`: The bitrate (bps) applied to packets
+      addressed to the *NEM* or received in promiscuous mode matching
+      the associated target. The bitrate has a valid range from 0,
+      meaning unused, to max unsigned 64 bit number.
+    
+   6. `<broadcastbitrate>`: The bitrate (bps) applied to packets
+      addressed to the *NEM* broadcast address matching the associated
+      target. The bitrate has a valid range from 0, meaning unused, to
+      max unsigned 64 bit number.
+
+   The filters and their associated impairments are defined at
+   initialization and cannot be altered during emulation.
+
+6. Filter ordering determines the network impairment, and as such,
+   more specific filters should be defined first. Each received packet
+   is evaluated against the defined filters in order and the first
+   match determines the impairment to be applied. In the below
+   example, a packet as it is received by a node will be evaluated
+   against each of the four filters (OSPF, TOS, UDP, DEFAULT) in order
+   and the respective effect will be applied based on the first
+   match.
+
+   It should be noted that the inclusion of the DEFAULT filter should
+   only be used when ~{{link name="`CommEffectEvents`"
+   file="comm-effect-utility-model.md" section="#commeffectevent"}}~
+   are not being utilized since the filters take precedence. When
+   filters are used in conjunction with ~{{link
+   name="`CommEffectEvents`" file="comm-effect-utility-model.md"
+   section="#commeffectevent"}}~, the event driven impairments serve
+   as the default effect for all packets that do not match a filter
+   target.
+
+   ~{{verbatim type=xml --
+   <!DOCTYPE commeffect SYSTEM "file:///usr/share/emane/dtd/commeffectfilters.dtd">
+   <commeffect>
+     <filter>
+       <description>OSPF Packets</description>
+       <target>
+         <ipv4>
+           <protocol type="89"/>
+         </ipv4>
+       </target>
+       <effect>
+         <loss>0</loss>
+         <duplicate>0</duplicate>
+         <latency sec='0' usec='0'/>
+         <jitter sec='0' usec='0'/>
+       </effect>
+     </filter>
+     <filter>
+       <description>TOS (Type of Service) = 192</description>
+       <target>
+         <ipv4 tos='192'>
+         </ipv4>
+       </target>
+       <effect>
+         <loss>10</loss>
+         <duplicate>150</duplicate>
+         <latency sec='0' usec='100000'/>
+         <jitter sec='0' usec='0'/>
+       </effect>
+     </filter>
+     <filter>
+       <description>UDP Multicast (destination address = 224.1.2.3 and destination port = 12345)</description>
+       <target>
+         <ipv4 dst='224.1.2.3'>
+           <udp dport='12345'/>
+         </ipv4>
+       </target>
+       <effect>
+         <loss>20</loss>
+         <duplicate>0</duplicate>
+         <latency sec='0' usec='200000'/>
+         <jitter sec='0' usec='0'/>
+       </effect>
+     </filter>
+     <filter>
+       <description>DEFAULT:  All Other Packets</description>
+       <target/>
+       <effect>
+         <loss>40</loss>
+         <duplicate>30</duplicate>
+         <latency sec='0' usec='600000'/>
+         <jitter sec='0' usec='100000'/>
+         <broadcastbitrate>8096</broadcastbitrate>
+         <unicastbitrate>8096</unicastbitrate>
+       </effect>
+     </filter>
+   </commeffect>}}~
+
+## `CommEffectEvent`
+
+~{{file path="$emane_SRC_ROOT/src/libemane/commeffectevent.proto"
+type=protobuf
+showname=true
+blank=false
+skip=33
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"}}~
+
+## NEM XML Structure
+
+The Comm Effect utility model is not a radio model and does not use a
+physical layer. It is a special class of plugin called a
+*shim*. *Shims* follow all the same paradigms found in ~{{link
+name="EMANE Paradigms" file="paradigms.md"
+section="#emane-Paradigms"}}~, and it is possible to build an *NEM*
+that contains one or more shims. In practice, this is usually never
+necessary.
+
+The *NEM* XML definition for a Comm Effect utility model instance only
+contains a `<shim>` and `<transport>` element.  In order to be
+accepted by the emulator as valid, the `<nem>` `type` attribute must
+be set to `unstructured` in order to relax checks that aim to prevent
+incorrect *NEM* configuration.
+
+~{{file path="../examples/commeffect-01/node-1/emane-commeffect-nem.xml"
+type=xml
+skip=1
+showname=true
+blank=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+## Configuration
+
+~{{emaneinfo plugin=commeffectshim type=config}}~
+
+## Statistics
+
+~{{emaneinfo plugin=commeffectshim type=stat}}~
+
+## Statistic Tables
+
+~{{emaneinfo plugin=commeffectshim type=table}}~
+
+## Examples
+
+This guide includes the IEEE 802.11abg example:
+
+1. `commeffect-01`: A five host example where each host is configured
+on a flat 10.98.0.0/16 network and connected via `lan0` to an *NEM*
+using a ~{{link name="Raw Transport" file="raw-transport.md"
+section="#raw-transport"}}~.
+
+### commeffect-01
+
+
+~{{graphviz
+   file="images/topology-commeffect-01" scale=65 caption="commeffect-01 experiment components" --
+   digraph hierarchy {
+rankdir="TB";
+node[shape=circle,style=filled]
+"host-2" [fillcolor=gray,shape=square]
+"node-2" [fillcolor=green]
+"Network" [image="images/cloud.png",shape=none,fillcolor=none]
+"node-1" [fillcolor=green]
+"node-3" [fillcolor=green]
+"host-1" [fillcolor=gray,shape=square]
+"host-3" [fillcolor=gray,shape=square]
+"host-1"->"node-1" [dir="both",label="10.98.1.2/16"]
+"node-1"->Network [dir="both"]
+Network->"node-3" [dir="both"]
+"node-3"->"host-3" [dir="both",label="10.98.3.2/16"]
+Network->"node-2" [dir="both"]
+"node-2"->"host-2" [dir="both",label="10.98.2.2/16"]
+"host-4" [fillcolor=gray,shape=square]
+"node-4"  [fillcolor=green]
+"node-5"  [fillcolor=green]
+"host-5" [fillcolor=gray,shape=square]
+
+Network->"node-4" [dir="both"]
+Network->"node-5" [dir="both"]
+
+"node-4"->"host-4" [dir="both", label="10.98.4.2/16"]
+"node-5"->"host-5" [dir="both", label="10.98.5.2/16"]
+
+{rank = min; "node-2";"host-2";}
+{rank = same; "node-1"; "node-3"; Network; "host-1"; "host-3";}
+}
+}}~
+
+
+The `commeffect-01` example experiment contains five hosts configured
+on a flat 10.98.0.0/16 network and connected via `lan0` to an *NEM*
+using a ~{{link name="Raw Transport" file="raw-transport.md"
+section="#raw-transport"}}~. This configuration illustrates how you
+can connect physical or virtual network appliances to *EMANE*, in a
+manner in which the appliance is unaware of the emulator's presence,
+whether using a physical interface, tunnel, vif, etc. Here, the
+network appliances are LXCs but they can just as easily be physical
+devices connected to an *EMANE* server.
+
+Each host has a `lan0` interface that is monitored by a host
+corresponding *NEM*. All outbound host `lan0` traffic is routed into
+the emulation and if successfully received by the *NEM* associated
+with the destination(s), will be written the destination(s)'s
+corresponding `lan0`.
+
+All Comm Effect utility model instance are initialized with network
+impairments via the `emaneeventservice` which publishes ~{{link
+name="`CommEffectEvents`" file="comm-effect-utility-model.md"
+section="#commeffectevent"}}~ using values in `scenario.eel`.
+
+~{{file path="../examples/commeffect-01/host/scenario.eel"
+type=txt
+showname=true
+blank=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+~{{imagemagick
+    file="images/run-commeffect-01.png"
+    scale=75
+images/pointing-finger.png -resize 25% \( -size 800x -font DejaVu-Sans-Mono-Bold
+-gravity east label:" Run emane-guide/examples/commeffect-01 and give it a try. " \)
++append -transparent white}}~
+
+All hosts are configured similarly, taking a look at `host-1`
+interfaces we can see the `lan0` interface is configured as
+10.98.1.2/16.
+
+~{{verbatim type=txt --
+$ ssh host-1 ip addr show dev lan0
+3: lan0@if102: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 7e:9a:ba:30:f0:90 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.98.1.2/16 brd 10.98.255.255 scope global lan0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::7c9a:baff:fe30:f090/64 scope link
+       valid_lft forever preferred_lft forever}}~
+
+Looking at `host-1` routes shows a flat network which is different
+than the host configuration in previous experiments which used a
+tiered topology with radio nodes acting as gateways for hosts.
+
+~{{verbatim type=txt --
+$ ssh host-1 ip route show
+10.98.0.0/16 dev lan0 proto kernel scope link src 10.98.1.2
+10.99.0.0/16 dev backchan0 proto kernel scope link src 10.99.1.1}}~
+
+Pinging from `host-1` to all other hosts over the `lan0` interface
+shows 100% completion and minimal latency.
+
+~{{verbatim type=txt --
+$ ssh host-1 fping host-2-lan host-3-lan host-4-lan host-5-lan -C 2
+host-2-lan : [0], 64 bytes, 2.42 ms (2.42 avg, 0% loss)
+host-3-lan : [0], 64 bytes, 2.70 ms (2.70 avg, 0% loss)
+host-4-lan : [0], 64 bytes, 2.61 ms (2.61 avg, 0% loss)
+host-5-lan : [0], 64 bytes, 2.70 ms (2.70 avg, 0% loss)
+host-2-lan : [1], 64 bytes, 3.37 ms (2.90 avg, 0% loss)
+host-3-lan : [1], 64 bytes, 3.35 ms (3.03 avg, 0% loss)
+host-4-lan : [1], 64 bytes, 3.28 ms (2.95 avg, 0% loss)
+host-5-lan : [1], 64 bytes, 3.11 ms (2.90 avg, 0% loss)
+
+host-2-lan : 2.42 3.37
+host-3-lan : 2.70 3.35
+host-4-lan : 2.61 3.28
+host-5-lan : 2.70 3.11}}~
+
+Using the `emaneevent-commeffect` utility, we can set the latency of
+all links to 100ms.
+
+~{{verbatim type=txt --
+$ emaneevent-commeffect 1:5 latency=.1 -i letce0}}~
+
+Reissuing the same `ping` command verifies 100ms of latency in each
+directions.
+
+~{{verbatim type=txt --
+$ ssh host-1 fping host-2-lan host-3-lan host-4-lan host-5-lan -C 2
+host-2-lan : [0], 64 bytes, 201 ms (201 avg, 0% loss)
+host-3-lan : [0], 64 bytes, 201 ms (201 avg, 0% loss)
+host-4-lan : [0], 64 bytes, 201 ms (201 avg, 0% loss)
+host-5-lan : [0], 64 bytes, 201 ms (201 avg, 0% loss)
+host-2-lan : [1], 64 bytes, 202 ms (202 avg, 0% loss)
+host-3-lan : [1], 64 bytes, 202 ms (201 avg, 0% loss)
+host-4-lan : [1], 64 bytes, 201 ms (201 avg, 0% loss)
+host-5-lan : [1], 64 bytes, 201 ms (201 avg, 0% loss)
+
+host-2-lan : 201 202
+host-3-lan : 201 202
+host-4-lan : 201 201
+host-5-lan : 201 201}}~
+

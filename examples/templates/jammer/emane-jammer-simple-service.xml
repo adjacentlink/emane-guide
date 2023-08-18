@@ -1,0 +1,8 @@
+<emane-jammer-simple-service endpoint='0.0.0.0:45715'>
+  <ota-channel group='224.1.2.8'
+               port='45702'
+               device='${control_interface}'/>
+  <ota-message destination='65535'
+               registration-id='65535'
+               sub-id='65535'/>
+</emane-jammer-simple-service>

@@ -1,0 +1,20 @@
+<%
+import re
+nems=set()
+for node,items in __share.items():
+    for item in items:
+        if item == 'nem_id':
+            nems.add(items[item])
+
+targets=set(nems)
+%>
+% for a in sorted(list(nems)):
+<%
+      targets.remove(a)
+%>
+%     for b in sorted(list(nems)):
+%     if a != b:
+<%block>0.0  nem:${a} commeffect nem:${b},0,0,0,0,1000000,1000000</%block>
+%     endif
+%     endfor
+% endfor

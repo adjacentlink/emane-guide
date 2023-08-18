@@ -1,0 +1,26 @@
+   digraph hierarchy {
+rankdir="TB";
+node[shape=circle,style=filled]
+"node-2" [fillcolor=green]
+"host-2" [fillcolor=gray,shape=square]
+"host-2"->"node-2" [dir="both",label="[.2]  10.98.2.0/24  [.1]"]
+"OTA" [image="images/cloud.png",shape=none,fillcolor=none]
+"node-1" [fillcolor=green]
+"node-3" [fillcolor=green]
+"monitor-4" [fillcolor=yellow]
+"monitor-4"->OTA
+"jammer-5" [fillcolor=red]
+"jammer-5"->OTA
+"host-1" [fillcolor=gray,shape=square]
+"host-3" [fillcolor=gray,shape=square]
+"host-1"->"node-1" [dir="both",label="[.2]  10.98.1.0/24  [.1]"] 
+"node-1"->OTA [dir="both",label="10.100.0.1/24"]
+OTA->"node-3" [dir="both",label="10.100.0.3/24"]
+"node-3"->"host-3" [dir="both",label="[.2]  10.98.3.0/24  [.1]"]
+OTA->"node-2" [dir="both",label=" 10.100.0.2/24"]
+
+{rank = min; "host-2";}
+{rank = min; "node-2";}
+{rank = same; "node-1"; "node-3"; OTA; "host-1"; "host-3";}
+{rank = max; "monitor-4"; "jammer-5";}
+}

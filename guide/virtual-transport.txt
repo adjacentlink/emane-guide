@@ -1,0 +1,81 @@
+~{{frontmatter
+layout: default
+title: Virtual Transport
+nav_order: 15
+permalink: /virtual-transport}}~
+
+~{{layout type=newpage}}~
+# Virtual Transport
+
+The Virtual Transport uses the
+[TUN/TAP](https://www.kernel.org/doc/Documentation/networking/tuntap.txt)
+interface to create a *virtual interface* (*vif*) as the emulation
+boundary entry/exit point.
+
+## Features
+
+The Virtual Transport emulation boundary provides the following set of
+features: [Virtual Interface
+Management](#virtual-interface-management), [Raw Transport
+Interoperability](#raw-transport-interoperability), [Bitrate
+Enforcement](#bitrate-enforcement), [Broadcast Only
+Mode](#broadcast-only-mode), and [IPv4 and IPv6
+Capable](#ipv4-and-ipv6-capable).
+
+## Virtual Interface Management
+
+The Virtual Transport creates a virtual interface for use as the
+emulation boundary. IP packets routed to the virtual device are
+encapsulated and transmitted to their respective *NEM* for downstream
+processing. Packets received over-the-air are processed up the *NEM*
+stack and transmitted to the *NEM*'s respective virtual transport for
+injection back into the kernel IP stack.
+
+The newly created virtual interface is assigned an Ethernet address
+derived from the *NEM Id* associated with the transport using the
+following format: `02:02:00:00:XX:XX` , where `XX:XX` is the 16 bit
+*NEM Id*. This allows easy mapping of Ethernet MAC addresses to NEM Ids
+for unicast frames. Multicast and broadcast frames map to the NEM
+broadcast address `0xFFFF`.
+
+A Virtual Transport managed virtual interface can be configured via
+configuration parameters or managed externally, for example via DHCP.
+
+## Raw Transport Interoperability
+
+The Virtual Transport supports interoperability with ~{{link name="Raw
+Transport" file="raw-transport.md" section="#raw-transport"}}~
+emulation boundaries using ARP caching to learn IP network to *NEM Id*
+associations.
+
+### Bitrate Enforcement
+
+The Virtual Transport supports bitrate enforcement for use with models
+that do not limit bitrate based on emulation implementation. Set the
+configuration parameter `bitrate` to the desired rate in `bps` to
+enable bitrate enforcement or 0 to disable.
+
+### Broadcast Only Mode
+
+The Virtual Transport supports forced *NEM* broadcasting of all IP
+packet types: unicast, broadcast and multicast. Set the configuration
+parameter `broadcastmodeenable` to `true` to enable broadcast only
+mode.
+
+### IPv4 and IPv6 Capable
+
+The Virtual Transport supports IPv4 and IPv6 virtual interface address
+assignments and packet processing.
+
+## Configuration
+
+~{{emaneinfo plugin=transvirtual type=config}}~
+
+## Statistics
+
+~{{emaneinfo plugin=transvirtual type=stat}}~
+
+## Statistic Tables
+
+~{{emaneinfo plugin=transvirtual type=table}}~
+

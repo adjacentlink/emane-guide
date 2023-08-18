@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nem SYSTEM 'file:///usr/share/emane/dtd/nem.dtd'>
+<nem>
+  <transport definition="emane-transvirtual.xml">
+    <param name="arpcacheenable" value="off"/>
+  </transport>
+  <mac definition="emane-bentpipe-radiomodel.xml"/>
+  <phy>
+    %if bandwidth_hz:
+    <param name="bandwidth" value="${bandwidth_hz}"/>
+    %else:
+    <param name="bandwidth" value="20M"/>
+    %endif
+    %if tx_frequency_hz:
+    <param name="frequency" value="${tx_frequency_hz}"/>
+    %endif
+    %if rx_frequency_hz:
+    <param name="frequencyofinterest" value="${rx_frequency_hz}"/>
+    %endif
+    <param name="subid" value="${sub_id}"/>
+    %if system_noise_figure_db:
+    <param name="systemnoisefigure" value="${system_noise_figure_db}"/>
+    %else:
+    <param name="systemnoisefigure" value="4"/>
+    %endif
+    <param name="txpower" value="0.0"/>
+    <param name="fixedantennagain" value="0.0"/>
+    % if fixedantennagainenable:
+    <param name="fixedantennagainenable" value="${fixedantennagainenable}"/>
+    %else:
+    <param name="fixedantennagainenable" value="on"/>
+    %endif
+    <param name="noisemode" value="all"/>
+    <param name="noisebinsize" value="20"/>
+    <param name="propagationmodel" value="${propagationmodel}"/>
+    %if spectralmaskindex:
+    <param name="spectralmaskindex" value="${spectralmaskindex}"/>
+    %endif
+    <param name="compatibilitymode" value="2"/>
+   
+  </phy>
+</nem>

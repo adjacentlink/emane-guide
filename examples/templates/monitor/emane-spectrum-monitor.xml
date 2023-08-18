@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<emane-spectrum-monitor id="${nem_id}">
+  <emulator>
+      <param name="otamanagerchannelenable" value="on"/>
+      <param name="otamanagerdevice" value="${control_interface}"/>
+      <param name="otamanagergroup" value="224.1.2.8:45702"/>
+      <param name="eventservicegroup" value="224.1.2.8:45703"/>
+      <param name="eventservicedevice" value="${control_interface}"/>
+      %if spectralmaskmanifesturi:
+      <param name="spectralmaskmanifesturi" value="${spectralmaskmanifesturi}"/>
+      %endif
+  </emulator>
+  <physical-layer>
+    <param name="spectrumquery.recorderfile"
+           value="${__top_dir}/persist/${__node_name}/var/log/emane-spectrum-monitor.data"/>
+  </physical-layer>
+</emane-spectrum-monitor>

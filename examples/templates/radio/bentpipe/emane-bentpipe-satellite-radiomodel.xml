@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+import re
+antennas = []
+antenna_index_set = set()
+
+for key in context.keys():
+    m = re.match(r'antenna\.(\d+)',key)
+    if m:
+        antennas.append(context[key])
+        m = re.match(r'^(\d+):.+$',context[key])
+        if m:
+            antenna_index_set.add(int(m.group(1)))
+%>
+
+<!DOCTYPE mac SYSTEM "file:///usr/share/emane/dtd/mac.dtd">
+<mac library='emane-model-bentpipe'>
+
+  <!-- syntax: '<transponder id>:<rx freqeuncy Hz>' -->
+  <paramlist name='transponder.receive.frequency'>
+    <item value='0:29.910G'/>
+    <item value='1:29.745G'/>
+    <item value='2:29.580G'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<rx bandwidth Hz>' -->
+  <paramlist name='transponder.receive.bandwidth'>
+    <item value='0:150M'/>
+    <item value='1:150M'/>
+    <item value='2:150M'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<rx action: ubend | process>' -->
+  <paramlist name='transponder.receive.action'>
+    <item value='0:ubend'/>
+    <item value='1:ubend'/>
+    <item value='2:ubend'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<pcr index>' -->
+  <paramlist name='transponder.transmit.pcrcurveindex'>
+    <item value='0:0'/>
+    <item value='1:0'/>
+    <item value='2:0'/>
+  </paramlist>
+
+ <!-- syntax: '<transponder id>:<antenna index>' -->
+  <paramlist name='transponder.receive.antenna'>
+    <item value='0:0'/>
+    <item value='1:${1 if 1 in antenna_index_set else 0}'/>
+    <item value='2:${2 if 2 in antenna_index_set else 0}'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<on | off>' -->
+  <paramlist name='transponder.receive.enable'>
+    <item value='0:on'/>
+    <item value='1:on'/>
+    <item value='2:on'/>
+  </paramlist>
+  
+  <!-- syntax: '<transponder id>:<tx freqeuncy Hz>' -->
+  <paramlist name='transponder.transmit.frequency'>
+    <item value='0:20.175G'/>
+    <item value='1:20.340G'/>
+    <item value='2:20.505G'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx bandwidth Hz>' -->
+  <paramlist name='transponder.transmit.bandwidth'>
+    <item value='0:150M'/>
+    <item value='1:150M'/>
+    <item value='2:150M'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx datarate bps>' -->
+  <paramlist name='transponder.transmit.datarate'>
+    <item value='0:100M'/>
+    <item value='1:100M'/>
+    <item value='2:100M'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<ubend delay in useconds>' -->
+  <paramlist name='transponder.transmit.ubend.delay'>
+    <item value='0:0'/>
+    <item value='1:0'/>
+    <item value='2:0'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx slots | na>' -->
+  <paramlist name='transponder.transmit.txslots'>
+    <item value='0:na'/>
+    <item value='1:na'/>
+    <item value='2:na'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx slot size | na>' -->
+  <paramlist name='transponder.transmit.slotsize'>
+    <item value='0:na'/>
+    <item value='1:na'/>
+    <item value='2:na'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx slot per frame | na>' -->
+  <paramlist name='transponder.transmit.slotperframe'>
+    <item value='0:na'/>
+    <item value='1:na'/>
+    <item value='2:na'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<antenna index>' -->
+  <paramlist name='transponder.transmit.antenna'>
+    <item value='0:0'/>
+    <item value='1:${2 if 2 in antenna_index_set else 0}'/>
+    <item value='2:${1 if 1 in antenna_index_set else 0}'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<antenna index>' -->
+  <paramlist name='transponder.transmit.power'>
+    <item value='0:${tx_power_dbm}'/>
+    <item value='1:${tx_power_dbm}'/>
+    <item value='2:${tx_power_dbm}'/>
+  </paramlist>
+  
+   <!-- syntax: '<transponder id>:<tx mtu bytes | na>' -->
+  <paramlist name='transponder.transmit.mtu'>
+    % if tx_mtu_bytes:
+    <item value='0:${tx_mtu_bytes}'/>
+    <item value='1:${tx_mtu_bytes}'/>
+    <item value='2:${tx_mtu_bytes}'/>
+    % else:
+    <item value='0:na'/>
+    <item value='1:na'/>
+    <item value='2:na'/>
+    % endif
+  </paramlist>
+  
+  <paramlist name='transponder.transmit.tosmap'>
+     <item value='0:0-255'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<on | off>' -->
+  <paramlist name='transponder.transmit.enable'>
+    <item value='0:on'/>
+    <item value='1:on'/>
+    <item value='2:on'/>
+  </paramlist>
+
+  <!-- '<antenna id>:<(omni;fixed gain dBi)|(antenna profile;az in degree;el in deg);spectral mask index>' -->
+  <paramlist name='antenna.defines'>
+    % for antenna in antennas:
+    <item value='${antenna}'/>
+    % endfor
+  </paramlist>
+
+  <param name='queue.aggregationenable' value='on'/>
+  <param name='queue.depth' value='255'/>
+
+  <param name='queue.fragmentationenable' value='on'/>
+  <param name='reassembly.fragmentcheckthreshold' value='2'/>
+  <param name='reassembly.fragmenttimeoutthreshold' value='5'/>
+
+  <param name='pcrcurveuri'
+         value='emane-bentpipe-pcr.xml'/>
+</mac>

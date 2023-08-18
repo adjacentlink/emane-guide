@@ -1,0 +1,24 @@
+                             Compatibility Mode 1                                                                    Compatibility Mode 2
+
+                              /---------------\                                    |                                   /---------------\
+                              |               |                                    |                                   |               |
+                              |  Radio Model  |                                    |                                   |  Radio Model  |
+                              |  cFFB         |                                    |                                   |  cFFB         |   
+                              \---------------/                                    |                                   \---------------/
+                                  ^        |                                       |                                       ^        |   
+o ReceivePropertiesControlMessage |        | o AntennaProfileControlMessage        | o MIMOReceivePropertiesControlMessage |        | o MIMOTransmitPropertiesControlMessage
+                                  |        | o FrequencyOfInterestControlMessage   |                                       |        | o MIMOTxWhileRxInterferenceControlMessage
+                                  |        | o SpectrumFilterAddControlMessage     |                                       |        | o RxAntennaAddControlMessage
+                                  |        | o SpectrumFilterDataControlMessage    |                                       |        | o RxAntennaRemoveControlMessage
+                                  |        | o SpectrumFilterRemoveControlMessage  |                                       |        | o RxAntennaUpdateControlMessage
+                                  |        | o TimestampControlMessage             |                                       |        | o SpectrumFilterAddControlMessage
+                                  |        | o TxWhileRxInterferenceControlMessage |                                       |        | o SpectrumFilterDataControlMessage
+                                  |        |                                       |                                       |        | o SpectrumFilterRemoveControlMessage
+                                  |        |                                       |                                       |        | o TimestampControlMessage
+                                  |        v                                       |                                       |        v
+                              /----------------\                                   |                                   /----------------\
+                              |                |                                   |                                   |                |
+                              | Physical Layer |                                   |                                   | Physical Layer | 
+                              | cFFB           |                                   |                                   | cFFB           | 
+                              \----------------/                                   |                                   \----------------/
+                                                                                   |

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nem SYSTEM 'file:///usr/share/emane/dtd/nem.dtd'>
+<nem>
+  <transport definition="emane-transvirtual.xml"/>
+  <mac definition="emane-ieee80211abg-radiomodel.xml"/>
+  <phy>
+    <param name="bandwidth" value="20M"/>
+    <param name="frequency" value="${frequency_hz}"/>
+    <param name="frequencyofinterest" value="${frequency_hz}"/>
+    <param name="subid" value="${sub_id}"/>
+    <param name="systemnoisefigure" value="4.0"/>
+    <param name="txpower" value="0.0"/>
+    <param name="fixedantennagain" value="0.0"/>
+    <param name="fixedantennagainenable" value="on"/>
+    <param name="noisemode" value="outofband"/>
+    <param name="noisebinsize" value="20"/>
+    <param name="propagationmodel" value="precomputed"/>
+  </phy>
+</nem>

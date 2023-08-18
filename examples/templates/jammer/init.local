@@ -1,0 +1,25 @@
+#!/bin/bash -
+<%
+from letce2.utils.network import CIDRNotation
+%>
+
+top_dir=$1
+node_name=$2
+start_time=$3
+
+echo "top_dir: $top_dir"
+echo "node_name: $node_name"
+echo "start_time: $start_time"
+
+cd "$top_dir/$node_name"
+
+if [ -f  emane-jammer-simple-service.xml ]
+   then
+       emane-jammer-simple-service \
+           --config-file emane-jammer-simple-service.xml \
+           --log-file $top_dir/persist/$node_name/var/log/emane-jammer-simple-service.log \
+           --pid-file $top_dir/persist/$node_name/var/run/emane-jammer-simple-service.pid \
+           --daemonize  \
+           --log-level debug
+fi
+    

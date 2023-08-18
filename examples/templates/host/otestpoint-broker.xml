@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<%
+from letce2.utils.network import CIDRNotation
+
+daemon_addrs = set()
+for node,items in __share.items():
+    for item in items:
+        if item == 'control_ip_addr':
+            daemon_addrs.add(items[item])
+%>
+<otestpoint-broker discovery="0.0.0.0:9001" publish="0.0.0.0:9002">
+% for addr in sorted(daemon_addrs):
+<testpoint discovery="${CIDRNotation.address(addr)}:8881"
+           publish="${CIDRNotation.address(addr)}:8882"/>
+% endfor
+</otestpoint-broker>

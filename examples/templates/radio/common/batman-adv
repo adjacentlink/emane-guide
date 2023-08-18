@@ -1,0 +1,25 @@
+#!/bin/bash -
+
+node_name=$1
+
+# remove waveform address for interface to reassign to batman interface
+ip addr flush dev ${waveform_interface}
+
+batctl meshif ${batman_interface} interface add ${waveform_interface}
+
+%if batman_orig_interval:
+batctl meshif ${batman_interface} orig_interval ${batman_orig_interval}
+%endif
+
+ip addr add ${radio_ip_addr} dev ${batman_interface}
+
+%if batman_mac_addr:
+ip link set dev ${batman_interface} address ${batman_mac_addr}
+%endif
+
+ip link set ${batman_interface} up
+
+if [ -f batman-routes ]
+then
+    ./batman-routes $node_name
+fi

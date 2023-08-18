@@ -1,0 +1,16 @@
+<%
+from letce2.utils.network import CIDRNotation
+%>
+<otestpoint id="${__node_name}"
+            discovery="${CIDRNotation.address(control_ip_addr)}:8881"
+            publish="${CIDRNotation.address(control_ip_addr)}:8882">
+  <probe configuration="otestpoint-probe-emane-commeffect.xml">
+    <python module="otestpoint.emane.commeffect"
+            class="CommEffect"/>
+  </probe>
+
+  <probe configuration="otestpoint-probe-emane-rawtransport.xml">
+    <python module="otestpoint.emane.rawtransport"
+            class="RawTransport"/>
+  </probe>
+</otestpoint>

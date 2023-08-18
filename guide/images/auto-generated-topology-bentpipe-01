@@ -1,0 +1,13 @@
+   digraph hierarchy {
+rankdir="LR";
+node[shape=circle,style=filled]
+"OTA" [image="images/cloud.png",shape=none,fillcolor=none]
+"node-1" [fillcolor=green]
+"node-2" [fillcolor=green]
+"host-1" [fillcolor=gray,shape=square]
+"host-2" [fillcolor=gray,shape=square]
+"host-1"->"node-1" [dir="both",label="[.2]  10.98.1.0/24  [.1]"] 
+"node-1"->OTA [dir="both",label="10.100.0.1/24"]
+OTA->"node-2" [dir="both",label="10.100.0.2/24"]
+"node-2"->"host-2" [dir="both",label="[.2]  10.98.2.0/24  [.1]"]
+}

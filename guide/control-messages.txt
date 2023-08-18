@@ -1,0 +1,270 @@
+~{{frontmatter
+layout: default
+title: Control Messages
+nav_order: 7
+permalink: /control-messages}}~
+
+~{{layout type=newpage}}~
+# Control Messages
+
+~{{imagemagick
+   file="images/incomplete-chapter.png"
+   scale=75
+   images/exclamation.png -resize 20% \( -size 800x -font DejaVu-Sans-Mono-Bold
+   -gravity east label:" This chapter is incomplete " \)
+   +append -transparent white}}~
+
+## `AntennaProfileControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/antennaprofilecontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+
+## `FlowControlControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/flowcontrolcontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `FrequencyControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/frequencycontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `FrequencyOfInterestControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/frequencyofinterestcontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+
+## `MIMOReceivePropertiesControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/mimoreceivepropertiescontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `MIMOTransmitPropertiesControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/mimotransmitpropertiescontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `MIMOTxWhileRxInterferenceControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/mimotxwhilerxinterferencecontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+
+## `OTATransmitterControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/otatransmittercontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `R2RINeighborMetricControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/r2rineighbormetriccontrolmessage.h"
+type=cpp caption="."
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `R2RIQueueMetricControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/r2riqueuemetriccontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `R2RISelfMetricControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/r2riselfmetriccontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `ReceivePropertiesControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/receivepropertiescontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `RxAntennaAddControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/rxantennaaddcontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `RxAntennaRemoveControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/rxantennaremovecontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `RxAntennaUpdateControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/rxantennaupdatecontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `SpectrumFilterAddControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/spectrumfilteraddcontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `SpectrumFilterDataControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/spectrumfilterdatacontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `SpectrumFilterRemoveControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/spectrumfilterremovecontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `TimestampControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/timestampcontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `TransmitterControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/transmittercontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+
+
+## `TxWhileRxInterferenceControlMessage`
+
+~{{file path="$emane_SRC_ROOT/include/emane/controls/txwhilerxinterferencecontrolmessage.h"
+type=cpp
+showname=true
+blank=true
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"
+cpp-show-private=false
+cpp-show-comment=false}}~
+

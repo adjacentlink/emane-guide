@@ -1,0 +1,7 @@
+<probe-emane-spectrum-tools-Monitor address='localhost' nem='${nem_id}'>
+  <probes>
+    <EMANE.Spectrum.Tools.Monitor.Counters.General enable="yes"/>
+    <EMANE.Spectrum.Tools.Monitor.Tables.Events enable="yes"/>
+    <EMANE.Spectrum.Tools.Monitor.Tables.Status enable="yes"/>
+  </probes>
+</probe-emane-spectrum-tools-Monitor>

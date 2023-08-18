@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+import re
+antennas = []
+for key in context.keys():
+    m = re.match(r'antenna\.(\d+)',key)
+    if m:
+        antennas.append(context[key])
+%>
+
+<!DOCTYPE mac SYSTEM "file:///usr/share/emane/dtd/mac.dtd">
+<mac library='emane-model-bentpipe'>
+
+  <!-- syntax: '<transponder id>:<rx freqeuncy Hz>' -->
+  <paramlist name='transponder.receive.frequency'>
+    <item value='0:${rx_frequency_hz}'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<rx bandwidth Hz>' -->
+  <paramlist name='transponder.receive.bandwidth'>
+    <item value='0:150M'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<rx action: ubend | process>' -->
+  <paramlist name='transponder.receive.action'>
+    <item value='0:process'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<pcr index>' -->
+  <paramlist name='transponder.transmit.pcrcurveindex'>
+    <item value='0:0'/>
+  </paramlist>
+
+ <!-- syntax: '<transponder id>:<antenna index>' -->
+  <paramlist name='transponder.receive.antenna'>
+    <item value='0:0'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<on | off>' -->
+  <paramlist name='transponder.receive.enable'>
+    <item value='0:on'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx freqeuncy Hz>' -->
+  <paramlist name='transponder.transmit.frequency'>
+    <item value='0:${tx_frequency_hz}'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx bandwidth Hz>' -->
+  <paramlist name='transponder.transmit.bandwidth'>
+    <item value='0:150M'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx datarate bps>' -->
+  <paramlist name='transponder.transmit.datarate'>
+    <item value='0:100M'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<ubend delay in useconds>' -->
+  <paramlist name='transponder.transmit.ubend.delay'>
+    <item value='0:na'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx slots | na>' -->
+  <paramlist name='transponder.transmit.txslots'>
+    % if txslots:
+    <item value='0:${txslots}'/>
+    %else:
+    <item value='0:na'/>
+    %endif
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx slot size | na>' -->
+  <paramlist name='transponder.transmit.slotsize'>
+    % if txslotsize:
+    <item value='0:${txslotsize}'/>
+    % else:
+    <item value='0:na'/>
+    % endif
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<tx slot per frame | na>' -->
+  <paramlist name='transponder.transmit.slotperframe'>
+    % if txslotperframe:
+    <item value='0:${txslotperframe}'/>
+    % else:
+    <item value='0:na'/>    
+    % endif
+  </paramlist>
+
+   <!-- syntax: '<transponder id>:<tx mtu bytes | na>' -->
+  <paramlist name='transponder.transmit.mtu'>
+    % if tx_mtu_bytes:
+    <item value='0:${tx_mtu_bytes}'/>
+    % else:
+    <item value='0:na'/>    
+    % endif
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<antenna index>' -->
+  <paramlist name='transponder.transmit.antenna'>
+    <item value='0:0'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<antenna index>' -->
+  <paramlist name='transponder.transmit.power'>
+    <item value='0:${tx_power_dbm}'/>
+  </paramlist>
+ 
+  <paramlist name='transponder.transmit.tosmap'>
+     <item value='0:0-255'/>
+  </paramlist>
+
+  <!-- syntax: '<transponder id>:<on | off>' -->
+  <paramlist name='transponder.transmit.enable'>
+    <item value='0:on'/>
+  </paramlist>
+
+  
+  <!-- '<antenna id>:<(omni;fixed gain dBi)|(antenna profile;az in degree;el in deg);spectral mask index>' -->
+  <paramlist name='antenna.defines'>
+    % for antenna in antennas:
+    <item value='${antenna}'/>
+    % endfor
+  </paramlist>
+
+  <param name='queue.aggregationenable' value='on'/>
+  <param name='queue.depth' value='255'/>
+  <param name='queue.fragmentationenable' value='on'/>
+  
+  <param name='reassembly.fragmentcheckthreshold' value='2'/>
+  <param name='reassembly.fragmenttimeoutthreshold' value='5'/>
+
+  <param name='pcrcurveuri'
+         value='emane-bentpipe-pcr.xml'/>
+</mac>

@@ -1,0 +1,9 @@
+#!/bin/bash -
+
+top_dir=$1
+start_time=$2
+
+cd "$top_dir/host"
+
+echo "host: modprobe batman-adv"
+modprobe batman-adv

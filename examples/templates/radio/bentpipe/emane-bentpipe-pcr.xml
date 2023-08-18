@@ -1,0 +1,34 @@
+<bentpipe-model-pcr packetsize="128">
+  <curve index="0">
+    <entry sinr="-9.0"  por="0.0"/>
+    <entry sinr="-8.0"  por="1.4"/>
+    <entry sinr="-7.0"  por="21.0"/>
+    <entry sinr="-6.0"  por="63.5"/>
+    <entry sinr="-5.0"  por="90.7"/>
+    <entry sinr="-4.0"  por="98.6"/>
+    <entry sinr="-3.0"  por="99.9"/>
+    <entry sinr="-2.0"  por="100.0"/>
+  </curve>
+ 
+  <curve index="1">
+    <entry sinr="-6.0"  por="0"/>
+    <entry sinr="-5.0"  por="1.4"/>
+    <entry sinr="-4.0"  por="20.6"/>
+    <entry sinr="-3.0"  por="63.1"/>
+    <entry sinr="-2.0"  por="90.5"/>
+    <entry sinr="-1.0"  por="98.5"/>
+    <entry sinr="0.0"   por="99.9"/>
+    <entry sinr="1.0"   por="100.0"/>
+  </curve>
+
+  <curve index="2">
+    <entry sinr="17.0"  por="0.0"/>
+    <entry sinr="18.0"  por="0.2"/>
+    <entry sinr="19.0"  por="5.7"/>
+    <entry sinr="20.0"  por="32.4"/>
+    <entry sinr="21.0"  por="71.3"/>
+    <entry sinr="22.0"  por="92.4"/>
+    <entry sinr="23.0"  por="99.9"/>
+    <entry sinr="24.0"  por="100.0"/>
+  </curve>
+</bentpipe-model-pcr>

@@ -1,0 +1,370 @@
+---
+layout: default
+title: Getting Started
+nav_order: 2
+permalink: /getting-started
+---
+
+
+# Getting Started
+
+This guide includes a set of
+[*letce2*](https://github.com/adjacentlink/letce2) (*Lightweight
+Experiment Template Configuration Environment*) defined example
+experiments that highlight various *emane* features of interest.
+
+*lecte2* provides a hierarchical mechanism for generating experiment
+ configuration using the [Mako](https://https//www.makotemplates.org)
+ template engine and supports a plugin architecture for defining test
+ environment execution controls. More details on *letce2* can be found
+ in the
+ [*letce2-tutorial*](https://github.com/adjacentlink/letce2-tutorial).
+
+For the purpose of this guide, a set of configuration file templates
+(`example/templates`) are used to produce per node configuration
+specific files based on experiment specific `experiment.cfg`
+definition files. These templates provide the ability to run and
+interact with example experiments.
+
+```text
+[!experiment]
+@experiment_control_interface=letce0
+
+[host:experiment]
+__template.path=../templates/host:../templates/common
+@bridge.0.name=%(@experiment_control_interface)s
+@bridge.0.ipv4=10.99.0.100/16
+__template.file.100=bridge
+__template.file.101=control
+__template.file.102=start.local
+__template.file.103=otestpoint-broker.xml
+__template.file.104=stop.local
+__template.file.105=functions
+__template.file.106=scenario.eel
+__template.file.107=eelgenerator.xml
+__template.file.108=eventservice.xml
+__template.file.109=prestart.local
+@scenario_all_nodes_pathloss_db=70
+
+[!common:experiment]
++@lxc.interface.0.link =%(@experiment_control_interface)s
++@lxc.interface.0.ipv4=%(@control_ip_addr)s
++@lxc.interface.0.name=%(@control_interface)s
+@control_interface=backchan0
+__template.file.001=lxc.conf
+
+<... snippet: only 25 lines shown...>
+```
+<p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/rfpipe-01/experiment.cfg</p><br>
+
+Examples use the *letce2* LXC plugin to create one LXC container per
+experiment node. A *makefile* is used to simplify issuing *letce2*
+commands for generating experiment node configuration, with resulting
+files partitioned into directories named by *experiment.cfg* section,
+which are experiment node names.
+
+
+```text
+$ tree emane-guide/examples/rfpipe-01/node-1
+examples/rfpipe-01/node-1
+|-- batman-adv
+|-- emane-platform.xml
+|-- emane-rfpipe-nem.xml
+|-- emane-rfpipe-pcr.xml
+|-- emane-rfpipe-radiomodel.xml
+|-- emane-transvirtual.xml
+|-- functions
+|-- init
+|-- init.local
+|-- lxc.conf
+|-- lxc.hook.autodev.sh
+|-- mgen
+|-- otestpoint-probe-emane-physicallayer.xml
+|-- otestpoint-probe-emane-rfpipe.xml
+|-- otestpoint-probe-emane-virtualtransport.xml
+|-- otestpoint-probe-mgen.xml
+|-- otestpoint-recorder.xml
+`-- otestpoint.xml
+```
+
+To start an example, change directory to the example directory and
+issue the *letce2* start command:
+
+```text
+$ pushd emane-guide/examples/rfpipe-01
+$ letce2 lxc start
+```
+
+To stop an example, issue the *letce2* stop command from the same
+example directory:
+
+```text
+$ letce2 lxc stop
+```
+
+If running from built source, both the *letce2* start and stop
+commands must contain an additional command line environment file
+[option](#running-from-source-build) to add Adjacent Link FOSS
+application, library, and Python package build paths to individual LXC
+container environments.
+
+## Installation from  Pre-built Packages
+
+Adjacent Link
+[distributes](https://github.com/adjacentlink/emane/wiki/Install)
+pre-built packages for all *emane* and experiment support software in
+bundles versioned by corresponding *emane* version and a release
+index. All bundles are signed using the Adjacent Link code signing
+[key](https://adjacentlink.com/downloads/emane/RPM-GPG-KEY-adjacentlink).
+
+All software dependencies are available using standard
+distribution repositories.
+
+At the time of this writing, the latest *emane* version is 1.4.1.
+
+### Fedora Linux
+
+To use `wget` to download the latest release bundle for Fedora Linux:
+
+```text
+$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.f37.x86_64.tar.gz
+$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.f37.x86_64.tar.gz.asc
+$ gpg2 --verify emane-1.4.1-release-1.f37.x86_64.tar.gz.asc
+```
+
+To unpack and install bundle software:
+
+```text
+$ tar zxvf emane-1.4.1-release-1.f37.x86_64.tar.gz
+$ sudo dnf install $(find emane-1.4.1-release-1 -name '*.rpm' -print | egrep -v '(devel|debug)')
+```
+
+### Rocky Linux
+
+To use `wget` to download the latest release bundle for Rocky Linux
+and verify the release signature with *gpg2*:
+
+```text
+$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.el8.x86_64.tar.gz
+$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.el8.x86_64.tar.gz.asc
+$ gpg2 --verify emane-1.4.1-release-1.el8.x86_64.tar.gz.asc
+```
+
+To unpack and install bundle software:
+
+```text
+$ tar zxvf emane-1.4.1-release-1.el8.x86_64.tar.gz
+$ dnf install epel-release 
+$ dnf config-manager --set-enabled powertools
+$ sudo dnf install $(find emane-1.4.1-release-1 -name '*.rpm' -print | egrep -v '(devel|debug)')
+```
+
+At the time of this writing, the lxc rpm distributed via Rocky 8
+repositories is missing a build dependency in the spec file which
+causes the `configure` call invoked during rpm build to not build
+`lxc.init.static`. Adjacent Link distributes a bundle with pre-built
+lxc packages which include the necessary static components.
+
+To use `wget` to download the latest release bundle for Rocky Linux
+lxc rpms with *static init* and verify the release signature with
+`gpg2`:
+
+```text
+$ wget https://adjacentlink.com/downloads/emane/lxc-3.0.4-2.static_init-release-1.el8.tar.bz2
+$ wget https://adjacentlink.com/downloads/emane/lxc-3.0.4-2.static_init-release-1.el8.tar.bz2.asc
+$ gpg2 --verify lxc-3.0.4-2.static_init-release-1.el8.tar.bz2.asc
+```
+
+To unpack and install the bundle software:
+
+```text
+$ tar xf lxc-3.0.4-2.static_init-release-1.el8.tar.bz2
+$ sudo dnf install \
+   lxc-3.0.4-2.static_init-release-1/rpms/el8/x86_64/lxc-3.0.4-2.static_init.el8.x86_64.rpm \
+   lxc-3.0.4-2.static_init-release-1/rpms/el8/x86_64/lxc-libs-3.0.4-2.static_init.el8.x86_64.rpm
+```
+
+The examples in this guide that use a MANET routing protocol, as well
+as those in the
+[*letce2-tutorial*](https://github.com/adjacentlink/letce2-tutorial),
+use [Better Approach to Mobile Ad-hoc Networking
+(B.A.T.M.A.N.)](https://en.wikipedia.org/wiki/B.A.T.M.A.N.). Rocky 8
+does not build the `batman-adv` module as part of the distribution
+kernel module package. In order to experiment with the examples using
+`batman-adv`, either rebuild your kernel with the `batman-adv` module
+or use the supplied `build-external-kmod-batman-adv-rpm.sh` script to
+download and build a `batman-adv` kernel module rpm using the
+[kernel.org](https://kernel.org) version of the currently running
+kernel.
+
+To build and install the `batman-adv` kernel module
+
+```text
+$ sudo emane-guide/extras/build-external-kmod-batman-adv-rpm.sh
+$ sudo dnf install kmod-batman-adv-*x86_64.rpm
+```
+
+If you are using Secure Boot, follow the instructions at the
+conclusion of `build-external-kmod-batman-adv-rpm.sh` to sign the
+module with your Machine Owner Key (MOK).
+
+To sign the `batman-adv` kernel module replace with the full path to
+the system mok key:
+
+```text
+sudo /usr/src/kernels/$(uname -r)/scripts/sign-file \
+  sha256 \
+  /replace/with/path/to/your/mok.priv \
+  /replace/with/path/to/your/mok.der \
+  /lib/modules/$(uname -r)/extra/batman-adv/batman-adv.ko
+```
+
+
+### Ubuntu
+
+To use `wget` to download the latest release bundle for Ubuntu and
+verify the release signature with *gpg2*:
+
+```text
+$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.ubuntu-20_04.amd64.tar.gz
+$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.ubuntu-20_04.amd64.tar.gz.asc
+$ gpg2 --verify emane-1.4.1-release-1.ubuntu-20_04.amd64.tar.gz.asc
+```
+
+To unpack and install bundle software:
+
+```text
+$ tar zxvf emane-1.4.1-release-1.ubuntu-20_04.amd64.tar.gz
+$ cd emane-1.4.1-release-1/debs/ubuntu-20_04/amd64
+$ sudo dpkg -i $(find emane-1.4.1-release-1 -name '*.deb' -print | egrep -v '(dev|debug)')
+$ apt-get install -f
+```
+
+## Running From Source Build
+
+It is possible to run the examples in this guide directly from source
+build. The `adjacentlink-foss-build.sh` script will clone and build
+the latest release of all Adjacent Link FOSS projects. Running from
+source build requires the use of the
+[*environments-foss*](https://github.com/sgalgano/environments-foss)
+package which adds Adjacent Link FOSS application, library, and Python
+package build paths to the current shell environment.
+
+The following instructions for using `adjacentlink-foss-build.sh`
+assume *emane-guide* has been cloned in `~/dev` which is also the
+location to clone and build all Adjacent Link FOSS and that all the
+Adjacent Link FOSS [build dependencies](#build-dependencies) are
+installed.
+
+```text
+$ mkdir -p ~/dev
+$ pushd ~/dev
+$ git clone https://github.com/adjacentlink/emane-guide
+$ emane-guide/extras/adjacentlink-foss-build.sh build
+```
+
+The *emane* dtd and schema must be copied to `/usr/share/emane`. These
+are core files that never change, regardless of which version of
+*emane* you are running.
+
+```text
+$ sudo mkdir -p /usr/share/emane/{dtd,schema}
+$ sudo cp ~/dev/emane/schema/*.xsd /usr/share/emane/schema
+$ sudo cp ~/dev/emane/dtd/*.{dtd,ent} /usr/share/emane/dtd
+```
+
+Every time you want to start or stop one of the *emane-guide*
+examples, use the `letce2` `-e` option to load the
+`adjacentlink-foss.env` environment in each lxc runtime environment.
+Be sure to also source `adjacentlink-foss.env` and `letce2.env` in
+your shell environment prior to issuing the `lecte2` commands. For
+example:
+
+```text
+$ . ~/dev/environments-foss/adjacentlink-foss.env
+$ . ~/dev/environments-foss/letce2.env
+$ pushd  ~/dev/emane-guide/examples/rfpipe-01
+$ letce2 lxc start -e ~/dev/environments-foss/adjacentlink-foss.env
+...
+$ letce2 lxc stop -e ~/dev/environments-foss/adjacentlink-foss.env
+```
+
+![](images/auto-generated-no-packages-with-source-build.png){: width="100%"; .centered}
+
+
+### Build Dependencies
+
+All Adjacent Link FOSS project build dependencies are available from
+standard distribution repositories.
+
+#### Fedora Linux
+
+To install build dependencies in Fedora Linux:
+
+```text
+$ sudo dnf install autoconf automake boost-devel cmake fftw3-devel gcc-c++ git \
+   libconfig-devel libpcap-devel libtool libuuid-devel libxml2-devel lksctp-tools-devel \
+   make mbedtls-devel pcre-devel protobuf-devel python3-devel python3-protobuf \
+   python3-setuptools redhat-lsb-core rpm-build sqlite-devel zeromq-devel
+```
+
+#### Rocky Linux
+
+To install build dependencies in Rocky Linux:
+
+```text
+$ sudo dnf install epel-release
+$ sudo dnf config-manager --set-enabled powertools
+$ sudo dnf install autoconf automake boost-devel cmake fftw3-devel gcc-c++ git \
+   libconfig-devel libpcap-devel libtool libuuid-devel libxml2-devel lksctp-tools-devel \
+   make mbedtls-devel pcre-devel protobuf-devel python3-devel python3-protobuf \
+   python3-setuptools redhat-lsb-core rpm-build sqlite-devel zeromq-devel
+```
+
+
+#### Ubuntu
+
+To install build dependencies in Ubuntu Linux:
+
+```text
+$ sudo apt-get install autoconf automake cmake debhelper dh-python g++ gcc git \
+   libboost-program-options-dev libconfig++-dev libfftw3-dev libmbedtls-dev libpcap-dev \
+   libpcre3-dev libprotobuf-dev libsctp-dev libsqlite3-dev libtool libxml2-dev libzmq3-dev \
+   libzmq5 lsb-release pkg-config protobuf-compiler python3-dev python3-lxml python3-protobuf \
+   python3-setuptools python3-zmq sqlite3 uuid-dev
+```
+
+## `/etc/hosts` Additions
+
+Adding the contents of `hosts-additions` to your system `/etc/hosts`
+is recommended. These additions contain common *emane-guide*
+honstname-to-ip-address mapping that make it easier to generate and
+monitor traffic.
+
+```text
+#
+# emane-guide container address mapping
+#
+10.99.0.1 node-1
+10.99.0.2 node-2
+10.99.0.3 node-3
+10.99.0.4 node-4
+10.99.0.5 node-5
+10.99.0.6 node-6
+10.99.0.7 node-7
+10.99.0.8 node-8
+10.99.0.9 node-9
+10.99.0.10 node-10
+10.99.0.100 node-server
+
+
+<... snippet: only 15 lines shown...>
+```
+<p style="float:right;font-family:courier;font-size:75%">emane-guide/extras/hosts-additions</p><br>
+
+You can cut-and-paste `hosts-additions` contents into `/etc/hosts` or
+use the following command:
+
+```text
+$ sudo sh -c 'cat  ~/dev/emane-guide/extras/hosts-additions >> /etc/hosts'
+```

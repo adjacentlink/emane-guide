@@ -1,0 +1,352 @@
+~{{frontmatter
+layout: default
+title: RF Pipe Radio Model
+nav_order: 10
+permalink: /rf-pipe-radio-model}}~
+
+~{{layout type=newpage}}~
+# RF Pipe Radio Model
+
+The RF Pipe radio model is a generic model designed for use as a
+surrogate for waveforms without a model of their own.
+
+
+## Features
+
+The RF Pipe radio model provides the following set of features:
+[Network Delay Emulation](#network-delay-emulation) and [Packet
+Completion Rate Curves](#packet-completion-rate-curves).
+
+### Network Delay Emulation
+
+The RF Pipe radio model allows for downstream transmission network
+delay emulation using a configurable delay and jitter. The RF Pipe
+model will apply a network delay before a message is sent to the
+physical layer for over-the-air transmission.
+
+The network delay is computed as follows:
+
+~{{math networkDelay = delay + jitter}}~
+
+Where,
+
+* ~{{math delay}}~ is defined by the configuration parameter `delay`.
+
+* ~{{math jitter}}~ is defined by the configuration parameter `jitter`.
+
+### Packet Completion Rate Curves
+
+The RF Pipe radio model Packet Completion Rate is specified as curve
+defined via XML. The curve definition comprises a series of SINR
+values along with their corresponding probability of reception.
+
+A curve definition must contain a minimum of two points with one SINR
+representing *POR = 0* and one SINR representing *POR = 100*. Linear
+interpolation is preformed when an exact SINR match is not found.
+
+Specifying a packet size (`<table>` attribute
+`pktsize`) in the curve file will adjust the POR based on received
+packet size. Specifying a `pktsize` of 0 disregards received packet
+size when computing the POR.
+
+The POR is obtained using the following calculation when a non-zero
+`pktsize` is specified:
+
+~{{math POR = POR_0 ^ {S_1/S_0}}}~
+
+Where,
+
+~{{math POR_0}}~ is the POR value determined from the PCR curve for
+the given SINR value
+
+~{{math S_0}}~ is the packet size specified in the curve file
+`pktsize`
+
+~{{math S_1}}~ is the received packet size
+
+The below PCR curve file is used by all nodes in the `rfpipe-01`
+example. This curve is for illustrative purposes only. Packet
+Completion Rate curves should be representative of the waveform being
+emulated.
+
+~{{file path="../examples/rfpipe-01/node-1/emane-rfpipe-pcr.xml"
+   type=xml
+   showname=true
+   blank=false
+   path-cut="../examples"
+   path-replace="emane-guide/examples"
+   lines=25}}~
+
+~{{imagemagick
+   file="images/pcr-representation.png"
+   scale=75
+   images/exclamation.png -resize 25% \( -size 1100x -font DejaVu-Sans-Mono-Bold
+   -gravity east label:" PCR curves should be representative of the waveform being emulated. " \)
+   +append -transparent white}}~
+
+## Limitations
+
+The RF Pipe radio model has the following limitations:
+
+1. The RF Pipe radio model does not perform channel access. Since
+there is no channel access protocol, the data rate defines the
+transmission capacity of each node within the network.
+
+2. The RF Pipe radio model does not apply any in-band interference
+effects and as such, the use of negative SINR values within the PCR
+curve is valid only when the physical layer `nodemode` configuration
+value is set to `outofband` in order to raise the noise floor above
+the inherent receiver sensitivity.
+
+## Configuration
+
+~{{emaneinfo plugin=rfpipemaclayer type=config}}~
+
+## Statistics
+
+~{{emaneinfo plugin=rfpipemaclayer type=stat}}~
+
+## Statistic Tables
+
+~{{emaneinfo plugin=rfpipemaclayer type=table}}~
+
+
+## Examples
+
+This guide includes the RF Pipe example:
+
+1. `rfpipe-01`: A five node example using precomputed pathloss and
+   running the B.A.T.M.A.N manet protocol.
+
+### rfpipe-01
+
+~{{graphviz
+   file="images/topology-rfpipe-01" scale=60 caption="rfpipe-01 experiment components" --
+   digraph hierarchy {
+rankdir="TB";
+node[shape=circle,style=filled]
+"node-2" [fillcolor=green]
+"OTA" [image="images/cloud.png",shape=none,fillcolor=none]
+"node-1" [fillcolor=green]
+"node-3" [fillcolor=green]
+"node-1"->OTA [dir="both",label="10.100.0.1/24"]
+OTA->"node-3" [dir="both",label="10.100.0.3/24"]
+OTA->"node-2" [dir="both",label="10.100.0.2/24"]
+"node-4"  [fillcolor=green]
+"node-5"  [fillcolor=green]
+
+OTA->"node-4" [dir="both",label="10.100.0.4/24"]
+OTA->"node-5" [dir="both",label="10.100.0.5/24"]
+
+{rank = min; "node-2";}
+{rank = same; "node-1"; "node-3"; OTA;}
+}   
+}}~
+
+The `rfpipe-01` example experiment contains five nodes, each running
+the B.A.T.M.A.N. routing protocol.
+
+All physical layers are configured to use the `precomputed` propagation
+model and `emaneeventservice` publishes ~{{link
+name="`PathlossEvents`" file="events.md" section="#pathlossevent"}}~
+using pathloss values in `scenario.eel`.
+
+~{{file path="../examples/rfpipe-01/host/scenario.eel"
+type=txt
+showname=true
+blank=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+~{{imagemagick
+    file="images/run-rfpipe-01.png"
+    scale=75
+images/pointing-finger.png -resize 25% \( -size 800x -font DejaVu-Sans-Mono-Bold
+-gravity east label:" Run emane-guide/examples/rfpipe-01 and give it a try. " \)
++append -transparent white}}~
+
+With `emane-guide/examples/rfpipe-01` running, we can query `node-1`'s
+physical layer to take a look at the `PathlossEventInfoTable` and
+`ReceivePowerTable`.
+
+~{{verbatim type=txt --
+$ emanesh node-1 get table nems phy PathlossEventInfoTable ReceivePowerTable
+nem 1   phy PathlossEventInfoTable
+| NEM | Forward Pathloss | Reverse Pathloss |
+| 2   | 70.0             | 70.0             |
+| 3   | 70.0             | 70.0             |
+| 4   | 70.0             | 70.0             |
+| 5   | 70.0             | 70.0             |
+
+nem 1   phy ReceivePowerTable
+|NEM|Rx Antenna|Tx Antenna|Frequency |Rx Power|Tx Gain|Rx Gain|Tx Power|Pathloss|Doppler|Last Packet Time  |
+|2  |0         |0         |2400000000|-70.0   |0.0    |0.0    |0.0     |70.0    |0.0    |1688147153.189406 |
+|3  |0         |0         |2400000000|-70.0   |0.0    |0.0    |0.0     |70.0    |0.0    |1688147153.293473 |
+|4  |0         |0         |2400000000|-70.0   |0.0    |0.0    |0.0     |70.0    |0.0    |1688147153.2934668|
+|5  |0         |0         |2400000000|-70.0   |0.0    |0.0    |0.0     |70.0    |0.0    |1688147153.30126  |}}~
+
+The `PathlossEventInfoTable` shows pathloss values matching those in
+`scenario.eel`. Only the Forward Pathloss value is used by the
+physical layer. The Reverse Pathloss value is an unused legacy value
+but still useful when analyzing an experiment as it indicates if link
+pathloss is symmetrical without requiring correlation of values
+between nodes.
+
+Using the ~{{link name="Receive Power Calculation"
+file="physical-layer.md" section="#receive-power-calculation"}}~, we
+can verify the `Rx Power` value from the `ReceivePowerTable`.
+
+~{{math rxPower = txPower + txAntennaGain + rxAntennaGain - pathloss}}~
+
+~{{math rxPower = 0dBm + 0dB + 0dB - 70dB}}~
+
+~{{math rxPower =  -70dBm}}~
+
+Testing connectivity between `node-1` and all nodes using `fping` shows
+100% completion in both directions.
+
+~{{verbatim type=txt --
+$ ssh node-1 fping -N -C 2 radio-2 radio-3 radio-4 radio-5
+radio-2 : [0], 64 bytes, 0.707 ms (0.707 avg, 0% loss)
+radio-3 : [0], 64 bytes, 0.918 ms (0.918 avg, 0% loss)
+radio-4 : [0], 64 bytes, 0.780 ms (0.780 avg, 0% loss)
+radio-5 : [0], 64 bytes, 1.25 ms (1.25 avg, 0% loss)
+radio-2 : [1], 64 bytes, 1.67 ms (1.19 avg, 0% loss)
+radio-3 : [1], 64 bytes, 1.40 ms (1.16 avg, 0% loss)
+radio-4 : [1], 64 bytes, 1.65 ms (1.21 avg, 0% loss)
+radio-5 : [1], 64 bytes, 1.45 ms (1.35 avg, 0% loss)
+
+radio-2 : 0.707 1.67
+radio-3 : 0.918 1.40
+radio-4 : 0.780 1.65
+radio-5 : 1.25 1.45}}~
+
+Using `emanesh` we can modify the latency for `node-2` to add 200msec
+of delay to all transmitted packets and then rerun `fping` to verify
+the results.
+
+~{{verbatim type=txt --
+$ emanesh node-2 get config nems mac delay
+nem 2   mac  delay = 0.0
+$ emanesh node-2 set config nems mac delay=.2
+nem 2   mac  configuration updated}}~
+
+~{{verbatim type=txt --
+$ ssh node-1 fping -N -C 2 radio-2 radio-3 radio-4 radio-5
+radio-3 : [0], 64 bytes, 0.864 ms (0.864 avg, 0% loss)
+radio-4 : [0], 64 bytes, 0.871 ms (0.871 avg, 0% loss)
+radio-5 : [0], 64 bytes, 2.07 ms (2.07 avg, 0% loss)
+radio-2 : [0], 64 bytes, 202 ms (202 avg, 0% loss)
+radio-3 : [1], 64 bytes, 1.91 ms (1.39 avg, 0% loss)
+radio-4 : [1], 64 bytes, 2.05 ms (1.46 avg, 0% loss)
+radio-5 : [1], 64 bytes, 1.37 ms (1.72 avg, 0% loss)
+radio-2 : [1], 64 bytes, 202 ms (202 avg, 0% loss)
+
+radio-2 : 202 202
+radio-3 : 0.864 1.91
+radio-4 : 0.871 2.05
+radio-5 : 2.07 1.37}}~
+
+Connectivity is still 100% between `node-1` and all nodes but now
+there is an additional 200msec of latency from `node-2`'s response.
+
+Using `otestpoint-labtools-mtabletool` to subscribe to all
+`EMANE.RFPipe.Tables.Receive` probes, we can build a combined RF
+Signal table showing the number of samples in each measurement
+interval and the measurement interval averages computed from long
+running averages for receive power, noise floor, and SINR.
+
+~{{verbatim type=txt --
+$ otestpoint-labtools-mtabletool \
+    localhost:9002 \
+    Measurement_emane_rfpipe_tables_receive@rfsignaltable \
+    EMANE.RFPipe.Tables.Receive \
+    --actions \
+    "pass(c=(0-2));" \
+    "delta(c=(3))=>|{}_intvl|;" \
+    "iavg(c=(4,5,6),n=(3))=>|{}_intvl|;"}}~
+
+The `rfsignaltable` published as part of
+`Measurement_emane_rfpipe_tables_receive`, like all *OpenTestPoint*
+measurements, is updated every 5 seconds.
+
+~{{verbatim type=txt --
+ Measurement_emane_rfpipe_tables_receive@rfsignaltable
+    _Publisher  NEM  AntennaId  FrequencyHz  NumSamples_intvl  AvgRxPower_intvl  AvgNoiseFloor_intvl  AvgSINR_intvl
+0      node-1    2          0   2400000000                69             -70.0             -96.9897        26.9897
+1      node-1    3          0   2400000000                69             -70.0             -96.9897        26.9897
+2      node-1    4          0   2400000000                69             -70.0             -96.9897        26.9897
+3      node-1    5          0   2400000000                69             -70.0             -96.9897        26.9897
+4      node-2    1          0   2400000000                69             -70.0             -96.9897        26.9897
+5      node-2    3          0   2400000000                69             -70.0             -96.9897        26.9897
+6      node-2    4          0   2400000000                69             -70.0             -96.9897        26.9897
+7      node-2    5          0   2400000000                69             -70.0             -96.9897        26.9897
+8      node-3    1          0   2400000000                69             -70.0             -96.9897        26.9897
+9      node-3    2          0   2400000000                69             -70.0             -96.9897        26.9897
+10     node-3    4          0   2400000000                69             -70.0             -96.9897        26.9897
+11     node-3    5          0   2400000000                69             -70.0             -96.9897        26.9897
+12     node-4    1          0   2400000000                69             -70.0             -96.9897        26.9897
+13     node-4    2          0   2400000000                69             -70.0             -96.9897        26.9897
+14     node-4    3          0   2400000000                69             -70.0             -96.9897        26.9897
+15     node-4    5          0   2400000000                69             -70.0             -96.9897        26.9897
+16     node-5    1          0   2400000000                69             -70.0             -96.9897        26.9897
+17     node-5    2          0   2400000000                69             -70.0             -96.9897        26.9897
+18     node-5    3          0   2400000000                69             -70.0             -96.9897        26.9897
+19     node-5    4          0   2400000000                69             -70.0             -96.9897        26.9897}}~
+
+The table output shows `AvgRxPower_intvl` matches the `Rx Power` from
+the physical layer `ReceivePowerTable` and that the `AvgSINR_intvl`
+between all nodes is 26.9dB. Taking a look at the RF Pipe PCR curve
+used for this example,
+`emane-guide/examples/rfpipe-01/node-1/emane-rfpipe-pcr.xml`, any SINR
+over 20dB will have a 100% probability of completion.
+
+In order to experience 50% loss on each link, reduce the SINR to
+10dB. This can be achieved by increasing the pathloss between nodes to
+86.98dB. The `emaneevent-pathloss` script is a quick way to change
+pathloss while investigating an experiment, provided
+`emaneeventservice` is not actively publishing pathloss changes.
+
+~{{verbatim type=txt --
+$ emaneevent-pathloss -i letce0 1:5 86.98}}~
+
+The pathloss increase results in an `AvgSINR_intvl` of 10.009697 which
+maps to an approximate POR of 50% within
+`emane-guide/examples/rfpipe-01/node-1/emane-rfpipe-pcr.xml`.
+
+~{{verbatim type=txt --
+  Measurement_emane_rfpipe_tables_receive@rfsignaltable
+    _Publisher  NEM  AntennaId  FrequencyHz  NumSamples_intvl  AvgRxPower_intvl  AvgNoiseFloor_intvl  AvgSINR_intvl
+0      node-1    2          0   2400000000                22        -86.980003             -96.9897      10.009697
+1      node-1    3          0   2400000000                27        -86.980003             -96.9897      10.009697
+2      node-1    4          0   2400000000                25        -86.980003             -96.9897      10.009697
+3      node-1    5          0   2400000000                22        -86.980003             -96.9897      10.009697
+4      node-2    1          0   2400000000                21        -86.980003             -96.9897      10.009697
+5      node-2    3          0   2400000000                21        -86.980003             -96.9897      10.009697
+6      node-2    4          0   2400000000                21        -86.980003             -96.9897      10.009697
+7      node-2    5          0   2400000000                17        -86.980003             -96.9897      10.009697
+8      node-3    1          0   2400000000                20        -86.980003             -96.9897      10.009697
+9      node-3    2          0   2400000000                25        -86.980003             -96.9897      10.009697
+10     node-3    4          0   2400000000                26        -86.980003             -96.9897      10.009697
+11     node-3    5          0   2400000000                26        -86.980003             -96.9897      10.009697
+12     node-4    1          0   2400000000                28        -86.980003             -96.9897      10.009697
+13     node-4    2          0   2400000000                27        -86.980003             -96.9897      10.009697
+14     node-4    3          0   2400000000                25        -86.980003             -96.9897      10.009697
+15     node-4    5          0   2400000000                22        -86.980003             -96.9897      10.009697
+16     node-5    1          0   2400000000                23        -86.980003             -96.9897      10.009697
+17     node-5    2          0   2400000000                26        -86.980003             -96.9897      10.009697
+18     node-5    3          0   2400000000                27        -86.980003             -96.9897      10.009697
+19     node-5    4          0   2400000000                26        -86.980003             -96.9897      10.009697
+}}~
+
+Using `ping` as a quick test shows an approximate completion of
+25%. Which makes sense, 50% loss in each direction would yield a 25%
+completion rate.
+
+~{{verbatim type=txt
+$ ssh node-1 ping radio-2 -i .02 -c 1000 -q
+PING radio-2 (10.100.0.2) 56(84) bytes of data.
+
+--- radio-2 ping statistics ---
+1000 packets transmitted, 234 received, 76.6% packet loss, time 20966ms
+rtt min/avg/max/mdev = 0.500/1.540/2.649/0.447 ms}}~

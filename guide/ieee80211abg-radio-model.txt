@@ -1,0 +1,373 @@
+~{{frontmatter
+layout: default
+title: IEEE 802.11abg Radio Model
+nav_order: 11
+permalink: /ieee80211abg-radio-model}}~
+
+~{{layout type=newpage}}~
+# IEEE 802.11abg Radio Model
+
+The IEEE 802.11abg radio model is a behavioral representation of an
+IEEE 802.11abg radio.
+
+## Features
+
+The IEEE 802.11abg radio model provides the following set of features:
+[DSS and OFDM Modes and Rates](#dss-and-ofdm-modes-and-rates), [DCF
+Channel Access](#dcf-channel-access), and [Packet Completion Rate
+Curves](#packet-completion-rate-curves).
+
+### DSS and OFDM Modes and Rates
+
+The IEEE 802.11abg radio supports the following waveform modes and
+data rates with the appropriate timing:
+
+   1. 802.11b (DSS rates: 1, 2, 5.5 and 11 Mbps)
+  
+   2. 802.11a/g (OFDM rates: 6, 9, 12, 18, 24, 36, 48 and 54 Mbps)
+  
+   3. 802.11b/g (DSS and OFDM rates)
+
+### DCF Channel Access
+
+The IEEE 802.11abg radio model supports Distributed Coordination
+Function (DCF) channel access.
+
+### Unicast and Broadcast Transmissions
+
+The IEEE 802.11abg radio model supports both unicast and broadcast
+transmissions. Unicast transmissions include the ability to emulate
+control message (RTS/CTS) behavior as well as retries without actually
+transmitting the control messages or the re-transmission of the data
+message. The emulation of unicast does not replicate exponential
+growth of the contention window as a result of detected failures.
+
+###  Wi-Fi Multimedia
+
+The IEEE 802.11abg radio model supports Wi-Fi multimedia (WMM)
+capabilities with the ability to classify four different traffic
+classes: Background, Best Effort, Video, and Voice, where the higher
+priority classes (Voice and Video) are serviced first.
+
+### Packet Completion Rate Curves
+
+The IEEE 802.11abg Packet Completion Rate is specified as curves
+defined via XML. Each curve definition comprises a series SINR values
+along with their corresponding probability of reception for a given
+data rate index. A curve definition must contain a minimum of two
+points with one SINR representing *POR = 0* and one SINR representing
+*POR = 100*. Linear interpolation is preformed when an exact SINR
+match is not found.
+
+The IEEE 802.11abg radio model does adjust the interference on a
+per packet basis based on detected collisions and as such supports
+negative SINR values.
+
+Specifying a packet size (`<table>` attribute `pktsize`) in the
+curve file will adjust the POR based on received packet
+size. Specifying a `pktsize` of 0 disregards received packet size when
+computing the POR.
+
+The POR is obtained using the following calculation when a non-zero
+`pktsize` is specified:
+
+~{{math POR = POR_0 ^ {S_1/S_0}}}~
+
+Where,
+
+~{{math POR_0}}~ is the POR value determined from the PCR curve for
+the given SINR value
+
+~{{math S_0}}~ is the packet size specified in the curve file
+`pktsize`
+
+~{{math S_1}}~ is the received packet size
+
+The below default PCR curves are provided for each of the supported
+802.11 modulation and data rate combinations based on theoretical
+equations for determining Bit Error Rate (BER) in an Additive White
+Gaussian Noise (AWGN) channel.
+
+~{{file path="../examples/ieee80211abg-01/node-1/emane-ieee80211abg-pcr.xml"
+   type=xml
+   skip=1
+   showname=true
+   blank=false
+   path-cut="../examples"
+   path-replace="emane-guide/examples"
+   lines=26}}~
+
+~{{image file="images/ieee80211pcr.png"
+  scale=90
+  caption="IEEE 802.11b DSS (left). IEEE 802.11ag OFDM (right)."
+}}~
+
+## Limitations
+
+1. The IEEE 802.11abg radio model does not support Point Coordination
+Function (PCF) channel access or the concept of beacons to discover
+and join an access point.
+
+2. The IEEE 802.11abg uses a radio model specific
+[`OneHopNeighborsEvent`](#onehopneighborsevent) to communicate one-hop
+neighbors to behaviorally emulate the csma/ca channel access protocol
+without actual transmission of RTS and CTS packets. The neighbor
+information in the event allows each node to estimate channel activity
+associated from one and two hop neighbors to emulate collisions not
+only from immediate neighbors but also from 2-hop hidden neighbors.
+
+If the emulator is oversubscribed and can no longer process IEEE
+802.11abg radio model transmissions as fast as they are received, the
+radio model channel activity estimator will estimate less activity
+within the estimation period, leading to a failure condition with
+better network performance then would be experienced with real radios.
+
+## `OneHopNeighborsEvent`
+
+A `OneHopNeighborsEvent` is used to communicate one-hop neighbors to
+other IEEE 802.11abg radio model instances running in an emulation in
+order to behaviorally emulate the csma/ca channel access protocol
+without actual transmission of RTS and CTS packets
+
+~{{file path="$emane_SRC_ROOT/src/models/mac/ieee80211abg/onehopneighborsevent.proto"
+type=protobuf
+showname=true
+blank=false
+skip=33
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"}}~
+
+## Configuration
+
+~{{emaneinfo plugin=ieee80211abgmaclayer type=config}}~
+
+
+## Statistics
+
+~{{emaneinfo plugin=ieee80211abgmaclayer type=stat}}~
+
+
+## Statistic Tables
+
+~{{emaneinfo plugin=ieee80211abgmaclayer type=table}}~
+
+## Examples
+
+This guide includes the IEEE 802.11abg example:
+
+1. `ieee80211abg-01`: A three node example using precomputed pathloss and
+   running the B.A.T.M.A.N manet protocol with a jammer and monitor node.
+
+### ieee80211abg-01
+
+~{{graphviz
+   file="images/topology-ieee80211abg-01"
+   scale=65
+   caption="ieee80211abg-01 experiment components: Three nodes with one host each, monitor node, and jammer node."
+   --
+   digraph hierarchy {
+rankdir="TB";
+node[shape=circle,style=filled]
+"node-2" [fillcolor=green]
+"host-2" [fillcolor=gray,shape=square]
+"host-2"->"node-2" [dir="both",label="[.2]  10.98.2.0/24  [.1]"]
+"OTA" [image="images/cloud.png",shape=none,fillcolor=none]
+"node-1" [fillcolor=green]
+"node-3" [fillcolor=green]
+"monitor-4" [fillcolor=yellow]
+"monitor-4"->OTA
+"jammer-5" [fillcolor=red]
+"jammer-5"->OTA
+"host-1" [fillcolor=gray,shape=square]
+"host-3" [fillcolor=gray,shape=square]
+"host-1"->"node-1" [dir="both",label="[.2]  10.98.1.0/24  [.1]"] 
+"node-1"->OTA [dir="both",label="10.100.0.1/24"]
+OTA->"node-3" [dir="both",label="10.100.0.3/24"]
+"node-3"->"host-3" [dir="both",label="[.2]  10.98.3.0/24  [.1]"]
+OTA->"node-2" [dir="both",label=" 10.100.0.2/24"]
+
+{rank = min; "host-2";}
+{rank = min; "node-2";}
+{rank = same; "node-1"; "node-3"; OTA; "host-1"; "host-3";}
+{rank = max; "monitor-4"; "jammer-5";}
+}
+}}~
+
+The `ieee80211abg-01` example contains three nodes, each with a host
+hanging off their respective `lan0` interface, a jammer node, and
+monitor node.
+
+All physical layers are configured to use the `precomputed` propagation
+model and `emaneeventservice` publishes ~{{link
+name="`PathlossEvents`" file="events.md" section="#pathlossevent"}}~
+using the values in `pathloss.eel`.
+
+~{{file path="../examples/ieee80211abg-01/pathloss.eel"
+type=txt
+showname=true
+blank=true
+path-cut="../examples"
+path-replace="emane-guide/examples"}}~
+
+~{{imagemagick
+    file="images/run-ieee80211abg-01.png"
+    scale=75
+images/pointing-finger.png -resize 25% \( -size 800x -font DejaVu-Sans-Mono-Bold
+-gravity east label:" Run emane-guide/examples/ieee80211abg-01 and give it a try. " \)
++append -transparent white}}~
+
+With `emane-guide/examples/ieee80211abg-01` running, we can use
+`otestpoint-labtools-mtabletool` to subscribe to all
+`EMANE.IEEE80211abg.Tables.Neighbor` probes, and build a combined
+Neighbor interval average SINR table showing the number of received
+packets in each measurement interval and the measurement interval
+average computed from long running averages of SINR.
+
+~{{verbatim type=txt --
+$ otestpoint-labtools-mtabletool \
+   localhost:9002 \
+   Measurement_emane_ieee80211abg_tables_neighbor@neighbormetrictable \
+   EMANE.IEEE80211abg.Tables.Neighbor \
+   --actions \
+   "pass(c=(0));" \
+   "delta(c=(1))=>|{}_intvl|;" \
+   "iavg(c=(7),n=(1))=>|{}_intvl|;"}}~
+
+The displayed combined neighbor interval average SINR table shows a
+lower SINR between `node-1` and `node-3` due to the higher pathloss
+between the nodes, 75dB, as compared to 70dB between all other nodes.
+
+~{{verbatim type=txt --
+ Measurement_emane_ieee80211abg_tables_neighbor@neighbormetrictable
+   _Publisher    NEM  Rx Pkts_intvl  SINR Avg_intvl
+0     node-1      2             29         26.9897
+1     node-1      3             29         21.9897
+2     node-1  65535              0             NaN
+3     node-2      1             29         26.9897
+4     node-2      3             29         26.9897
+5     node-2  65535              0             NaN
+6     node-3      1             29         21.9897
+7     node-3      2             29         26.9897
+8     node-3  65535              0             NaN}}~
+
+We can monitor the B.A.T.M.A.N. Next Hop Matrix using
+`batman-nexthop-monitor.py`.
+
+~{{verbatim type=txt --
+$ ~/dev/emane-guide/examples/scripts/batman-nexthop-monitor.py 3}}~
+
+The displayed matrix shows the node reporting it's next hops
+(`Reporter`) followed by column for each final destination, where '`--`'
+indicates the self-identify entry, '`*`' indicates the final destination
+is the next hop, and a *node id* indicates the next hop to the
+destination.
+
+~{{verbatim type=txt --
+== B.A.T.M.A.N. Next Hop Matrix ==
++----------------+----------+----------+----------+
+|    Reporter    |    1     |    2     |    3     |
++----------------+----------+----------+----------+
+|       1        |    --    |    *     |    *     |
+|       2        |    *     |    --    |    *     |
+|       3        |    *     |    *     |    --    |
++----------------+----------+----------+----------+}}~
+
+As shown, the network is fully informed with all nodes a single hop
+from each other.
+
+Using `emane-jammer-simple-control`, we can instruct the jammer,
+`node-4`, to create a continuous tone centered at 2.39GHz with a 20MHz
+(default) bandwidth, and -20dBm transmit power.
+
+~{{verbatim type=txt --
+$ emane-jammer-simple-control -v node-4:45715 on 4 2390000000,-20 -a omni}}~
+
+The resulting tone can be viewed using the monitor, `node-5`, and
+`emane-spectrum-analyzer`.
+
+~{{verbatim type=txt --
+$ emane-spectrum-analyzer \
+    10.99.0.5:8883 \
+    -100 \
+    --with-waveforms \
+    --hz-min 2350000000 \
+    --hz-max 2500000000 \
+    --subid-name 1,IEEE802.11}}~
+
+~{{image file="images/ieee80211abg-01-emane-spectrum-monitor.png"
+  scale=75
+  caption="Monitor view of spectrum during jamming activity."
+}}~
+
+From the combined neighbor interval average SINR table, we can see
+that the SINR between all nodes drops by ~4dB.
+
+~{{verbatim type=txt --
+  _Publisher    NEM  Rx Pkts_intvl  SINR Avg_intvl
+0     node-1      2             30         23.0103
+1     node-1      3             29         18.0103
+2     node-1  65535              0             NaN
+3     node-2      1             30         23.0103
+4     node-2      3             29         23.0103
+5     node-2  65535              0             NaN
+6     node-3      1             30         18.0103
+7     node-3      2             30         23.0103
+8     node-3  65535              0             NaN}}~
+
+For `node-1` and `node-3` this drop in SINR has big implications when
+running at 54Mbps.
+
+~{{verbatim type=txt --
+$ emanesh node-1 get config nems mac mode unicastrate multicastrate
+nem 1   mac  mode = 3
+nem 1   mac  multicastrate = 12
+nem 1   mac  unicastrate = 12}}~
+
+Since the bidirectional link between `node-1` and `node-3` started at
+a higher pathloss, the change in SINR from 21.9dB to 18.01dB results
+in a probability of reception of almost 0. This can be verified by
+consulting
+`emane-guide/examples/rfpipe-01/node-1/emane-ieee80211abg-pcr.xml`.
+
+All nodes in this example are using the same PCR definitions. For
+54Mbps, an SINR of 21dB results in 71.3% probability of reception and an
+SINR of 18dB results in 0.2% probability of reception.
+
+This can be seen in the B.A.T.M.A.N. Next Hop Matrix, where now
+`node-1` and `node-3` must hop through `node-2` in order to complete
+traffic.
+
+~{{layout type=newpage}}~
+
+~{{verbatim type=txt --
+== B.A.T.M.A.N. Next Hop Matrix ==
++----------------+----------+----------+----------+
+|    Reporter    |    1     |    2     |    3     |
++----------------+----------+----------+----------+
+|       1        |    --    |    *     |    2     |
+|       2        |    *     |    --    |    *     |
+|       3        |    2     |    *     |    --    |
++----------------+----------+----------+----------+}}~
+
+One way to restore single hop connectivity between `node-1` and
+`node-3` is to reduce their data rate, which causes a different PCR
+curve to be used. Setting both nodes to 36Mbps will result in 100%
+probability of reception for SINR greater than or equal to 18dB.
+
+~{{verbatim type=txt --
+$ emanesh node-1 set config nems mac unicastrate=10 multicastrate=10 && \
+   emanesh node-3 set config nems mac unicastrate=10 multicastrate=10}}~
+
+The B.A.T.M.A.N. Next Hop Matrix now shows `node-1` and `node-3`
+directly connected.
+
+~{{verbatim type=txt --
+== B.A.T.M.A.N. Next Hop Matrix ==
++----------------+----------+----------+----------+
+|    Reporter    |    1     |    2     |    3     |
++----------------+----------+----------+----------+
+|       1        |    --    |    *     |    *     |
+|       2        |    *     |    --    |    *     |
+|       3        |    *     |    *     |    --    |
++----------------+----------+----------+----------+}}~
+

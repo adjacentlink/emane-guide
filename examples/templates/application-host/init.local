@@ -1,0 +1,69 @@
+#!/bin/bash -
+<%
+from letce2.utils.network import CIDRNotation
+%>
+
+top_dir=$1
+node_name=$2
+start_time=$3
+
+echo "top_dir: $top_dir"
+echo "node_name: $node_name"
+echo "start_time: $start_time"
+
+cd "$top_dir/$node_name"
+
+# load common functions
+. ./functions
+
+% if gateway_ip_addr:
+route add default gw ${CIDRNotation.address(gateway_ip_addr)}
+% endif
+
+% if ipv6_gateway_ip_addr:
+ip -6 route add default via ${ipv6_gateway_ip_addr} dev ${lan_interface}
+% endif
+
+if [ -f otestpoint-recorder.xml ] &&
+       [ ! -f NO-otestpoint-recorder ]
+then
+    start_otestpoint_recorder \
+        $node_name \
+        otestpoint-recorder.xml \
+        $top_dir/persist/$node_name/var/log/otestpoint-recorder.log \
+        $top_dir/persist/$node_name/var/run/otestpoint-recorder.pid \
+        $top_dir/persist/$node_name/var/run/otestpoint-recorder.uuid
+fi
+
+if [ -f otestpoint.xml ] &&
+       [ ! -f NO-otestpointd ]
+then
+    start_otestpointd \
+        $node_name \
+        otestpoint.xml \
+        $top_dir/persist/$node_name/var/log/otestpoint.log \
+        $top_dir/persist/$node_name/var/run/otestpoint.pid \
+        $top_dir/persist/$node_name/var/run/otestpoint.uuid
+fi
+
+if [ -f mgen ] &&
+       [ ! -f NO-mgen ]
+then
+% if mgen_monitor_listen_address and mgen_monitor_listen_port:
+    start_mgen_monitor \
+        $node_name \
+        ${mgen_monitor_listen_address} \
+        ${mgen_monitor_listen_port} \
+        $top_dir/persist/$node_name/var/log/mgen.out \
+        $top_dir/persist/$node_name/var/run/mgen-monitor.pid \
+        $top_dir/persist/$node_name/var/log/mgen-monitor.log
+% endif
+    
+    start_mgen \
+        $node_name \
+        mgen \
+        $top_dir/persist/$node_name/var/log/mgen.out \
+        $top_dir/persist/$node_name/var/run/mgen.pid \
+        $top_dir/persist/$node_name/var/log/mgen.log \
+        "$start_time"
+fi

@@ -1,0 +1,292 @@
+~{{frontmatter
+layout: default
+title: Applications
+nav_order: 5
+permalink: /applications}}~
+
+~{{layout type=newpage}}~
+
+# EMANE Applications
+
+Most *EMANE* experiments will have four XML configuration files per
+running `emane` application and an additional two XML configuration
+files for a single `emaneeventservice` application responsible for
+instantiating and configuring event generators used to direct the
+experiment scenario.
+
+## Emulator
+
+The `emane` application processes a set of XML configuration files in
+order to determine the type of radio model to load, how the radio
+model and physical layer should be configured and what
+general application level settings to apply.
+
+~{{ditaa file="images/configuration-parameter-hierarchy"
+         scale=75
+         no-shadows=true
+         transparent=true
+         caption="Configuration parameter value hierarchy for values
+                  specified in multiple files where the highest priority
+                  value for the same configuration parameter is used."
+         --
+                      Configuration Parameter XML Value Hierarchy
+
+                                  /---------------\
+                                  |               |
+ Priority 1                       |   Emulator    |                        Highest 
+                                  |   Platform    |
+                                  |   cFFB        |                           ^
+                                  \---------------/                           |
+                                                                              :
+ -=--------------------------------------------------------------------       |
+                                                                              |
+                                  /---------------\                           |
+                                  |               |                           |
+ Priority 2                       |      NEM      |                           |
+                                  |      cFFB     |                           |
+                                  \---------------/                           |
+                                                                              |
+ -=--------------------------------------------------------------------       |
+                                                                              |
+              /---------------\   /---------------\   /---------------\       V
+              |               |   |               |   |               |
+ Priority 3   |  Radio Model  |   |   Boundary    |   |     Shim      |    Lowest
+              |  cFFB         |   |   cFFB        |   |     cFFB      |
+              \---------------/   \---------------/   \---------------/
+}}~
+
+
+1. *Emulator Platform XML*: The initial configuration file processed
+   by the `emane` application. Contains all the emulator
+   infrastructure configuration as well as a reference to the *NEM*
+   XML along with the *NEM* structure, potentially including
+   *NEM* component configuration values.
+   
+   *NEM* structure is defined using an `<nem>` element with a
+   `definition` attribute specifying the *NEM* XML configuration file
+   and an `id` attribute specifying the *NEM id*.
+   
+   If configuration values are specified for an NEM component:
+   `<mac>`, `<phy>`, `<transport>` or `<shim>`, the XML configuration
+   file for that component must also be supplied in component's
+   respective `definition` attribute.
+
+   Emulator platform XML configuration parameter values specified
+   for *NEM* components will override the same configuration
+   parameters, if present, in *NEM* XML or the same configuration
+   parameters, if present, in the specific *NEM* component's XML.
+
+   The below emulator platform configuration for `node-1` in the
+   `rfpipe-01` example illustrates including boundary configuration
+   via a sequence of `<param>` elements within the `<transport>`
+   component and specifying the boundary configuration XML file as
+   `emane-transvirtual.xml`. Values are provided for the `device`,
+   `address`, and `mask` configuration parameters.
+
+   ~{{file
+      path="../examples/rfpipe-01/node-1/emane-platform.xml"
+      type=xml
+      skip=1  
+      showname=true
+      blank=true
+      path-cut="../examples"
+      path-replace="emane-guide/examples"
+      indent=3}}~
+
+
+   For legacy reasons it is possible to configure an emulator instance
+   to instantiate more than one *NEM*. For performance reasons, stick
+   to one and only one *NEM* per emulator instance.
+
+   ~{{imagemagick
+     file="images/dont-run-multiple-nems.png"
+     scale=75
+     images/exclamation.png -resize 20% \( -size 800x -font DejaVu-Sans-Mono-Bold
+     -gravity east label:" Do not run multiple NEMs in a single emulator instance. " \)
+     +append -transparent white}}~
+
+
+2. *NEM XML*: The configuration file specified in the emulator
+   platform XML when defining the *NEM* structure. All *NEM*
+   components are defined: `<mac>`, `<phy>`, `<transport>` and/or
+   `<shim>`, along with their respective `definition` attribute
+   specifying the appropriate component XML configuration file.
+
+   *NEM* XML is the most appropriate place to specify physical layer
+    configuration using the `<phy>` element.
+
+   *NEM* XML configuration parameters specified within any *NEM*
+   component will override the same configuration parameters, if
+   present, in the specific *NEM* component's XML.
+
+   The below *NEM* configuration for `node-1` in the `rfpipe-01`
+   example illustrates how to define the *NEM* structure and configure
+   the physical layer. The order of components within the `<nem>`
+   element is important and maps directly to how they will be
+   connected. Always order *NEM* components from *upstream* to
+   *downstream*.
+
+   ~{{file
+      path="../examples/rfpipe-01/node-1/emane-rfpipe-nem.xml"
+      type=xml
+      skip=1  
+      showname=true
+      blank=true
+      path-cut="../examples"
+      path-replace="emane-guide/examples"
+      indent=3}}~
+
+
+2. *Radio Model XML*: The configuration file specified in the *NEM* XML
+   `<mac>` `definition` attribute. It contains the name of the plugin
+   to instantiate within the `library` attribute of its `<mac>`
+   element.
+
+   Radio model XML configuration parameters specified within the
+   `<mac>` component will be overridden by the same configuration
+   parameters, if present, within *NEM* XML or the emulator platform
+   XML, if present.
+
+   The below radio model XML configuration for `node-1` in the
+   `rfpipe-01` example illustrates the available configuration
+   parameters for the ~{{link name="RF Pipe"
+   file="rf-pipe-radio-model.md" section="#rf-pipe-radio-model"}}~
+   radio model.
+
+   ~{{file
+      path="../examples/rfpipe-01/node-1/emane-rfpipe-radiomodel.xml"
+      type=xml
+      skip=1  
+      showname=true
+      blank=true
+      path-cut="../examples"
+      path-replace="emane-guide/examples"
+      indent=3}}~
+
+3. *Boundary XML*:  The configuration file specified in the *NEM* XML
+   `<transport>` `definition` attribute. It contains the name of the plugin
+   to instantiate within within the `library` attribute of its `<transport>`
+   element.
+
+   Boundary XML configuration parameters specified within the
+   `<transport>` component will be overridden by the same configuration
+   parameters, if present, within *NEM* XML or the emulator platform
+   XML, if present.
+
+   The below boundary XML configuration for `node-1` in the
+   `rfpipe-01` example provides no configuration parameter values,
+   leaving all the ~{{link name="Virtual Transport"
+   file="virtual-transport.md" section="#virtual-transport"}}~
+   configuration parameters to their default values unless otherwise
+   set in *NEM* XML or emulator platform XML.
+
+   ~{{file
+      path="../examples/rfpipe-01/node-1/emane-transvirtual.xml"
+      type=xml
+      skip=1  
+      showname=true
+      blank=true
+      path-cut="../examples"
+      path-replace="emane-guide/examples"
+      indent=3}}~
+
+4. *Bit Error Rate or Packet Completion Rate XML*: Most radio models
+   employ *Bit Error Rate* (BER) or *Packet Completion Rate* (PCR)
+   curves to factor *Signal to Noise and Interference Ratio* (SINR) into
+   their reception success or failure logic.
+
+   The below packet completion rate XML for `node-1` in the
+   `rfpipe-01` example illustrates the format used by the ~{{link
+   name="RF Pipe" file="rf-pipe-radio-model.md"
+   section="#rf-pipe-radio-model"}}~ model. There is no standard BER
+   or PCR curve XML format.
+
+   ~{{file
+      path="../examples/rfpipe-01/node-1/emane-rfpipe-pcr.xml"
+      type=xml
+      skip=1  
+      showname=true
+      blank=true
+      path-cut="../examples"
+      path-replace="emane-guide/examples"
+      indent=3
+      lines=25}}~
+
+### `emane` configuration
+
+~{{emaneinfo plugin=nemmanager type=config indent=0}}~
+
+### `emane` statistics
+
+~{{emaneinfo plugin=nemmanager type=stat indent=0}}~
+
+### `emane` Statistic Tables
+
+The `emane` application processes a set of XML configuration files in
+order to determine the type of radio model to load, how the radio
+model and physical layer should be configured and what
+general application level settings to apply.
+
+~{{emaneinfo plugin=nemmanager type=table indent=0}}~
+
+## Event Service
+
+The `emaneeventservice` application processes a configuration file in
+order to determine the types of event generator plugins to
+instantiate, how the plugins should be configured and what general
+application level settings to apply.
+
+1. *Event Service XML*: The initial configuration file processed by
+   the `emaneeventservice` application. Contains all the event service
+   infrastructure configuration as well as the event generators to
+   load.
+
+   Event generators are loaded by `emaneeventservice` based on an
+   `<generator>` element's `definition` attribute which specifies the
+   event generator XML. More than one `<generator>` element may be
+   present, resulting in more than one generator being loaded by the
+   event service.
+
+    The below event service configuration for `host` in the
+   `rfpipe-01` example illustrates configuring the event service to
+   load the ~{{link name="EEL" file="eel-event-generator.md"
+   section="#eel-event-generator"}}~ event generator.
+
+   ~{{file
+      path="../examples/rfpipe-01/host/eventservice.xml"
+      type=xml
+      skip=1  
+      showname=true
+      blank=true
+      path-cut="../examples"
+      path-replace="emane-guide/examples"
+      indent=3}}~
+
+2. "*Event Generator XML*: The configuration file specified in the Event Service XML
+   `<generator>` `definition` attribute. It contains the name of the plugin
+   to instantiate within the `library` attribute of its `<generator>`
+   element.
+
+   Event generator XML configuration parameters are specified as a
+   sequence of `<param>` or `<paramlist>` elements within `<generator>`.
+
+   The below event generator XML configuration for `host` in the
+   `rfpipe-01` example illustrates using some of the available
+   configuration parameters for the ~{{link name="EEL"
+   file="eel-event-generator.md" section="#eel-event-generator"}}~
+   event generator.
+
+   ~{{file
+      path="../examples/rfpipe-01/host/eelgenerator.xml"
+      type=xml
+      skip=1  
+      showname=true
+      blank=true
+      path-cut="../examples"
+      path-replace="emane-guide/examples"
+      indent=3}}~
+
+
+### `emaneeventservice` configuration
+
+   ~{{emaneinfo plugin=eventgeneratormanager type=config indent=3}}~

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<%
+from letce2.utils.network import CIDRNotation
+%>
+<otestpoint-recorder file="${__top_dir}/persist/${__node_name}/var/log/otestpoint-recorder.data">
+  <testpoint publish="${CIDRNotation.address(control_ip_addr)}:8882"/>
+</otestpoint-recorder>

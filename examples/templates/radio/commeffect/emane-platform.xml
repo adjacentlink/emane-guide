@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<%
+from letce2.utils.network import CIDRNotation
+%>
+<!DOCTYPE platform  SYSTEM 'file:///usr/share/emane/dtd/platform.dtd'>
+<platform>
+  <param name="otamanagerchannelenable" value="on"/>
+  <param name="otamanagerdevice" value="${control_interface}"/>
+  <param name="otamanagergroup" value="224.1.2.8:45702"/>
+  <param name="eventservicegroup" value="224.1.2.8:45703"/>
+  <param name="eventservicedevice" value="${control_interface}"/>
+  <param name="controlportendpoint" value="0.0.0.0:47000"/>
+  %if otamanagermtu:
+  <param name="otamanagermtu" value="${otamanagermtu}"/>
+  %endif
+  %if stats_ota_maxpacketcountrow:
+  <param name="stats.ota.maxpacketcountrows" value="${stats_ota_maxpacketcountrow}"/>
+  %endif
+
+%if antenna_profile_manifest:
+   <param name="antennaprofilemanifesturi" value="${antenna_profile_manifest}"/>
+%endif
+  
+  %if spectralmaskmanifesturi:
+  <param name="spectralmaskmanifesturi" value="${spectralmaskmanifesturi}"/>
+  %endif
+  
+  <nem definition="emane-commeffect-nem.xml" id="${nem_id}">
+    <transport definition="emane-transraw.xml">
+      <param name="device" value="${lan_interface}"/>
+    </transport>
+  </nem>
+</platform>

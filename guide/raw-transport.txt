@@ -1,0 +1,71 @@
+~{{frontmatter
+layout: default
+title: Raw Transport
+nav_order: 16
+permalink: /raw-transport}}~
+
+~{{layout type=newpage}}~
+
+# Raw Transport
+
+The Raw Transport uses a specified network interface as the emulation
+boundary entry/exit point.
+
+## Features
+
+The Raw Transport emulation boundary provides the following set of
+features: [Network Interface Raw
+Read/Write](#network-interface-raw-readwrite), [Virtual Transport
+Interoperability](#virtual-transport-interoperability), [Bitrate
+Enforcement](#bitrate-enforcement), [Broadcast Only
+Mode](#broadcast-only-mode), and [IPv4 and IPv6
+Capable](#ipv4-and-ipv6-capable).
+
+## Network Interface Raw Read/Write
+
+The Raw Transport uses a specific network interface as the emulation
+boundary entry/exit point. The network interface can be a physical
+interface, virtual interface, tunnel, etc. The interface is managed
+external to the Raw Transport.
+
+Any traffic read from the interface will
+be delivered to the Raw Transport's respective *NEM* for emulation
+processing.
+
+## Virtual Transport Interoperability
+
+The Raw Transport supports interoperability with ~{{link name="Virtual
+Transport" file="virtual-transport.md" section="#virtual-transport"}}~
+emulation boundaries using ARP caching to learn IP network to *NEM Id*
+associations.
+
+### Bitrate Enforcement
+
+The Raw Transport supports bitrate enforcement for use with models
+that do not limit bitrate based on emulation implementation. Set the
+configuration parameter `bitrate` to the desired rate in `bps` to
+enable bitrate enforcement or 0 to disable.
+
+### Broadcast Only Mode
+
+The Raw Transport supports forced *NEM* broadcasting of all IP
+packet types: unicast, broadcast and multicast. Set the configuration
+parameter `broadcastmodeenable` to `true` to enable broadcast only
+mode.
+
+### IPv4 and IPv6 Capable
+
+The Raw Transport supports IPv4 and IPv6 packet processing.
+
+## Configuration
+
+~{{emaneinfo plugin=transraw type=config}}~
+
+## Statistics
+
+~{{emaneinfo plugin=transraw type=stat}}~
+
+## Statistic Tables
+
+~{{emaneinfo plugin=transraw type=table}}~
+

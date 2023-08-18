@@ -1,0 +1,77 @@
+~{{frontmatter
+layout: default
+title: Events
+nav_order: 8
+permalink: /events}}~
+
+~{{layout type=newpage}}~
+# Events
+
+~{{imagemagick
+   file="images/incomplete-chapter.png"
+   scale=75
+   images/exclamation.png -resize 20% \( -size 800x -font DejaVu-Sans-Mono-Bold
+   -gravity east label:" This chapter is incomplete " \)
+   +append -transparent white}}~
+
+A scenario is a set of *events* that are sent to one or more *NEMs* in
+order to change environmental characteristics such as locations,
+pathloss and antenna pointing. Events are delivered opaquely to
+registered radio model and physical layer instances so individual
+radio models may use their own specialized events.
+
+## `AntennaProfileEvent`
+
+An `AntennaProfileEvent` is used to set the antenna profile and
+pointing information (azimuth and elevation) for an *NEM's* default
+antenna (index 0).
+
+~{{file path="$emane_SRC_ROOT/src/libemane/antennaprofileevent.proto"
+type=protobuf
+showname=true
+blank=false
+skip=33
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"}}~
+
+## `LocationEvent`
+
+A `LocationEvent` is used to set the location and optionally the
+velocity and/or orientation of an *NEM*.
+
+~{{file path="$emane_SRC_ROOT/src/libemane/locationevent.proto"
+type=protobuf
+showname=true
+blank=false
+skip=33
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"}}~
+
+## `PathlossEvent`
+
+A `PathlossEvent` is used to set the pathloss used at a receiving
+*NEM* for over-the-air transmissions from one or more specified source
+*NEMs*. 
+
+~{{file path="$emane_SRC_ROOT/src/libemane/pathlossevent.proto"
+type=protobuf
+showname=true
+blank=false
+skip=33
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"}}~
+ 
+## `FadingSelectionEvent`
+
+A `FadingSelectionEvent` is used to set the fading model in use at a
+receiving *NEM* for over-the-air transmission from one or more
+specified source *NEMs*. Required when the physical layer
+`fading.model` configuration parameter is set to `event`.
+
+~{{file path="$emane_SRC_ROOT/src/libemane/fadingselectionevent.proto"
+type=protobuf
+showname=true
+blank=false
+skip=33
+path-cut="$emane_SRC_ROOT"
+path-replace="emane"}}~

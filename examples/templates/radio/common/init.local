@@ -1,0 +1,143 @@
+#!/bin/bash -
+#
+# Copyright (c) 2016-2017,2021 - Adjacent Link LLC, Bridgewater,
+# New Jersey
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# * Redistributions of source code must retain the above copyright
+#   notice, this list of conditions and the following disclaimer.
+# * Redistributions in binary form must reproduce the above copyright
+#   notice, this list of conditions and the following disclaimer in
+#   the documentation and/or other materials provided with the
+#   distribution.
+# * Neither the name of Adjacent Link LLC nor the names of its
+#   contributors may be used to endorse or promote products derived
+#   from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+top_dir=$1
+node_name=$2
+start_time=$3
+
+echo "top_dir: $top_dir"
+echo "node_name: $node_name"
+echo "start_time: $start_time"
+
+cd "$top_dir/$node_name"
+
+# load common functions
+. ./functions
+
+if [ -f ./node-prestart ]
+then
+    bash ./node-prestart $node_name
+fi
+
+if [ -f emane-platform.xml ] &&
+       [ ! -f NO-emane ]
+then
+    start_emane \
+        $node_name \
+        emane-platform.xml \
+        $top_dir/persist/$node_name/var/log/emane.log \
+        $top_dir/persist/$node_name/var/run/emane.pid \
+        $top_dir/persist/$node_name/var/run/emane.uuid
+fi
+
+if [ -f emane-spectrum-monitor.xml ] &&
+       [ ! -f NO-emane-spectrum-monitor ]
+then
+    start_emane_spectrum_monitor \
+        $node_name \
+        emane-spectrum-monitor.xml \
+        $top_dir/persist/$node_name/var/log/emane-spectrum-monitor.log \
+        $top_dir/persist/$node_name/var/run/emane-spectrum-monitor.pid \
+        $top_dir/persist/$node_name/var/run/emane-spectrum-monitor.uuid
+fi
+
+% if waveform_interface:
+    wait_for_device $node_name ${waveform_interface} 30
+% else:
+    sleep 4
+%endif
+
+if [ -f batman-adv ] &&
+       [ ! -f NO-batman-adv ]
+then
+    bash ./batman-adv $node_name
+
+% if batman_interface:
+    wait_for_device $node_name ${batman_interface} 30
+% endif
+fi
+
+if [ -f otestpoint-recorder.xml ] &&
+       [ ! -f NO-otestpoint-recorder ]
+then
+    start_otestpoint_recorder \
+        $node_name \
+        otestpoint-recorder.xml \
+        $top_dir/persist/$node_name/var/log/otestpoint-recorder.log \
+        $top_dir/persist/$node_name/var/run/otestpoint-recorder.pid \
+        $top_dir/persist/$node_name/var/run/otestpoint-recorder.uuid
+fi
+
+if [ -f otestpoint.xml ] &&
+       [ ! -f NO-otestpointd ]
+then
+    start_otestpointd \
+        $node_name \
+        otestpoint.xml \
+        $top_dir/persist/$node_name/var/log/otestpoint.log \
+        $top_dir/persist/$node_name/var/run/otestpoint.pid \
+        $top_dir/persist/$node_name/var/run/otestpoint.uuid
+fi
+
+if [ -f ./node-preapplication ]
+then
+
+    bash ./node-preapplication $node_name
+fi
+
+if [ -f mgen ] &&
+       [ ! -f NO-mgen ]
+then
+% if mgen_monitor_listen_address and mgen_monitor_listen_port:
+    start_mgen_monitor \
+        $node_name \
+        ${mgen_monitor_listen_address} \
+        ${mgen_monitor_listen_port} \
+        $top_dir/persist/$node_name/var/log/mgen.out \
+        $top_dir/persist/$node_name/var/run/mgen-monitor.pid \
+        $top_dir/persist/$node_name/var/log/mgen-monitor.log
+% endif
+    
+    start_mgen \
+        $node_name \
+        mgen \
+        $top_dir/persist/$node_name/var/log/mgen.out \
+        $top_dir/persist/$node_name/var/run/mgen.pid \
+        $top_dir/persist/$node_name/var/log/mgen.log \
+        "$start_time"
+fi
+
+if [ -f ./node-poststart ]
+then
+    bash ./node-poststart $node_name
+fi
