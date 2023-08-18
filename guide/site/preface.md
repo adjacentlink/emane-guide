@@ -6,7 +6,7 @@ permalink: /
 ---
 
 
-# About The EMANE Guide
+# The EMANE Guide
 
 ## Who This Guide Is For
 
