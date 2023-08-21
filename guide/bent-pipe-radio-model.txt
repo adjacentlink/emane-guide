@@ -248,12 +248,9 @@ blank=false
 path-cut="../examples"
 path-replace="emane-guide/examples"}}~
 
-~{{imagemagick
-   file="images/pcr-representation.png"
-   scale=75
-   images/exclamation.png -resize 20% \( -size 800x -font DejaVu-Sans-Mono-Bold
-   -gravity east label:" PCR curves should be representative of the waveform being emulated. " \)
-   +append -transparent white}}~
+~{{warnbox Packet Completion Rate (PCR) curves should be
+representative of the waveform being emulated. The curves used for
+Bent Pipe radio model examples are for illustrative purposes only.}}~
 
 ## Configuration
 ~{{emaneinfo plugin=emane-model-bentpipe type=config}}~

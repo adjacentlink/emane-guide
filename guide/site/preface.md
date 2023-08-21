@@ -44,14 +44,14 @@ proficiency with each will be helpful.
 
 ## Resources and Contributions
 
-All [Adjacent Link](https://adjacentlink.com) FOSS, including this
-guide, is available on [Adjacent Link's
+All [Adjacent Link](https://adjacentlink.com) Free and Open Software
+(FOSS), including this guide, is available on [Adjacent Link's
 GitHub](https://github.com/adjacentlink) organization page. Each
 project has its own *Issues* and *Pull Requests*. Please use these to
 report any application specific bugs or questions.
 
-There are other Adjacent Link tutorials that cover in more detail
-areas used in this guide.
+Additional Adjacent Link tutorials related to material and topics
+referenced in this guide are as follows:
 
 * The
   [*emane-control-port-tutorial*](https://github.com/adjacentlink/emane-control-port-tutorial)

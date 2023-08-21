@@ -13,10 +13,10 @@ when utilizing antenna profiles. It should be noted that antenna gains
 are computed as part of the OTA receive packet processing.
 
 The following steps 1 through 12 define the process of determining the
-$rxAntennaGain$ when the receiving node is configured to use antenna
-profiles. Steps 2 through 12 would be required to compute the
-$txAntennaGain$ if the transmitter was also configured to use antenna
-profiles.
+~{{math rxAntennaGain}}~ when the receiving node is configured to use
+antenna profiles. Steps 2 through 12 would be required to compute the
+~{{math txAntennaGain}}~ if the transmitter was also configured to use
+antenna profiles.
 
 1. Transform the positions from WGS84 (lat/long/alt) to ECEF (Earth Centered Earth Fixed)
 

@@ -7,12 +7,7 @@ permalink: /control-messages}}~
 ~{{layout type=newpage}}~
 # Control Messages
 
-~{{imagemagick
-   file="images/incomplete-chapter.png"
-   scale=75
-   images/exclamation.png -resize 20% \( -size 800x -font DejaVu-Sans-Mono-Bold
-   -gravity east label:" This chapter is incomplete " \)
-   +append -transparent white}}~
+~{{warnbox This chapter is incomplete.}}~
 
 ## `AntennaProfileControlMessage`
 

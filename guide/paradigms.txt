@@ -41,7 +41,7 @@ name="`registerNonNumeric`"
 path="$emane_SRC_ROOT/include/emane/configurationregistrar.h"
 path-cut="$emane_SRC_ROOT"
 path-replace="https://github.com/adjacentlink/emane/blob/master"
-line-regex="\s*void\s+registerNonNumeric.*"}}~, respectively.
+line-regex="\s*void\s+registerNonNumeric.*"}}~ respectively.
 
 Numeric configuration item types may be any of the following:
 
@@ -244,7 +244,7 @@ name="`registerNonNumeric`"
 path="$emane_SRC_ROOT/include/emane/statisticregistrar.h"
 path-cut="$emane_SRC_ROOT"
 path-replace="https://github.com/adjacentlink/emane/blob/master"
-line-regex="\s*StatisticNonNumeric<T> \*\s+registerNonNumeric.*"}}~, respectively.
+line-regex="\s*StatisticNonNumeric<T> \*\s+registerNonNumeric.*"}}~ respectively.
 
 Numeric statistic types may be any of the following:
 

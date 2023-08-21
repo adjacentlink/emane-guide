@@ -8,7 +8,8 @@ permalink: /eel-event-generator
 
 # EEL Event Generator
 
-![](images/auto-generated-incomplete-chapter.png){: width="75%"; .centered}
+{: .warning }
+> This chapter is incomplete.
 
 ## Features
 
@@ -71,7 +72,9 @@ There are four EEL sentence parsing plugins:
 
 1. Pathloss Parser - Parses pathloss sentences and builds the resulting event.
 
-    *\<time\> nem:\<Id\> pathloss nem:\<Id\>,\<pathloss\>\[,\<reversePathloss\>\] \[nem:\<Id\>,\<pathloss\>\[,\<reversePathloss\>\]\]...*
+   ```text
+   <time> nem:<Id> pathloss nem:<Id>,<pathloss>[,<reversePathloss>] [nem:<Id>,<pathloss>[,<reversePathloss>]]...
+   ```
 
    Where,  
    *pathoss* is the pathloss in dB  
@@ -79,21 +82,27 @@ There are four EEL sentence parsing plugins:
 
 2. Location Parser - Parses location sentences and builds the resulting event.
 
-    *\<time\> nem:\<Id\> location gps \<latitude\>,\<longitude\>,\<altitude\>\[,msl|agl\]*
+   ```text
+   <time> nem:<Id> location gps <latitude>,<longitude>,<altitude>[,msl|agl]
+   ```
 
     Where,  
     *latitude* is the latitude in degrees  
     *longitude* is the longitude in degrees  
     *altitude* is the altitude in meters
 
-    *\<time\> nem:\<Id\> orientation \<pitch\>,\<roll\>,\<yaw\>*
+   ```text
+   <time> nem:<Id> orientation <pitch>,<roll>,<yaw>
+   ```
 
     Where,  
     *pitch* is the pitch in degrees  
     *roll* is the roll in degrees  
     *yaw* is the yaw in degrees
 
-    *\<time\> nem:\<Id\> velocity \<azimuth\>,\<elevation\>,\<magnitude\>*
+   ```text
+   <time> nem:<Id> velocity <azimuth>,<elevation>,<magnitude>*
+   ```
 
     Where,  
     *azimuth* is the azimuth in degrees  
@@ -102,7 +111,9 @@ There are four EEL sentence parsing plugins:
 
 3. Antenna Profile Parser - Parses antenna profile sentences and builds the resulting event.
 
-    *\<time\> nem:\<Id\> antennaprofile \<profileId\>,\<azimuth\>,\<elevation\>*
+   ```text
+   <time> nem:<Id> antennaprofile <profileId>,<azimuth>,<elevation>
+   ```
 
     Where,  
    *profileId* is the antenna profile id  
@@ -111,9 +122,12 @@ There are four EEL sentence parsing plugins:
 
 4. Comm Effect Parser - Parses comm effect sentences and builds the resulting event.
 
-    *\<time\> nem:\<Id\> commeffect nem:\<Id\>,\<CommEffectEntryList\> \[nem:\<Id\>,\<CommEffectEntryList\>\]...*
+   ```text
+   <time> nem:<Id> commeffect nem:<Id>,<CommEffectEntryList> [nem:<Id>,<CommEffectEntryList>]...
 
-    *CommEffectEntryList := \<latencySeconds\>,\<jitterSeconds\>,\<probabilityLoss\>,\<probabilityDuplication\>,\<unicastBitRate\>,\<multicastBitRate\>*
+   CommEffectEntryList := <latencySeconds>,<jitterSeconds>,<probabilityLoss>,<probabilityDuplication>,
+                           <unicastBitRate>,<multicastBitRate>
+   ```
 
     Where,  
     *latencySeconds* is the latency seconds (float)  
@@ -125,8 +139,9 @@ There are four EEL sentence parsing plugins:
 
 5. Fading Selection Parser - Parses fading selection sentences and builds the resulting event.
 
-   *\<time\> nem:\<Id\> fadingselection nem:\<Id\>,'none'|'nakagami' [nem:\<Id\>,'none'|'nakagami']...*
-
+   ```text
+    <time> nem:<Id> fadingselection nem:<Id>,'none'|'nakagami' [nem:<Id>,'none'|'nakagami']...
+    ```
    
 ### Example Sentences
 

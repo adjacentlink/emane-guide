@@ -73,6 +73,7 @@ header-includes:
     - \usepackage{fancyhdr}
     - \pagestyle{fancy}
     - \usepackage[firstpage]{draftwatermark}
+    - \usepackage[skins]{tcolorbox}
 ---
 \setcounter{tocdepth}{2}
 \tableofcontents

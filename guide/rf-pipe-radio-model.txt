@@ -36,7 +36,7 @@ Where,
 
 ### Packet Completion Rate Curves
 
-The RF Pipe radio model Packet Completion Rate is specified as curve
+The RF Pipe radio model Packet Completion Rate is specified as a curve
 defined via XML. The curve definition comprises a series of SINR
 values along with their corresponding probability of reception.
 
@@ -77,12 +77,9 @@ emulated.
    path-replace="emane-guide/examples"
    lines=25}}~
 
-~{{imagemagick
-   file="images/pcr-representation.png"
-   scale=75
-   images/exclamation.png -resize 25% \( -size 1100x -font DejaVu-Sans-Mono-Bold
-   -gravity east label:" PCR curves should be representative of the waveform being emulated. " \)
-   +append -transparent white}}~
+~{{warnbox Packet Completion Rate (PCR) curves should be
+representative of the waveform being emulated. The curve used for the
+RF Pipe radio model example is for illustrative purposes only.}}~
 
 ## Limitations
 
@@ -93,8 +90,8 @@ there is no channel access protocol, the data rate defines the
 transmission capacity of each node within the network.
 
 2. The RF Pipe radio model does not apply any in-band interference
-effects and as such, the use of negative SINR values within the PCR
-curve is valid only when the physical layer `nodemode` configuration
+effects, and as such, the use of negative SINR values within the PCR
+curve is valid only when the physical layer `noisemode` configuration
 value is set to `outofband` in order to raise the noise floor above
 the inherent receiver sensitivity.
 

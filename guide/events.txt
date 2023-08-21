@@ -7,12 +7,7 @@ permalink: /events}}~
 ~{{layout type=newpage}}~
 # Events
 
-~{{imagemagick
-   file="images/incomplete-chapter.png"
-   scale=75
-   images/exclamation.png -resize 20% \( -size 800x -font DejaVu-Sans-Mono-Bold
-   -gravity east label:" This chapter is incomplete " \)
-   +append -transparent white}}~
+~{{warnbox This chapter is incomplete.}}~
 
 A scenario is a set of *events* that are sent to one or more *NEMs* in
 order to change environmental characteristics such as locations,

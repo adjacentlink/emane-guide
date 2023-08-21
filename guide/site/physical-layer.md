@@ -468,7 +468,7 @@ fade loss value based on distance and power. Configuration parameters
 provide the ability to model various fading effects experienced in
 both indoor and outdoor environments based on empirical
 data. Parameters are used to specify two distance thresholds:
-`fading.nakagami.distance0` and `fading.nakagami.distance1` (meters),
+`fading.nakagami.distance0` and `fading.nakagami.distance1` (meters)
 in order to establish three distance bounds: *below*, *between*, and
 *above*; and three shape factors corresponding to the three distance
 bounds: `fading.nakagami.m0`, `fading.nakagami.m1`, and
@@ -636,7 +636,7 @@ parameter: `spectralmaskmanifesturi`.
 
 If spectral masks are being used by one or more *NEMs* within the
 emulation, the `spectralmaskmanifesturi` configuration parameter must
-be configured for all emulator instances (including those instances
+be configured for all emulator instances, including those instances
 with an *NEM* not transmitting with a spectral mask. This is necessary
 for a receiving *NEM* to determine the *txPower* when performing the
 [receive power calculation](#receive-power-calculation).
@@ -1194,7 +1194,7 @@ The arrow directions indicate positive angles.
 
 33. **`stats.observedpowertableenable`**: Defines whether the observed
     power table will be populated. Large number of antenna (MIMO) and/or
-    frequency segments will increases processing load when populating.
+    frequency segments will increase processing load when populating.
     
     ```no-highlighting
     Default: yes                   Required: no                    Modifiable: no                  
@@ -1204,7 +1204,7 @@ The arrow directions indicate positive angles.
 
 34. **`stats.receivepowertableenable`**: Defines whether the receive
     power table will be populated. Large number of antenna (MIMO) and/or
-    frequency segments will increases processing load when populating.
+    frequency segments will increase processing load when populating.
     
     ```no-highlighting
     Default: yes                   Required: no                    Modifiable: no                  
@@ -1416,13 +1416,15 @@ The arrow directions indicate positive angles.
     Type: uint64                Clearable: yes                 
     ```
 
-23. **`numDownstreamQueueDelay`**:
+23. **`numDownstreamQueueDelay`**: Accumulation of downstream queue
+    delay in microseconds.
     
     ```no-highlighting
     Type: uint64                Clearable: yes                 
     ```
 
-24. **`numHighWaterMark`**:
+24. **`numHighWaterMark`**: Downstream queue high water mark in
+    packets.
     
     ```no-highlighting
     Type: uint32                Clearable: yes                 

@@ -38,10 +38,10 @@ characteristics such as pathloss, location, orientation and velocity.
 
 *EMANE* emulation processing consists of pairing a *physical layer
 model* instantiation with a *radio model* instantiation. The emulator
-application, `emane`, processes a configuration file in order to
-determine the type of radio model to load, how the radio model and
-physical layer instance should be configured and what general
-application level settings to apply.
+application, `emane`, processes a configuration file to determine the
+type of radio model to load, how the radio model and physical layer
+instance should be configured and what general application level
+settings to apply.
 
 When the emulator instantiates a radio model plugin, it along with a
 dedicated instance of the emulator's physical layer, are placed in an
@@ -65,9 +65,9 @@ transmission over the OTA multicast channel (possibly after the radio
 model performs a channel access function). All emulator instances
 using the same OTA multicast channel receive the message and perform a
 receive power test. Those physical layer instances that determine the
-message receive power was greater than the receiver sensitivity either
+message receive power was greater than the receiver sensitivity
 categorize the message as noise or as a valid *in-band* waveform
-signal. An *in-band* signal in the context of *EMANE* refers to a
+signal. An *in-band* signal, in the context of *EMANE*, refers to a
 signal that can be properly decoded by the receiver based on waveform
 transmission properties such as modulation, frequency, and
 transec. Valid waveform signals are sent to the receiving radio model
@@ -134,16 +134,16 @@ Transport" file="raw-transport.md" section="#raw-transport"}}~ and
 section="#virtual-transport"}}~.
 
 *EMANE* supports IP and non-IP wireless system emulation. The
-mechanisms and messages *processes outside the emulation* use and
-those boundaries are required to support in order to interact with
-*processes outside the emulation* vary. However, once a boundary has a
-message to deliver, they all generally do the same thing. In the
-downstream direction, a boundary must determine the *NEM id* for the
-message next hop (which may be the *NEM* broadcast address) and send
-the message to its respective *NEM* along with the source and
-destination *NEM ids*. In the upstream direction, a boundary must
-determine the process outside the emulation to receive the message and
-send it.
+ mechanisms and messages *processes outside the emulation* use to
+ communicate with *EMANE* and the features boundaries are required to
+ support in order to interact with those processes vary. However, once
+ a boundary has a message to deliver, they all generally do the same
+ thing. In the downstream direction, a boundary must determine the
+ *NEM id* for the message next hop (which may be the *NEM* broadcast
+ address) and send the message to its respective *NEM* along with the
+ source and destination *NEM ids*. In the upstream direction, a
+ boundary must determine the process outside the emulation to receive
+ the message and send it.
 
 As messages from processes outside the emulation enter through a
 boundary they lose their form and are sent through the emulator as an
@@ -152,7 +152,7 @@ in the emulator that can read and write outside-the-emulation-message
 specifics.
 
 For example, the ~{{link name="Virtual Transport"
-file="virtual-transport.md" section="#virtual-transport"}}~, uses the
+file="virtual-transport.md" section="#virtual-transport"}}~ uses the
 [TUN/TAP](https://www.kernel.org/doc/Documentation/networking/tuntap.txt)
 interface to create a *virtual interface* (*vif*) as the boundary
 entry/exit point. In the downstream direction, ethernet frames routed
@@ -192,11 +192,12 @@ The *EMANE* distribution contains four events used by the physical layer: ~{{lin
  and
 ~{{link name="Fading Selection" file="events.md" section="#fadingselectionevent"}}~.
 
-Additionally, the ~{{link name="Comm Effect" file="events.md"
-section="#comm-effect-event"}}~ and
-~{{link name="TDMA Schedule" file="events.md" section="#tdma-schedule-event"}}~
-events are model specific events used to communicate link characteristics and TDMA
-schedules, for the Comm Effect utility model and TDMA radio model respectively.
+Additionally, the ~{{link name="Comm Effect"
+file="comm-effect-utility-model.md" section="#commeffectevent"}}~
+and ~{{link name="TDMA Schedule" file="tdma-radio-model.md"
+section="#tdmascheduleevent"}}~ events are model specific events
+used to communicate link characteristics and TDMA schedules for the
+Comm Effect utility model and TDMA radio model respectively.
 
 Events are created by event generator plugins using the *Event
 Service*. The *Event Service* application, `emaneeventservice`,

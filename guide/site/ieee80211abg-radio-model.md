@@ -53,12 +53,12 @@ priority classes (Voice and Video) are serviced first.
 ### Packet Completion Rate Curves
 
 The IEEE 802.11abg Packet Completion Rate is specified as curves
-defined via XML. Each curve definition comprises a series SINR values
-along with their corresponding probability of reception for a given
-data rate index. A curve definition must contain a minimum of two
-points with one SINR representing *POR = 0* and one SINR representing
-*POR = 100*. Linear interpolation is preformed when an exact SINR
-match is not found.
+defined via XML. Each curve definition comprises a series of SINR
+values along with their corresponding probability of reception for a
+given data rate index. A curve definition must contain a minimum of
+two points with one SINR representing *POR = 0* and one SINR
+representing *POR = 100*. Linear interpolation is preformed when an
+exact SINR match is not found.
 
 The IEEE 802.11abg radio model does adjust the interference on a
 per packet basis based on detected collisions and as such supports
@@ -132,23 +132,25 @@ and join an access point.
 
 2. The IEEE 802.11abg uses a radio model specific
 [`OneHopNeighborsEvent`](#onehopneighborsevent) to communicate one-hop
-neighbors to behaviorally emulate the csma/ca channel access protocol
-without actual transmission of RTS and CTS packets. The neighbor
-information in the event allows each node to estimate channel activity
-associated from one and two hop neighbors to emulate collisions not
-only from immediate neighbors but also from 2-hop hidden neighbors.
+neighbors to behaviorally emulate the Carrier Sense Multiple
+Access/Collision Avoidance (CSMA/CA) channel access protocol without
+actual transmission of RTS and CTS packets. The neighbor information
+in the event allows each node to estimate channel activity associated
+from one and two hop neighbors to emulate collisions not only from
+immediate neighbors but also from 2-hop hidden neighbors.
 
-If the emulator is oversubscribed and can no longer process IEEE
-802.11abg radio model transmissions as fast as they are received, the
-radio model channel activity estimator will estimate less activity
-within the estimation period, leading to a failure condition with
-better network performance then would be experienced with real radios.
+If the emulator is oversubscribed, insufficient emulation server CPU
+resources to process received over-the-air messages in a timely
+manner, the radio model channel activity estimator will estimate less
+activity within the estimation period, leading to a failure condition
+where better network performance is experienced within the emulation
+than would be experienced with real radios.
 
 ## `OneHopNeighborsEvent`
 
 A `OneHopNeighborsEvent` is used to communicate one-hop neighbors to
 other IEEE 802.11abg radio model instances running in an emulation in
-order to behaviorally emulate the csma/ca channel access protocol
+order to behaviorally emulate the CSMA/CA channel access protocol
 without actual transmission of RTS and CTS packets
 
 ```protobuf

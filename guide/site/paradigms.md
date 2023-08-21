@@ -52,7 +52,7 @@ namespace EMANE
 <p style="float:right;font-family:courier;font-size:75%">emane/include/emane/configurationregistrar.h</p><br>
 
 There are two registration template methods which allow components to
-register numeric and non-numeric configuration items: [`registerNumeric`](https://github.com/adjacentlink/emane/blob/master/include/emane/configurationregistrar.h#L81) and [`registerNonNumeric`](https://github.com/adjacentlink/emane/blob/master/include/emane/configurationregistrar.h#L105), respectively.
+register numeric and non-numeric configuration items: [`registerNumeric`](https://github.com/adjacentlink/emane/blob/master/include/emane/configurationregistrar.h#L81) and [`registerNonNumeric`](https://github.com/adjacentlink/emane/blob/master/include/emane/configurationregistrar.h#L105) respectively.
 
 Numeric configuration item types may be any of the following:
 
@@ -286,7 +286,7 @@ namespace EMANE
 <p style="float:right;font-family:courier;font-size:75%">emane/include/emane/statisticregistrar.h</p><br>
 
 There are two registration template methods which allow components to
-register numeric and non-numeric statistics: [`registerNumeric`](https://github.com/adjacentlink/emane/blob/master/include/emane/statisticregistrar.h#L82) and [`registerNonNumeric`](https://github.com/adjacentlink/emane/blob/master/include/emane/statisticregistrar.h#L102), respectively.
+register numeric and non-numeric statistics: [`registerNumeric`](https://github.com/adjacentlink/emane/blob/master/include/emane/statisticregistrar.h#L82) and [`registerNonNumeric`](https://github.com/adjacentlink/emane/blob/master/include/emane/statisticregistrar.h#L102) respectively.
 
 Numeric statistic types may be any of the following:
 
@@ -321,9 +321,10 @@ Below is a snippet of statistic registration from the [RF Pipe](rf-pipe-radio-mo
 ```cpp
   pNumHighWaterMark_ =
      statisticRegistrar.registerNumeric<std::uint32_t>("numHighWaterMark",
-                                                       StatisticProperties::CLEARABLE);
+                                                       StatisticProperties::CLEARABLE,
+                                                       "Downstream queue high water mark in packets.");
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/src/models/mac/rfpipe/downstreamqueue.cc lines: <a href="https://github.com/adjacentlink/emane/blob/master/src/models/mac/rfpipe/downstreamqueue.cc#L55-L57">55-57</a></p><br>
+<p style="float:right;font-family:courier;font-size:75%">emane/src/models/mac/rfpipe/downstreamqueue.cc lines: <a href="https://github.com/adjacentlink/emane/blob/master/src/models/mac/rfpipe/downstreamqueue.cc#L55-L58">55-58</a></p><br>
 
 An unsigned 32-bit integer statistic variable is declared with the
 `CLEARABLE` propriety. No description is specified.

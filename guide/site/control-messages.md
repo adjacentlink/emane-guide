@@ -8,7 +8,8 @@ permalink: /control-messages
 
 # Control Messages
 
-![](images/auto-generated-incomplete-chapter.png){: width="75%"; .centered}
+{: .warning }
+> This chapter is incomplete.
 
 ## `AntennaProfileControlMessage`
 

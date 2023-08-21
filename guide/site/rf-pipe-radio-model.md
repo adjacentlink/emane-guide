@@ -37,7 +37,7 @@ Where,
 
 ### Packet Completion Rate Curves
 
-The RF Pipe radio model Packet Completion Rate is specified as curve
+The RF Pipe radio model Packet Completion Rate is specified as a curve
 defined via XML. The curve definition comprises a series of SINR
 values along with their corresponding probability of reception.
 
@@ -101,7 +101,10 @@ emulated.
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/rfpipe-01/node-1/emane-rfpipe-pcr.xml</p><br>
 
-![](images/auto-generated-pcr-representation.png){: width="75%"; .centered}
+{: .warning }
+> Packet Completion Rate (PCR) curves should be
+representative of the waveform being emulated. The curve used for the
+RF Pipe radio model example is for illustrative purposes only.
 
 ## Limitations
 
@@ -112,8 +115,8 @@ there is no channel access protocol, the data rate defines the
 transmission capacity of each node within the network.
 
 2. The RF Pipe radio model does not apply any in-band interference
-effects and as such, the use of negative SINR values within the PCR
-curve is valid only when the physical layer `nodemode` configuration
+effects, and as such, the use of negative SINR values within the PCR
+curve is valid only when the physical layer `noisemode` configuration
 value is set to `outofband` in order to raise the noise floor above
 the inherent receiver sensitivity.
 
@@ -401,13 +404,15 @@ the inherent receiver sensitivity.
     Type: uint64                Clearable: yes                 
     ```
 
-23. **`numDownstreamQueueDelay`**:
+23. **`numDownstreamQueueDelay`**: Accumulation of downstream queue
+    delay in microseconds.
     
     ```no-highlighting
     Type: uint64                Clearable: yes                 
     ```
 
-24. **`numHighWaterMark`**:
+24. **`numHighWaterMark`**: Downstream queue high water mark in
+    packets.
     
     ```no-highlighting
     Type: uint32                Clearable: yes                 

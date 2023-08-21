@@ -43,10 +43,10 @@ general application level settings to apply.
    file for that component must also be supplied in component's
    respective `definition` attribute.
 
-   Emulator platform XML configuration parameter values specified
-   for *NEM* components will override the same configuration
-   parameters, if present, in *NEM* XML or the same configuration
-   parameters, if present, in the specific *NEM* component's XML.
+   Emulator platform XML configuration parameter values specified for
+   *NEM* components will override the same configuration parameters in
+   *NEM* XML or the same configuration parameters in the specific
+   *NEM* component's XML, if present.
 
    The below emulator platform configuration for `node-1` in the
    `rfpipe-01` example illustrates including boundary configuration
@@ -81,8 +81,8 @@ general application level settings to apply.
    to instantiate more than one *NEM*. For performance reasons, stick
    to one and only one *NEM* per emulator instance.
 
-   ![](images/auto-generated-dont-run-multiple-nems.png){: width="75%"; .centered}
-
+   {: .warning }
+> Do not run multiple NEMs in a single emulator instance.
 
 2. *NEM XML*: The configuration file specified in the emulator
    platform XML when defining the *NEM* structure. All *NEM*
@@ -137,8 +137,8 @@ general application level settings to apply.
 
    Radio model XML configuration parameters specified within the
    `<mac>` component will be overridden by the same configuration
-   parameters, if present, within *NEM* XML or the emulator platform
-   XML, if present.
+   parameters within *NEM* XML or the emulator platform XML, if
+   present.
 
    The below radio model XML configuration for `node-1` in the
    `rfpipe-01` example illustrates the available configuration
@@ -162,12 +162,12 @@ general application level settings to apply.
 
 3. *Boundary XML*:  The configuration file specified in the *NEM* XML
    `<transport>` `definition` attribute. It contains the name of the plugin
-   to instantiate within within the `library` attribute of its `<transport>`
+   to instantiate within the `library` attribute of its `<transport>`
    element.
 
    Boundary XML configuration parameters specified within the
-   `<transport>` component will be overridden by the same configuration
-   parameters, if present, within *NEM* XML or the emulator platform
+   `<transport>` component will be overridden by the same
+   configuration parameters within *NEM* XML or the emulator platform
    XML, if present.
 
    The below boundary XML configuration for `node-1` in the
@@ -429,11 +429,6 @@ general application level settings to apply.
 
 ### `emane` Statistic Tables
 
-The `emane` application processes a set of XML configuration files in
-order to determine the type of radio model to load, how the radio
-model and physical layer should be configured and what
-general application level settings to apply.
-
 1. **`EventChannelEventCountTable`**: EventChannel Event count table.
    
    ```no-highlighting
@@ -486,10 +481,10 @@ application level settings to apply.
    ```
    <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/rfpipe-01/host/eventservice.xml</p><br>
 
-2. "*Event Generator XML*: The configuration file specified in the Event Service XML
-   `<generator>` `definition` attribute. It contains the name of the plugin
-   to instantiate within the `library` attribute of its `<generator>`
-   element.
+2. *Event Generator XML*: The configuration file specified in the
+   Event Service XML `<generator>` `definition` attribute. It contains
+   the name of the plugin to instantiate within the `library`
+   attribute of its `<generator>` element.
 
    Event generator XML configuration parameters are specified as a
    sequence of `<param>` or `<paramlist>` elements within `<generator>`.

@@ -8,7 +8,8 @@ permalink: /antenna-patterns
 
 # Antenna Patterns
 
-![](images/auto-generated-incomplete-chapter.png){: width="75%"; .centered}
+{: .warning }
+> This chapter is incomplete.
 
 The antenna profile manifest is an XML file that provides a list of
 all antenna profiles to be utilized within an emulation
@@ -272,8 +273,8 @@ make the proper adjustments to account for platform orientation. The
 blockage pattern is optional. When defined, it is used in conjunction
 with the antenna pattern to determine the actual antenna gain.
 
-Sample blockage pattern XML file with full blockage aft (90 degrees <=
-bearing <= 270 degrees) of the platform and at elevations above and
+The below sample blockage XML file shows full blockage aft (90 degrees
+<= bearing <= 270 degrees) of the platform and at elevations above and
 below 10 degrees:
 
 ```xml

@@ -251,9 +251,9 @@ package which adds Adjacent Link FOSS application, library, and Python
 package build paths to the current shell environment.
 
 The following instructions for using `adjacentlink-foss-build.sh`
-assume *emane-guide* has been cloned in `~/dev` which is also the
-location to clone and build all Adjacent Link FOSS and that all the
-Adjacent Link FOSS [build dependencies](#build-dependencies) are
+assume *emane-guide* has been cloned in `~/dev`, which is also the
+location to clone and build all Adjacent Link FOSS, and all Adjacent
+Link FOSS [build dependencies](#build-dependencies) have been
 installed.
 
 ```text
@@ -289,8 +289,11 @@ $ letce2 lxc start -e ~/dev/environments-foss/adjacentlink-foss.env
 $ letce2 lxc stop -e ~/dev/environments-foss/adjacentlink-foss.env
 ```
 
-![](images/auto-generated-no-packages-with-source-build.png){: width="100%"; .centered}
-
+{: .warning }
+> Adjacent Link FOSS distribution packages (rpms or debs)
+CANNOT be installed when using source build. Python module path lookup
+failure will occur due to Python namespaces being used by both
+installed packages and PYTHONPATH.
 
 ### Build Dependencies
 

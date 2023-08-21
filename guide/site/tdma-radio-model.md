@@ -24,9 +24,9 @@ Curves](#packet-completion-rate-curves).
 
 The TDMA radio model supports priority queues which map to user
 traffic based priority levels assigned by emulation boundary
-components. Outbound messages are dequeued FIFO based on slot service
-class queue mapping and a highest to lowest priority queue search, if
-necessary.
+components. Outbound messages are dequeued First in First Out (FIFO)
+based on slot service class queue mapping and a highest to lowest
+priority queue search, if necessary.
 
 The TDMA radio model classifies user traffic into four categories
 which map to four queues. Traffic is assigned to a queue based on
@@ -223,11 +223,12 @@ $$S_0$$ is the packet size specified in the curve file
 $$S_1$$ is the received packet size
 
 The below PCR curve file is used by all nodes in the `tdma-01`
-example. These curves are based on 802.11 modulation and data rate
-combination based on theoretical equations for determining Bit Error
-Rate (BER) in an Additive White Gaussian Noise (AWGN) channel and are
-for illustrative purposes only. Packet Completion Rate curves should
-be representative of the waveform being emulated.
+example. These curves are the same as the ones used for the
+IEEE802.11abg radio model based on theoretical equations for
+determining Bit Error Rate (BER) in an Additive White Gaussian Noise
+(AWGN) channel and are for illustrative purposes only. Packet
+Completion Rate curves should be representative of the waveform being
+emulated.
 
 ```xml
 <tdmabasemodel-pcr packetsize="128">
@@ -255,7 +256,11 @@ be representative of the waveform being emulated.
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/tdma-01/node-1/emane-tdma-pcr.xml</p><br>
 
-![](images/auto-generated-pcr-representation.png){: width="75%"; .centered}
+{: .warning }
+> Packet Completion Rate (PCR) curves should be
+representative of the waveform being emulated. The curves used for the
+TDMA radio model example are the same as the IEEE 802.11abg example
+and are for illustrative purposes only.
 
 ## Working with TDMA Schedules
 
@@ -1215,10 +1220,10 @@ slots        10                                                 slots        10
 ```
 
 Monitoring the `RxSlotStatusTable` and `TxSlotStatusTable` statistic
-tables provides and way to assess the health of the emulation when
-using the TDMA radio model. Both tables indicate the number of valid
-slots, receive and transmit, respectively, along with the quartile the
-radio model handled the slot activity.
+tables provides a way to assess the health of the emulation when using
+the TDMA radio model. Both tables indicate the number of valid slots,
+receive and transmit, respectively, along with the quartile the radio
+model handled the slot activity.
 
 ```text
 $ emanesh node-1 get table nems mac RxSlotStatusTable TxSlotStatusTable

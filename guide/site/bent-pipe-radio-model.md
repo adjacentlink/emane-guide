@@ -364,7 +364,10 @@ of the waveform being emulated.
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/bentpipe-01/node-1/emane-bentpipe-pcr.xml</p><br>
 
-![](images/auto-generated-pcr-representation.png){: width="75%"; .centered}
+{: .warning }
+> Packet Completion Rate (PCR) curves should be
+representative of the waveform being emulated. The curves used for
+Bent Pipe radio model examples are for illustrative purposes only.
 
 ## Configuration
 1. **`antenna.defines`**: Defines antennas available for use by

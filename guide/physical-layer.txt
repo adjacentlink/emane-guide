@@ -522,7 +522,7 @@ fade loss value based on distance and power. Configuration parameters
 provide the ability to model various fading effects experienced in
 both indoor and outdoor environments based on empirical
 data. Parameters are used to specify two distance thresholds:
-`fading.nakagami.distance0` and `fading.nakagami.distance1` (meters),
+`fading.nakagami.distance0` and `fading.nakagami.distance1` (meters)
 in order to establish three distance bounds: *below*, *between*, and
 *above*; and three shape factors corresponding to the three distance
 bounds: `fading.nakagami.m0`, `fading.nakagami.m1`, and
@@ -752,7 +752,7 @@ parameter: `spectralmaskmanifesturi`.
 
 If spectral masks are being used by one or more *NEMs* within the
 emulation, the `spectralmaskmanifesturi` configuration parameter must
-be configured for all emulator instances (including those instances
+be configured for all emulator instances, including those instances
 with an *NEM* not transmitting with a spectral mask. This is necessary
 for a receiving *NEM* to determine the *txPower* when performing the
 [receive power calculation](#receive-power-calculation).
