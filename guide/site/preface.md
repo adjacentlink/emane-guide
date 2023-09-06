@@ -13,29 +13,29 @@ permalink: /
 The *emane-guide* is for anyone interested in using the [*Extendable
 Mobile Ad-hoc Network
 Emulator*](https://github.com/adjacentlink/emane) (*EMANE*) for
-research and/or development of wireless communication systems.
+research and development of wireless communication systems.
 
-This guide assumes that you are familiar with basic wireless
+The *emane-guide* assumes that you are familiar with basic wireless
 communication concepts and have a working knowledge of the Linux
-command line. The material presented throughout this guide is done in
-a broadly accessible manner. Networking tools and operating system
-components, such as Linux Containers, are used throughout the examples
-that accompany this guide. If you find that you require more
-information or direction using any of these, there is ample
-documentation readily available on the Internet.
+command line. The material presented throughout the guide is done in a
+broadly accessible manner. Networking tools and operating system
+components, such as Linux Containers, are used throughout the
+accompanying examples. If you find that you require more information
+or direction using any of these, there is ample documentation readily
+available on the Internet.
 
 ## How to Use This Guide
 
-This guide is designed to be read in sequence, with each chapter
-building on the previous. This guide comes with a set of examples, so
-you will want to clone the latest version from
-[GitHub](https://github.com) and try each of the examples yourself.
+The *emane-guide* is designed to be read in sequence, with each
+chapter building on the previous. The *emane-guide* comes with a set
+of examples, so you will want to clone the latest version from
+[GitHub](https://github.com) and give each a try.
 
 ```text
 $ git clone https://github.com/adjacentlink/emane-guide
 ```
 
-Some sections of this guide that focus on internal and external APIs
+Some sections of the guide that focus on internal and external APIs
 will make more sense if you have a programming background,
 specifically experience with C++, Python, and Google Protocol
 Buffers. None of which are a prerequisite for using *EMANE*, but if
@@ -45,13 +45,13 @@ proficiency with each will be helpful.
 ## Resources and Contributions
 
 All [Adjacent Link](https://adjacentlink.com) Free and Open Software
-(FOSS), including this guide, is available on [Adjacent Link's
+(FOSS), including the *emane-guide*, are available on [Adjacent Link's
 GitHub](https://github.com/adjacentlink) organization page. Each
 project has its own *Issues* and *Pull Requests*. Please use these to
 report any application specific bugs or questions.
 
 Additional Adjacent Link tutorials related to material and topics
-referenced in this guide are as follows:
+referenced the *emane-guide* are as follows:
 
 * The
   [*emane-control-port-tutorial*](https://github.com/adjacentlink/emane-control-port-tutorial)

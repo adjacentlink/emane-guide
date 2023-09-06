@@ -8,20 +8,154 @@ permalink: /events
 
 # Events
 
-{: .warning }
-> This chapter is incomplete.
-
 A scenario is a set of *events* that are sent to one or more *NEMs* in
 order to change environmental characteristics such as locations,
 pathloss and antenna pointing. Events are delivered opaquely to
-registered radio model and physical layer instances so individual
-radio models may use their own specialized events.
+registered radio model and physical layer instances allowing
+individual radio models to use their own specialized events when
+necessary.
 
-## `AntennaProfileEvent`
+Events are defined using [Google Protocol
+Buffers](https://protobuf.dev/) and transmitted to emulator instances
+via the multicast event channel or in some special circumstances via
+the multicast over-the-air channel. Events on the over-the-air channel
+are referred to as *attached events* because they are attached to
+specific over-the-air messages. The *attached event* mechanism is used
+by a small subset of *compat1* radio models to issue antenna profile
+events that are required to be processed before their respective
+over-the-air message. The vast majority of radio models do not use
+*attached events* and the MIMO API (*compat2*) makes using *attached
+events* for antenna profile control unnecessary.
+
+*EMANE* provides two mechanisms for generating events and injecting
+them into a running emulation: event generator plugins using the
+[Event Service](applications#event-service) and applications using the Python
+`emane.events` module.
+
+The [Emulation Event Log Generator](eel-event-generator#eel-event-generator) for
+the [Event Service](applications#event-service) provides a time based input sentence
+syntax for defining emulation events and is discussed in detail in a
+later [section](eel-event-generator#eel-event-generator).
+
+The Python `emane.events` module provides an event class for each of
+the standard *EMANE* events and an `EventService` class for sending
+and receiving events. The following sections detail each of the
+standard *EMANE* events along with Python usage examples and command
+line tools that are available for quick event injection.
+
+You can also use event protocol buffer
+definitions to develop your own tools that generate and send
+events. The
+[emane-example-cpp-events](https://github.com/adjacentlink/emane-example-cpp-events)
+project is an example of doing just that in C++.
+
+## Monitoring Events
+
+It can be beneficial to monitor events in order to determine why an
+emulation may not be executing as intended. Events can be monitored in
+a number of way: using the *EMANE* shell (`emanesh`) to inspect
+individual event reception tables; using OpenTestPoint to monitor all
+event reception tables of all nodes in an emulation, or using
+`emaneevent-dump` to listen and display event contents transmitted via
+the event and over-the-air channels.
+
+Depending on the scale of your emulation and your reason for
+monitoring events, some monitoring methods may be more appropriate
+than others. As we discuss event monitoring, you can try any of the
+following examples yourself using a running [`rfpipe-01`](rf-pipe-radio-model#rfpipe-01) example. Don't
+worry about what the nodes in the example are doing. For now we are
+only interested in events.
+
+The `emaneevent-dump` application listens on an interface for events
+and displays the Python representation of received event data. If you
+are trying this yourself with `rfpipe-01`, you might miss the event
+sent at the start of the example. You can send events with any of the
+example scripts in `emane-guide/examples/event-01/scripts` and see
+them with `emaneevent-dump`. The examples below are after executing
+the `send-location-event.py` script.
+
+```text
+$ emaneevent-dump -i letce0
+[1694014118.758490] nem: 0 event: 100 len: 33 seq: 1 [Location]
+ UUID: 8e156854-12c9-42eb-9d56-f2e5bfb771af
+   (1, {'latitude': 37.274043, 'longitude': -115.79903, 'altitude': 10.0})
+```
+
+{: .warning }
+> If you are not seeing any events, you might have to set
+letce0 to be a trusted interface: sudo firewall-cmd --zone=trusted
+--change-interface=letce0
+
+
+The `emanesh` application can query a running `emane` instance to view
+statistics and statistic tables.
+
+```text
+$ emanesh node-1 get table nems phy EventReceptionTable
+nem 1   phy EventReceptionTable
+| Event | Total Rx |
+| 100   | 1        |
+| 101   | 1        |
+
+```
+
+The Physical Layer `EventReceptionTable` keeps a count of all received
+events by event id.
+
+| Event Id  | Event Name            |
+|-----------|-----------------------|
+| 100       | Location              |
+| 101       | Pathloss              |
+| 102       | Antenna Profile       |
+| 103       | Comm Effect           |
+| 104       | IEEE802.11abg One Hop |
+| 105       | TDMA Schedule         |
+| 106       | Fading Selection      |
+
+OpenTestPoint probes for *EMANE* publish statistic and statistic table
+measurements on OpenTestPoint time boundaries, once every 5
+seconds. An easy way to view a correlated table of
+`EventReceptionTable` entries from all nodes is to use
+`otestpoint-labtools-mtabletool`.
+
+```text
+$ otestpoint-labtools-mtabletool \
+    localhost:9002 \
+    Measurement_emane_physicallayer_tables_events@eventreceptiontable \
+    EMANE.PhysicalLayer.Tables.Events \
+    --actions \
+    "pass(c=(0));" \
+    "pass(c=(1))=>|Total|};" \
+    --pivot "values=(2),index=(0),cols=(1);"
+```
+
+Which will produce a periodically updated long-form table of per node event
+counts pivoted on event id.
+
+```text
+ Measurement_emane_physicallayer_tables_events@eventreceptiontable
+            Total
+Event        100 101
+_Publisher
+node-1         1   1
+node-2         1   1
+node-3         1   1
+node-4         1   1
+node-5         1   1
+ ```
+
+## AntennaProfileEvent
 
 An `AntennaProfileEvent` is used to set the antenna profile and
 pointing information (azimuth and elevation) for an *NEM's* default
 antenna (index 0).
+
+*NEMs* must know the antenna profile and pointing information for
+themselves and/or any other *NEMs* that have their physical layer
+[configuration parameters](physical-layer#configuration) set accordingly:
+
+1. `compatibilitymode` is `1`
+2. `fixedanntennagainenable` is `off`
 
 ```protobuf
 package EMANEMessage;
@@ -40,10 +174,49 @@ message AntennaProfileEvent
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane/src/libemane/antennaprofileevent.proto</p><br>
 
-## `LocationEvent`
+The following example uses the `emane.events` Python module to send
+antenna profile updates for two *NEMs* to all  *NEMs*.
+
+```python
+from emane.events import EventService
+from emane.events import AntennaProfileEvent
+
+# create the event service
+service = EventService(('224.1.2.8',45703,'letce0'))
+
+# create an event
+event = AntennaProfileEvent()
+
+# append NEM 1 & NEM 2 antenna profile and pointing
+event.append(1,profile=1,azimuth=291.11372919270093,elevation=69.66042286291453)
+event.append(2,profile=1,azimuth=46.978501196479556,elevation=72.73376112146813)
+
+# publish the event to all NEMs
+service.publish(0,event)
+```
+<p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/events-01/scripts/send-antenna-profile-event.py</p><br>
+
+The `emaneevent-antennaprofile` command line tool can be used to set a
+single antenna profile and pointing for one or more *NEMs*. See
+`emaneevent-antennaprofile --help` for more information.
+
+```text
+$ emaneevent-antennaprofile 1 profile=1 azimuth=291.11372919270093 elevation=69.66042286291453 -i letce0
+```
+
+## LocationEvent
 
 A `LocationEvent` is used to set the location and optionally the
 velocity and/or orientation of an *NEM*.
+
+*NEMs* must know the location of all other *NEMs* if any of the
+following physical layer [configuration parameters](physical-layer#configuration) are set
+accordingly:
+
+1. `propagationmodel` is `2ray` or `freespace`
+2. `fading.model` is `event`, `nakagami`, or `lognormal`
+3. `dopplershiftenable` is `on`
+4. `fixedanntennagainenable` is `off`
 
 ```protobuf
 package EMANEMessage;
@@ -80,11 +253,47 @@ message LocationEvent
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane/src/libemane/locationevent.proto</p><br>
 
-## `PathlossEvent`
+The following example uses the `emane.events` Python module to send a
+location update for a single *NEM*.
+
+```python
+from emane.events import EventService
+from emane.events import LocationEvent
+
+# create the event service
+service = EventService(('224.1.2.8',45703,'letce0'))
+
+# create an event
+event = LocationEvent()
+
+# append NEM 1 position
+event.append(1,latitude=37.274043,longitude=-115.799030,altitude=10.0)
+
+# publish the event to all NEMs
+service.publish(0,event)
+```
+<p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/events-01/scripts/send-location-event.py</p><br>
+
+The `emaneevent-location` command line tool can be used to set a
+single position, with an optional velocity and/or orientation, as the
+position for one or more *NEMs*. See `emaneevent-location --help` for
+more information.
+
+```text
+$ emaneevent-location 1 latitude=37.274043 longitude=-115.799030 altitude=10.0 -i letce0
+```
+
+## PathlossEvent
 
 A `PathlossEvent` is used to set the pathloss used at a receiving
 *NEM* for over-the-air transmissions from one or more specified source
 *NEMs*. 
+
+*NEMs* must know the pathloss for transmitting *NEMs* if any of the
+following physical layer [configuration parameters](physical-layer#configuration) are set
+accordingly:
+
+1. `propagationmodel` is `precomuted`
 
 ```protobuf
 package EMANEMessage;
@@ -101,13 +310,65 @@ message PathlossEvent
 }
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane/src/libemane/pathlossevent.proto</p><br>
- 
-## `FadingSelectionEvent`
+
+The following example uses the `emane.events` Python module to send a
+pathloss update to *NEMs* 1 through 3 to place them in a straight
+line. If a previous pathloss event enabled *NEM* 1 and *NEM* 3 to see
+each other, the script should be modified to add a sufficiently large
+enough pathloss between the two to prevent direct communication.
+
+```python
+from emane.events import EventService
+from emane.events import PathlossEvent
+
+# create the event service
+service = EventService(('224.1.2.8',45703,'letce0'))
+
+# topology: 1 <-> 2 <-> 3
+
+# create an event setting the pathloss between 1 & 2
+event = PathlossEvent()
+event.append(1,forward=90)
+event.append(2,forward=90)
+
+# publish the event
+service.publish(1,event)
+service.publish(2,event)
+
+# create an event setting the pathloss between 2 & 3
+event = PathlossEvent()
+event.append(2,forward=90)
+event.append(3,forward=90)
+
+# publish the event
+service.publish(2,event)
+service.publish(3,event)
+```
+<p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/events-01/scripts/send-pathloss-event.py</p><br>
+
+The physical layer ignores any self-pathloss information, so you can
+avoid having to create separate event objects to change the
+bidirectional pathloss between two nodes.
+
+The `emaneevent-pathloss` command line tool can be used to set the
+pathloss between one or more *NEMs*. See `emaneevent-pathloss --help`
+for more information.
+
+```text
+$ emaneevent-pathloss 1:5 200 -i letce0
+```
+
+## FadingSelectionEvent
 
 A `FadingSelectionEvent` is used to set the fading model in use at a
 receiving *NEM* for over-the-air transmission from one or more
-specified source *NEMs*. Required when the physical layer
-`fading.model` configuration parameter is set to `event`.
+specified source *NEMs*.
+
+*NEMs* must know the fading model selection for transmitting *NEMs* if
+the receiving *NEM* has its physical layer [configuration parameters](physical-layer#configuration) set
+accordingly:
+
+1. `fading.model` is `event`
 
 ```protobuf
 package EMANEMessage;
@@ -129,3 +390,37 @@ message FadingSelectionEvent
 }
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane/src/libemane/fadingselectionevent.proto</p><br>
+
+The following example uses the `emane.events` Python module to send a
+fading model selection to all *NEMs*, selecting `nakagami` for all
+received traffic from *NEMs* 1 through 5.
+
+```python
+from emane.events import EventService
+from emane.events import FadingSelectionEvent
+
+# create the event service
+service = EventService(('224.1.2.8',45703,'letce0'))
+
+# create an event setting nakagami fading model to be used for all
+# over-the-air messages from NEMs 1 - 5
+event =FadingSelectionEvent()
+event.append(1,model='nakagami')
+event.append(2,model='nakagami')
+event.append(3,model='nakagami')
+event.append(4,model='nakagami')
+event.append(5,model='nakagami')
+
+# publish the event
+service.publish(0,event)
+```
+<p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/events-01/scripts/send-fading-selection-event.py</p><br>
+
+The `emaneevent-fadingselection` command line tool can be used to set
+the fading selection used at receiving *NEMs* for messages from
+transmitting *NEMs*. See `emaneevent-fadingselection --help` for more
+information.
+
+```text
+$ emaneevent-fadingselection 1:5 nakagami -i letce0
+```

@@ -263,6 +263,35 @@ $ git clone https://github.com/adjacentlink/emane-guide
 $ emane-guide/extras/adjacentlink-foss-build.sh build
 ```
 
+{: .warning }
+> If you wish to build the latest develop instead of the
+latest release, modify the build script changing all branches from
+master to develop.
+
+```python
+emane_branch=master
+openstatistic_branch=master
+opentestpoint_branch=master
+opentestpoint_probe_emane_branch=master
+opentestpoint_probe_iproute_branch=master
+opentestpoint_probe_iptraffic_branch=master
+opentestpoint_probe_system_branch=master
+opentestpoint_probe_mgen_branch=master
+opentestpoint_labtools_branch=master
+python_etce_branch=master
+emane_node_director_branch=master
+letce2_branch=master
+letce2_plugin_lxc_branch=master
+emane_spectrum_tools_branch=master
+emane_jammer_simple_branch=master
+emane_model_lte_branch=master
+srsRAN_emane_branch=master
+opentestpoint_probe_lte_branch=master
+waveform_resource_branch=master
+```
+<p style="float:right;font-family:courier;font-size:75%">emane-guide/extras/adjacentlink-foss-build.sh lines: 48-66</p><br>
+
+
 The *emane* dtd and schema must be copied to `/usr/share/emane`. These
 are core files that never change, regardless of which version of
 *emane* you are running.
