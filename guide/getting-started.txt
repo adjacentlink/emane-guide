@@ -225,6 +225,19 @@ $ pushd ~/dev
 $ git clone https://github.com/adjacentlink/emane-guide
 $ emane-guide/extras/adjacentlink-foss-build.sh build}}~
 
+~{{warnbox If you wish to build the latest develop instead of the
+latest release, modify the build script changing all branches from
+master to develop.}}~
+
+~{{snippet path="../extras/adjacentlink-foss-build.sh"
+type=python
+start-regex="^emane_branch=.*"
+stop-regex="^\s*$"
+path-cut="../extras"
+path-replace="emane-guide/extras"
+showname=true}}~
+
+
 The *emane* dtd and schema must be copied to `/usr/share/emane`. These
 are core files that never change, regardless of which version of
 *emane* you are running.
