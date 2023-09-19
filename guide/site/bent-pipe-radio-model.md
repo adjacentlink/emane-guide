@@ -369,6 +369,16 @@ of the waveform being emulated.
 representative of the waveform being emulated. The curves used for
 Bent Pipe radio model examples are for illustrative purposes only.
 
+## Compatibility
+
+When used with the Bent Pipe radio model:
+
+1. [Physical Layer](physical-layer#physical-layer) configuration parameter
+`compatibilitymode` must be set to `2`.
+
+2. [Virtual Transport](virtual-transport#virtual-transport) configuration parameter
+`arpcacheenable` must be set to `off`.
+
 ## Configuration
 1. **`antenna.defines`**: Defines antennas available for use by
    transponders with the following format:
