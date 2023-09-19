@@ -713,7 +713,7 @@ impairments via the `emaneeventservice` which publishes [`CommEffectEvents`](com
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/commeffect-01/host/scenario.eel</p><br>
 
-![](images/auto-generated-run-commeffect-01.png){: width="75%"; .centered}
+![](images/auto-generated-run-commeffect-01.png){:width="75%"; .centered}
 
 All hosts are configured similarly, taking a look at `host-1`
 interfaces we can see the `lan0` interface is configured as

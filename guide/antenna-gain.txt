@@ -2,7 +2,7 @@
 layout: default
 title: Computing Antenna Gain
 nav_order: 18
-permalink: /computing-antenna-gain}}~
+permalink: /antenna-gain}}~
 
 ~{{layout type=newpage}}~
 

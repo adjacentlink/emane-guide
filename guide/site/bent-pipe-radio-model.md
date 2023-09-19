@@ -858,7 +858,7 @@ This experiment illustrates the versatility of the Bent Pipe model in
 `process` mode, allowing its use in a similar fashion as you would the
  [RF Pipe](rf-pipe-radio-model#rf-pipe-radio-model) radio model.
 
-![](images/auto-generated-run-bentpipe-01.png){: width="75%"; .centered}
+![](images/auto-generated-run-bentpipe-01.png){:width="75%"; .centered}
 
 With `emane-guide/examples/bentpipe-01` running, we can query `node-1` to
 take a look at its transponder configuration.
@@ -945,7 +945,7 @@ using the locations in `locations.eel`.
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/bentpipe-02/locations.eel</p><br>
 
-![](images/auto-generated-run-bentpipe-02.png){: width="75%"; .centered}
+![](images/auto-generated-run-bentpipe-02.png){:width="75%"; .centered}
 
 With `emane-guide/examples/bentpipe-02` running, we can query `node-2` to
 take a look at its transponder configuration. 

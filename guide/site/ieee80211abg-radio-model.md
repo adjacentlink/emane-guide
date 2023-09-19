@@ -1862,7 +1862,7 @@ using the values in `pathloss.eel`.
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/ieee80211abg-01/pathloss.eel</p><br>
 
-![](images/auto-generated-run-ieee80211abg-01.png){: width="75%"; .centered}
+![](images/auto-generated-run-ieee80211abg-01.png){:width="75%"; .centered}
 
 With `emane-guide/examples/ieee80211abg-01` running, we can use
 `otestpoint-labtools-mtabletool` to subscribe to all

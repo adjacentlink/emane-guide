@@ -8,7 +8,7 @@ classoption:
 header-includes:
     - \usepackage{titling}
     - \pretitle{\begin{center}
-      \includegraphics[width=3in,height=3in]{images/adjacentlink.png}\\
+      \includegraphics[width=3in]{images/adjacentlink.png}\\
       \url{https://adjacentlink.com}
       \vspace{1.5cm}\LARGE\\}
     - \posttitle{\end{center}
@@ -72,7 +72,6 @@ header-includes:
         \end{minipage}}}}
     - \usepackage{fancyhdr}
     - \pagestyle{fancy}
-    - \usepackage[firstpage]{draftwatermark}
     - \usepackage[skins]{tcolorbox}
 ---
 \setcounter{tocdepth}{2}

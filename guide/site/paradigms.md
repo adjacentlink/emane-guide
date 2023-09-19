@@ -176,7 +176,7 @@ Running `emane-guide/examples/rfpipe-01`, the `emanesh` application is
 uded to connect to a running `emane` instance and query and/or clear
 statistics.
 
-![](images/auto-generated-run-rfpipe-01.png){: width="75%"; .centered}
+![](images/auto-generated-run-rfpipe-01.png){:width="75%"; .centered}
 
 To establish an shell connection and query one ore more configuration
 parameters of a running radio model:
@@ -335,7 +335,7 @@ Running `emane-guide/examples/rfpipe-01`, we can use the `emanesh`
 application to connect to a running `emane` instance and query and/or
 clear statistics.
 
-![](images/auto-generated-run-rfpipe-01.png){: width="75%"; .centered}
+![](images/auto-generated-run-rfpipe-01.png){:width="75%"; .centered}
 
 To establish an shell connection to query the statistics of a running
 radio model:
@@ -472,7 +472,7 @@ Running `emane-guide/examples/rfpipe-01`, the `emanesh` application is
 used to connect to a running `emane` instance and query and/or clear
 statistic tables.
 
-![](images/auto-generated-run-rfpipe-01.png){: width="75%"; .centered}
+![](images/auto-generated-run-rfpipe-01.png){:width="75%"; .centered}
 
 To establish an shell connection to query statistic tables of a
 running radio model:

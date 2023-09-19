@@ -1156,7 +1156,7 @@ This example uses the TDMA schedule defined in `schedule.xml`.
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/tdma-01/schedule.xml</p><br>
 
-![](images/auto-generated-run-tdma-01.png){: width="75%"; .centered}
+![](images/auto-generated-run-tdma-01.png){:width="75%"; .centered}
 
 With `emane-guide/examples/tdma-01` running, we can use `emanesh` to
 view the schedule assigned to `node-1` and compare this to the TDMA

@@ -1,0 +1,1697 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE antennaprofile SYSTEM "file:///usr/share/emane/dtd/antennaprofile.dtd">
+<antennaprofile>
+  <!-- Antenna Pattern generated from Antenna Test Lab Co Example 6: LHCP Omnidirectional FPV Antenna -->
+  <!-- https://antennatestlab.com/antenna-examples/example-6-lhcp-miniature-fpv-omnidirectional-antenna -->
+  <antennapattern>
+    <elevation min="-89" max="-90">
+      <bearing min="0" max="359">
+        <gain value="-19.94"/>
+      </bearing>
+    </elevation>
+    <elevation min="-89" max="-80">
+      <bearing min="0" max="9">
+        <gain value="-16.62"/>
+      </bearing>
+      <bearing min="10" max="59">
+        <gain value="-16.59"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-16.57"/>
+      </bearing>
+      <bearing min="70" max="119">
+        <gain value="-16.44"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-16.3"/>
+      </bearing>
+      <bearing min="130" max="169">
+        <gain value="-14.15"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-11.99"/>
+      </bearing>
+      <bearing min="180" max="229">
+        <gain value="-13.37"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-14.74"/>
+      </bearing>
+      <bearing min="240" max="289">
+        <gain value="-15.89"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-17.04"/>
+      </bearing>
+      <bearing min="300" max="349">
+        <gain value="-15.26"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-13.48"/>
+      </bearing>
+    </elevation>
+    <elevation min="-79" max="-70">
+      <bearing min="0" max="9">
+        <gain value="-10.31"/>
+      </bearing>
+      <bearing min="10" max="29">
+        <gain value="-11.45"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-12.59"/>
+      </bearing>
+      <bearing min="40" max="59">
+        <gain value="-13.85"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-15.1"/>
+      </bearing>
+      <bearing min="70" max="89">
+        <gain value="-13.83"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-12.55"/>
+      </bearing>
+      <bearing min="100" max="119">
+        <gain value="-13.48"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-14.4"/>
+      </bearing>
+      <bearing min="130" max="149">
+        <gain value="-12.01"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-9.61"/>
+      </bearing>
+      <bearing min="160" max="179">
+        <gain value="-9.66"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-9.7"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-9.28"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-8.85"/>
+      </bearing>
+      <bearing min="210" max="229">
+        <gain value="-12.23"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-15.61"/>
+      </bearing>
+      <bearing min="240" max="259">
+        <gain value="-13.73"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-11.85"/>
+      </bearing>
+      <bearing min="270" max="289">
+        <gain value="-12.63"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-13.41"/>
+      </bearing>
+      <bearing min="300" max="319">
+        <gain value="-12.51"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-11.6"/>
+      </bearing>
+      <bearing min="330" max="349">
+        <gain value="-10.59"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-9.57"/>
+      </bearing>
+    </elevation>
+    <elevation min="-69" max="-60">
+      <bearing min="0" max="9">
+        <gain value="-6.4"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-5.48"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-4.56"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-8.34"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-12.13"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-10.52"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-8.91"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-7.41"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-5.91"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-6.18"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-6.44"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-7.71"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-8.98"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-7.64"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-6.29"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-7.17"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-8.04"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-7.38"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-6.72"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-5.35"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-3.98"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-7.34"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-10.7"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-10.0"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-9.3"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-7.7"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-6.1"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-6.29"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-6.49"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-7.6"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-8.72"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-7.73"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-6.74"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-7.21"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-7.69"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-7.05"/>
+      </bearing>
+    </elevation>
+    <elevation min="-59" max="-50">
+      <bearing min="0" max="9">
+        <gain value="-5.85"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-5.54"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-5.22"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-6.24"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-6.41"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-6.57"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-5.21"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-4.37"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-3.54"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-3.6"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-5.11"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-6.62"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-8.54"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-6.44"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-4.33"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-4.17"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-4.01"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-6.38"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-5.22"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-4.07"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-4.89"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-5.59"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-6.29"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-6.09"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-5.1"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-4.1"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-4.01"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-4.74"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-5.48"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-7.24"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-9.0"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-7.78"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-5.02"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-2.26"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-4.79"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-5.32"/>
+      </bearing>
+    </elevation>
+    <elevation min="-49" max="-40">
+      <bearing min="0" max="9">
+        <gain value="-3.66"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-6.14"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-4.81"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-3.48"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-5.47"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-7.59"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-6.17"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-4.75"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-3.65"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-3.6"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-4.01"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-5.09"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-6.16"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-4.98"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-3.76"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-4.17"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-4.59"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-3.01"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-3.47"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-4.05"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-4.63"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-3.19"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-4.78"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-7.11"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-5.94"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-4.78"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-3.83"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-3.79"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-4.49"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-5.19"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-6.02"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-4.86"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-4.5"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-4.14"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-3.9"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-2.64"/>
+      </bearing>
+    </elevation>
+    <elevation min="-39" max="-30">
+      <bearing min="0" max="9">
+        <gain value="-3.43"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-4.17"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-4.4"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-3.67"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-4.08"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-4.49"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-5.95"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-5.36"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-4.45"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-4.59"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-5.22"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-5.17"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-5.11"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-3.29"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-2.54"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-4.2"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-5.04"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-4.08"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-3.65"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-3.79"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-3.93"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-3.39"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-3.32"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-4.32"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-5.36"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-5.15"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-4.93"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-4.72"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-5.13"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-5.92"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-5.64"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-3.49"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-2.48"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-4.34"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-4.03"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-3.72"/>
+      </bearing>
+    </elevation>
+    <elevation min="-29" max="-20">
+      <bearing min="0" max="9">
+        <gain value="-3.37"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-2.19"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-3.91"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-3.84"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-2.3"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-2.65"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-3.94"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-4.5"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-4.31"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-4.12"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-3.8"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-3.41"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-2.58"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-2.49"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-3.56"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-3.55"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-2.34"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-3.5"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-3.45"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-2.22"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-3.67"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-3.71"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-1.99"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-2.21"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-3.71"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-4.0"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-4.28"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-4.21"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-3.85"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-3.44"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-2.86"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-2.82"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-3.45"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-3.12"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-2.34"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-3.79"/>
+      </bearing>
+    </elevation>
+    <elevation min="-19" max="-10">
+      <bearing min="0" max="9">
+        <gain value="-3.32"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-3.31"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-2.93"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-3.35"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-3.47"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-2.45"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-2.01"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-2.18"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-2.59"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-3.0"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-2.67"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-2.15"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-2.16"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-2.6"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-3.12"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-2.95"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-2.8"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-2.69"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-2.83"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-3.28"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-2.83"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-3.04"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-3.18"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-2.3"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-1.98"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-2.21"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-2.65"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-3.13"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-2.87"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-2.32"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-2.13"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-2.66"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-3.46"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-3.15"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-2.84"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-3.19"/>
+      </bearing>
+    </elevation>
+    <elevation min="-9" max="0">
+      <bearing min="0" max="9">
+        <gain value="-2.19"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-2.63"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-2.5"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-2.54"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-3.11"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-3.19"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-2.53"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-2.03"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-2.01"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-2.26"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-2.29"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-2.48"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-3.3"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-3.33"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-2.32"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-2.08"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-2.72"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-2.45"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-2.26"/>
+      </bearing>
+      <bearing min="190" max="209">
+        <gain value="-2.68"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-2.5"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-3.09"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-3.29"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-2.58"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-1.99"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-1.82"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-2.06"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-2.25"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-2.56"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-3.22"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-3.18"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-2.33"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-2.22"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-2.87"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-2.48"/>
+      </bearing>
+    </elevation>
+    <elevation min="1" max="10">
+      <bearing min="0" max="9">
+        <gain value="-2.92"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-2.43"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-2.67"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-2.82"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-2.41"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-2.51"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-2.98"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-3.16"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-3.14"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-3.17"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-3.01"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-2.78"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-2.71"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-2.73"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-2.62"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-2.34"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-2.25"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-2.79"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-2.81"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-2.25"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-2.54"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-2.78"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-2.45"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-2.54"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-2.88"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-2.93"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-2.81"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-2.86"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-2.69"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-2.63"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-2.73"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-2.58"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-2.52"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-2.5"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-2.29"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-2.6"/>
+      </bearing>
+    </elevation>
+    <elevation min="11" max="20">
+      <bearing min="0" max="9">
+        <gain value="-2.7"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-2.63"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-2.58"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-2.8"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-3.03"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-2.99"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-2.81"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-2.61"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-2.53"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-2.62"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-2.72"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-2.61"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-2.8"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-3.14"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-3.16"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-2.94"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-2.85"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-2.69"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-2.71"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-2.85"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-2.76"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-3.0"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-3.34"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-3.18"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-2.75"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-2.45"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-2.57"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-2.69"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-2.45"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-2.19"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-2.46"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-2.92"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-3.07"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-2.9"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-2.93"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-2.9"/>
+      </bearing>
+    </elevation>
+    <elevation min="21" max="30">
+      <bearing min="0" max="9">
+        <gain value="-2.94"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-3.0"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-2.94"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-2.78"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-2.79"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-2.8"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-2.98"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-3.27"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-3.57"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-3.71"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-3.59"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-3.4"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-3.09"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-2.77"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-2.55"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-2.86"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-3.13"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-3.0"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-2.97"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-3.11"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-3.14"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-3.17"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-2.82"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-2.93"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-3.28"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-3.43"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-3.36"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-3.26"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-3.08"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-2.91"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-2.7"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-2.56"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-2.74"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-3.22"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-3.42"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-3.18"/>
+      </bearing>
+    </elevation>
+    <elevation min="31" max="40">
+      <bearing min="0" max="9">
+        <gain value="-3.96"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-3.55"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-3.52"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-3.48"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-3.28"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-3.1"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-3.39"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-3.77"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-4.15"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-4.0"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-3.83"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-3.64"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-3.45"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-3.41"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-3.62"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-3.75"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-3.76"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-3.78"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-3.94"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-3.81"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-3.79"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-3.76"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-3.53"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-3.17"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-3.25"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-3.48"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-3.72"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-3.52"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-3.3"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-3.12"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-2.94"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-2.97"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-3.29"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-3.67"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-3.82"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-3.97"/>
+      </bearing>
+    </elevation>
+    <elevation min="41" max="50">
+      <bearing min="0" max="9">
+        <gain value="-5.21"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-5.08"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-4.96"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-4.84"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-4.74"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-4.64"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-4.72"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-5.08"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-5.44"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-5.83"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-5.64"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-5.45"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-4.85"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-4.78"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-4.71"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-4.91"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-5.05"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-5.18"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-5.39"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-5.37"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-5.35"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-5.14"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-5.0"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-4.87"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-4.71"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-4.76"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-4.8"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-5.03"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-4.75"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-4.47"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-4.12"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-4.26"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-4.4"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-4.71"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-4.9"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-5.08"/>
+      </bearing>
+    </elevation>
+    <elevation min="51" max="60">
+      <bearing min="0" max="9">
+        <gain value="-7.05"/>
+      </bearing>
+      <bearing min="10" max="19">
+        <gain value="-7.39"/>
+      </bearing>
+      <bearing min="20" max="29">
+        <gain value="-7.73"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-7.45"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-7.17"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-7.25"/>
+      </bearing>
+      <bearing min="60" max="69">
+        <gain value="-7.34"/>
+      </bearing>
+      <bearing min="70" max="79">
+        <gain value="-7.37"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-7.39"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-7.43"/>
+      </bearing>
+      <bearing min="100" max="109">
+        <gain value="-7.42"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-7.4"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-7.8"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-8.19"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-7.93"/>
+      </bearing>
+      <bearing min="150" max="159">
+        <gain value="-7.67"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-7.27"/>
+      </bearing>
+      <bearing min="170" max="179">
+        <gain value="-6.86"/>
+      </bearing>
+      <bearing min="180" max="189">
+        <gain value="-7.38"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-7.89"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-7.84"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-7.79"/>
+      </bearing>
+      <bearing min="220" max="229">
+        <gain value="-7.7"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-7.62"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-7.43"/>
+      </bearing>
+      <bearing min="250" max="259">
+        <gain value="-7.24"/>
+      </bearing>
+      <bearing min="260" max="269">
+        <gain value="-6.97"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-6.69"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-6.59"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-6.73"/>
+      </bearing>
+      <bearing min="300" max="309">
+        <gain value="-6.86"/>
+      </bearing>
+      <bearing min="310" max="319">
+        <gain value="-7.13"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-7.4"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-6.97"/>
+      </bearing>
+      <bearing min="340" max="349">
+        <gain value="-6.54"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-6.8"/>
+      </bearing>
+    </elevation>
+    <elevation min="61" max="70">
+      <bearing min="0" max="9">
+        <gain value="-9.91"/>
+      </bearing>
+      <bearing min="10" max="29">
+        <gain value="-10.08"/>
+      </bearing>
+      <bearing min="30" max="39">
+        <gain value="-10.24"/>
+      </bearing>
+      <bearing min="40" max="49">
+        <gain value="-10.13"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-10.03"/>
+      </bearing>
+      <bearing min="60" max="79">
+        <gain value="-9.9"/>
+      </bearing>
+      <bearing min="80" max="89">
+        <gain value="-9.77"/>
+      </bearing>
+      <bearing min="90" max="109">
+        <gain value="-10.02"/>
+      </bearing>
+      <bearing min="110" max="119">
+        <gain value="-10.27"/>
+      </bearing>
+      <bearing min="120" max="129">
+        <gain value="-10.91"/>
+      </bearing>
+      <bearing min="130" max="139">
+        <gain value="-11.56"/>
+      </bearing>
+      <bearing min="140" max="159">
+        <gain value="-11.21"/>
+      </bearing>
+      <bearing min="160" max="169">
+        <gain value="-10.87"/>
+      </bearing>
+      <bearing min="170" max="189">
+        <gain value="-10.8"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-10.74"/>
+      </bearing>
+      <bearing min="200" max="209">
+        <gain value="-10.78"/>
+      </bearing>
+      <bearing min="210" max="219">
+        <gain value="-10.82"/>
+      </bearing>
+      <bearing min="220" max="239">
+        <gain value="-10.21"/>
+      </bearing>
+      <bearing min="240" max="249">
+        <gain value="-9.6"/>
+      </bearing>
+      <bearing min="250" max="269">
+        <gain value="-9.29"/>
+      </bearing>
+      <bearing min="270" max="279">
+        <gain value="-8.98"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-9.3"/>
+      </bearing>
+      <bearing min="290" max="299">
+        <gain value="-9.61"/>
+      </bearing>
+      <bearing min="300" max="319">
+        <gain value="-10.09"/>
+      </bearing>
+      <bearing min="320" max="329">
+        <gain value="-10.56"/>
+      </bearing>
+      <bearing min="330" max="349">
+        <gain value="-10.15"/>
+      </bearing>
+      <bearing min="350" max="359">
+        <gain value="-9.73"/>
+      </bearing>
+    </elevation>
+    <elevation min="71" max="80">
+      <bearing min="0" max="9">
+        <gain value="-14.17"/>
+      </bearing>
+      <bearing min="10" max="49">
+        <gain value="-15.42"/>
+      </bearing>
+      <bearing min="50" max="59">
+        <gain value="-16.66"/>
+      </bearing>
+      <bearing min="60" max="89">
+        <gain value="-18.95"/>
+      </bearing>
+      <bearing min="90" max="99">
+        <gain value="-21.25"/>
+      </bearing>
+      <bearing min="100" max="139">
+        <gain value="-20.34"/>
+      </bearing>
+      <bearing min="140" max="149">
+        <gain value="-19.43"/>
+      </bearing>
+      <bearing min="150" max="189">
+        <gain value="-17.55"/>
+      </bearing>
+      <bearing min="190" max="199">
+        <gain value="-15.67"/>
+      </bearing>
+      <bearing min="200" max="229">
+        <gain value="-16.83"/>
+      </bearing>
+      <bearing min="230" max="239">
+        <gain value="-18.0"/>
+      </bearing>
+      <bearing min="240" max="279">
+        <gain value="-18.13"/>
+      </bearing>
+      <bearing min="280" max="289">
+        <gain value="-18.26"/>
+      </bearing>
+      <bearing min="290" max="329">
+        <gain value="-16.86"/>
+      </bearing>
+      <bearing min="330" max="339">
+        <gain value="-15.45"/>
+      </bearing>
+      <bearing min="340" max="359">
+        <gain value="-14.81"/>
+      </bearing>
+    </elevation>
+    <elevation min="81" max="90">
+      <bearing min="0" max="359">
+        <gain value="-22.39"/>
+      </bearing>
+    </elevation>
+  </antennapattern>
+</antennaprofile>
+

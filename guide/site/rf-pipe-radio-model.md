@@ -628,7 +628,7 @@ using pathloss values in `scenario.eel`.
 ```
 <p style="float:right;font-family:courier;font-size:75%">emane-guide/examples/rfpipe-01/host/scenario.eel</p><br>
 
-![](images/auto-generated-run-rfpipe-01.png){: width="75%"; .centered}
+![](images/auto-generated-run-rfpipe-01.png){:width="75%"; .centered}
 
 With `emane-guide/examples/rfpipe-01` running, we can query `node-1`'s
 physical layer to take a look at the `PathlossEventInfoTable` and
