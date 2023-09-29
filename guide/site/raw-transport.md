@@ -93,6 +93,29 @@ The Raw Transport supports IPv4 and IPv6 packet processing.
    Type:    string                Occurrs:  [1,1]               
    ```
 
+5. **`ethernet.type.arp.priority`**: Defines the emulator priority
+   value (DSCP used for IP) to use when an ARP Ethernet frame is
+   encountered during downstream processing.
+   
+   ```no-highlighting
+   Default: yes                   Required: no                    Modifiable: no                  
+   Type:    uint8                 Occurrs:  [1,1]                 Range:      [0,255]             
+   Values:  0
+   ```
+
+6. **`ethernet.type.unknown.priority`**: Defines the emulator priority
+   value (DSCP used for IP) to use when the specified unknown Ethernet
+   type is encountered during downstream processing. Uses the following
+   format:
+   
+   `<ethernet type>:<priority>`
+   
+   ```no-highlighting
+   Default: no                    Required: no                    Modifiable: no                  
+   Type:    string                Occurrs:  [0,65535]           
+   Regex:   ^(0[xX]){0,1}\d+:\d+$
+   ```
+
 
 
 ## Statistics

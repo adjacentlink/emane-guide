@@ -127,21 +127,44 @@ assignments and packet processing.
    Values:  /dev/net/tun
    ```
 
-8. **`flowcontrolenable`**: Enables downstream traffic flow control
-   with a corresponding flow control capable NEM layer.
+8. **`ethernet.type.arp.priority`**: Defines the emulator priority
+   value (DSCP used for IP) to use when an ARP Ethernet frame is
+   encountered during downstream processing.
    
    ```no-highlighting
    Default: yes                   Required: no                    Modifiable: no                  
-   Type:    bool                  Occurrs:  [1,1]                 Range:      [false,true]        
-   Values:  false
+   Type:    uint8                 Occurrs:  [1,1]                 Range:      [0,255]             
+   Values:  0
    ```
 
-9. **`mask`**: IPv4 or IPv6 virutal device addres network mask.
+9. **`ethernet.type.unknown.priority`**: Defines the emulator priority
+   value (DSCP used for IP) to use when the specified unknown Ethernet
+   type is encountered during downstream processing. Uses the following
+   format:
+   
+   `<ethernet type>:<priority>`
    
    ```no-highlighting
    Default: no                    Required: no                    Modifiable: no                  
-   Type:    inetaddr              Occurrs:  [1,1]               
+   Type:    string                Occurrs:  [0,65535]           
+   Regex:   ^(0[xX]){0,1}\d+:\d+$
    ```
+
+10. **`flowcontrolenable`**: Enables downstream traffic flow control
+    with a corresponding flow control capable NEM layer.
+    
+    ```no-highlighting
+    Default: yes                   Required: no                    Modifiable: no                  
+    Type:    bool                  Occurrs:  [1,1]                 Range:      [false,true]        
+    Values:  false
+    ```
+
+11. **`mask`**: IPv4 or IPv6 virutal device addres network mask.
+    
+    ```no-highlighting
+    Default: no                    Required: no                    Modifiable: no                  
+    Type:    inetaddr              Occurrs:  [1,1]               
+    ```
 
 
 
