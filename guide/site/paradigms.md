@@ -173,7 +173,7 @@ parameters with more than one value:
 ### Querying/Modifying Configuration
 
 Running `emane-guide/examples/rfpipe-01`, the `emanesh` application is
-uded to connect to a running `emane` instance and query and/or clear
+used to connect to a running `emane` instance and query and/or clear
 statistics.
 
 ![](images/auto-generated-run-rfpipe-01.png){:width="75%"; .centered}
@@ -327,7 +327,7 @@ Below is a snippet of statistic registration from the [RF Pipe](rf-pipe-radio-mo
 <p style="float:right;font-family:courier;font-size:75%">emane/src/models/mac/rfpipe/downstreamqueue.cc lines: <a href="https://github.com/adjacentlink/emane/blob/master/src/models/mac/rfpipe/downstreamqueue.cc#L55-L58">55-58</a></p><br>
 
 An unsigned 32-bit integer statistic variable is declared with the
-`CLEARABLE` propriety. No description is specified.
+`CLEARABLE` propriety.
 
 ### Querying/Clearing Statistics
 
@@ -488,10 +488,10 @@ nem 1   phy LocationEventInfoTable
 
 nem 1   phy PathlossEventInfoTable
 | NEM | Forward Pathloss | Reverse Pathloss |
-| 2   | 80.0             | 80.0             |
-| 3   | 80.0             | 80.0             |
-| 4   | 80.0             | 80.0             |
-| 5   | 80.0             | 80.0             |
+| 2   | 70.0             | 70.0             |
+| 3   | 70.0             | 70.0             |
+| 4   | 70.0             | 70.0             |
+| 5   | 70.0             | 70.0             |
 ```
 
 To clear those statistic tables that were registered as `CLEARABLE`:

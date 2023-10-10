@@ -148,7 +148,7 @@ path-replace="emane-guide/examples"}}~
 ### Querying/Modifying Configuration
 
 Running `emane-guide/examples/rfpipe-01`, the `emanesh` application is
-uded to connect to a running `emane` instance and query and/or clear
+used to connect to a running `emane` instance and query and/or clear
 statistics.
 
 ~{{imagemagick
@@ -292,7 +292,7 @@ path-replace="emane"
 link-replace="https://github.com/adjacentlink/emane/blob/master" }}~
 
 An unsigned 32-bit integer statistic variable is declared with the
-`CLEARABLE` propriety. No description is specified.
+`CLEARABLE` propriety.
 
 ### Querying/Clearing Statistics
 
@@ -421,10 +421,10 @@ nem 1   phy LocationEventInfoTable
 
 nem 1   phy PathlossEventInfoTable
 | NEM | Forward Pathloss | Reverse Pathloss |
-| 2   | 80.0             | 80.0             |
-| 3   | 80.0             | 80.0             |
-| 4   | 80.0             | 80.0             |
-| 5   | 80.0             | 80.0             |}}~
+| 2   | 70.0             | 70.0             |
+| 3   | 70.0             | 70.0             |
+| 4   | 70.0             | 70.0             |
+| 5   | 70.0             | 70.0             |}}~
 
 To clear those statistic tables that were registered as `CLEARABLE`:
 

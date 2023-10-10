@@ -1077,7 +1077,7 @@ Similarly, if we want to change the antenna associated with `node-2`'s
 defines still in use:
 
 ```text
-$ emanesh node-2 set config nems mac
+$ emanesh node-2 set config nems mac \
     antenna.defines="0:omni;24.25;0,1:1;94.34439424144891;-86.98230090133954;0,2:1;237.5217814216051;-87.42647720511944;0"
 ```
 
