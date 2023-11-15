@@ -85,7 +85,7 @@ referenced the *emane-guide* are as follows:
   there may be material in the wiki and tutorial that is not yet
   included in this guide.
 
-  [https://https://github.com/adjacentlink/emane/wiki](https://https://github.com/adjacentlink/emane/wiki)
+  [https://github.com/adjacentlink/emane/wiki](https://github.com/adjacentlink/emane/wiki)
   
   [https://github.com/adjacentlink/emane-tutorial](https://github.com/adjacentlink/emane-tutorial)
   
