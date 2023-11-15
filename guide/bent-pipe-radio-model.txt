@@ -555,6 +555,11 @@ defines still in use:
 $ emanesh node-2 set config nems mac \
     antenna.defines="0:omni;24.25;0,1:1;94.34439424144891;-86.98230090133954;0,2:1;237.5217814216051;-87.42647720511944;0"}}~
 
+Repeat the same `ping` command to verify connectivity.
+
+~{{verbatim type=txt --
+$ host-1 ping -R -c 5  host-3-lan}}~
+
 Looking at `node-2`'s `AntennaStatusTable` and `NeighborStatusTable`,
 we can see that *antenna 0* is now an ideal omni indicated by the `NA`
 in the `Profile` column, and `node-2` sees `node-1` and `node-3` via

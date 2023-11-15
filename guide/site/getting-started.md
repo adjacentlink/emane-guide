@@ -302,6 +302,18 @@ $ sudo cp ~/dev/emane/schema/*.xsd /usr/share/emane/schema
 $ sudo cp ~/dev/emane/dtd/*.{dtd,ent} /usr/share/emane/dtd
 ```
 
+Generate manifest files for emulation components and models. Manifest
+files contain descriptions of all configuration, statistics, and
+statistic tables, and are used by some applications to validate
+input. The default location for manifest files is
+`/usr/share/emane/manifest`. The `EMANEMANIFESTPATH` environment
+variable can be used to point to alternate manifest file locations.
+
+```text
+$ mkdir ~/dev/manifest
+$ pushd ~/dev/emane && scripts/emanegenmanifests.sh ~/dev/manifest && popd
+```
+
 Every time you want to start or stop one of the *emane-guide*
 examples, use the `letce2` `-e` option to load the
 `adjacentlink-foss.env` environment in each lxc runtime environment.
@@ -398,5 +410,5 @@ You can cut-and-paste `hosts-additions` contents into `/etc/hosts` or
 use the following command:
 
 ```text
-$ sudo sh -c 'cat  ~/dev/emane-guide/extras/hosts-additions >> /etc/hosts'
+$ sudo sh -c 'cat /home/$SUDO_USER/dev/emane-guide/extras/hosts-additions >> /etc/hosts'
 ```

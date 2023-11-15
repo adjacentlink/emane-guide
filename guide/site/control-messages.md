@@ -11,7 +11,38 @@ permalink: /control-messages
 {: .warning }
 > This chapter is incomplete.
 
-## `AntennaProfileControlMessage`
+A radio model exchanges control messages with the physical layer to
+configure certain capabilities and to communication reception
+information, and with an emulation boundary if the radio model is
+implemented with flow control support. These messages are referred to
+as *downstream* and *upstream* control messages based on their
+direction of travel. *Downstream* control messages travel in the
+direction of the emulation boundary down towards the physical layer.
+*Upstream* control messages travel in the direction of the physical
+layer up towards the emulation boundary. Control messages are only
+exchanged between contiguous *NEM* layers.
+
+The [physical layer](physical-layer#features) operates in one of two API modes: *compatibly
+mode 1* (*compat1*) and *compatibility mode 2*
+(*compat2*). *Compatibility mode 1* is a legacy non-MIMO API mode that
+supports radio model control messaging for single antenna
+functionality.  *Compatibility mode 2* is the newer MIMO API mode and
+supports radio model control messaging for both single antenna and
+MIMO.  Many control messages originating at or destined for the
+physical layer are compatibility mode specific.
+
+## AntennaProfileControlMessage
+
+The `AntennaProfileControlMessage` is sent to the physical layer by a
+radio model to set the antenna profile and pointing information for
+the default antenna. The physical layer processes the control message
+and either sends an [`AntennaProfileEvent`](events#antennaprofileevent) via the event
+channel or as an [attached event](events#events) via the over-the-air channel, if the control
+message was sent as part of
+`processDownstreamPacket`.
+
+`AntennaProfileControlMessage` is a physical layer *compatibility mode
+1* control message.
 
 ```cpp
 namespace EMANE
@@ -42,11 +73,19 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/antennaprofilecontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/antennaprofilecontrolmessage.h">emane/include/emane/controls/antennaprofilecontrolmessage.h</a></p><br>
 
+## FlowControlControlMessage
 
+The `FlowControlControlMessage` is exchanged between a radio model and
+emulation boundary to manage flow control tokens in order to establish
+backpressure between a radio model's over-the-air transmission rate
+and the user offered load entering the emulation through the boundary.
 
-## `FlowControlControlMessage`
+{: .warning }
+> Flow control does not work with either the Virtual
+Transport or the Raw Transport. A custom boundary is required to take
+advantage of radio models that support this capability.
 
 ```cpp
 namespace EMANE
@@ -76,10 +115,22 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/flowcontrolcontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/flowcontrolcontrolmessage.h">emane/include/emane/controls/flowcontrolcontrolmessage.h</a></p><br>
 
+## FrequencyControlMessage
 
-## `FrequencyControlMessage`
+The `FrequencyControlMessage` is sent by a radio model to the physical
+layer to set transmit frequency characteristics of an outbound
+over-the-air message using `sendDownstreamPacket`. A radio model can
+set the transmit bandwidth in Hz (0 indicates use of the physical
+layer configuration parameter `bandwidth`) and one or more frequency
+segments describing center frequency in Hz (0 indicates use of
+physical layer configuration parameter `frequency`), duration in
+microseconds, and offset from the start-of-transmission in
+microseconds.
+
+`FrequencyControlMessage` is a physical layer *compatibility mode 1*
+control message.
 
 ```cpp
 namespace EMANE
@@ -107,10 +158,20 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/frequencycontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/frequencycontrolmessage.h">emane/include/emane/controls/frequencycontrolmessage.h</a></p><br>
 
+## FrequencyOfInterestControlMessage
 
-## `FrequencyOfInterestControlMessage`
+The `FrequencyOfInterestControlMessage` is sent by a radio model to
+the physical layer to set the receive frequencies of interest using
+`sendDownstreamControl`. A radio model can specify the receive
+bandwidth in Hz (0 indicates use of the physical layer configuration
+parameter `bandwidth`) and one or more receive frequencies in Hz,
+where each frequency will be monitored for spectrum energy by the
+physical layer [spectrum monitor](physical-layer#noise-processing).
+
+`FrequencyOfInterestControlMessage` is a physical layer *compatibility
+mode 1* control message.
 
 ```cpp
 namespace EMANE
@@ -138,11 +199,24 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/frequencyofinterestcontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/frequencyofinterestcontrolmessage.h">emane/include/emane/controls/frequencyofinterestcontrolmessage.h</a></p><br>
 
+## MIMOReceivePropertiesControlMessage
 
+The `MIMOReceivePropertiesControlMessage` is sent by the physical
+layer to a radio model to communicate receive properties associated
+with a received over-the-air message using
+`processUpstreamPacket`. `MIMOReceivePropertiesControlMessage`
+contains the start-of-transmission in microseconds since the epoch,
+propagation delay in microseconds, mapping of frequency in Hz to
+Doppler shift in Hz, and antenna receive information for all received
+transmission paths. There is one antenna receive information entry for
+each transmit antenna to receive antenna path containing the received
+frequency segments, overall message span in microseconds, and receiver
+sensitivity in dBm.
 
-## `MIMOReceivePropertiesControlMessage`
+`MIMOReceivePropertiesControlMessage` is a physical layer
+*compatibility mode 2* control message.
 
 ```cpp
 namespace EMANE
@@ -181,10 +255,27 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/mimoreceivepropertiescontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/mimoreceivepropertiescontrolmessage.h">emane/include/emane/controls/mimoreceivepropertiescontrolmessage.h</a></p><br>
 
+## MIMOTransmitPropertiesControlMessage
 
-## `MIMOTransmitPropertiesControlMessage`
+The `MIMOTransmitPropertiesControlMessage` is sent by a radio model to
+the physical layer to communicate transmit properties associated with
+an outbound over-the-air message using `sendDownstreamPacket`.
+`MIMOTransmitPropertiesControlMessage` contains one or more transmit
+antennas and a group of frequency segment lists. Each transmit antenna
+may be mapped to its own unique frequency segment list or share a list
+with other transmit antennas. Each transmit antenna is specified using
+a unique antenna index value which is unrelated to indexes used when
+adding receive antennas via
+[RxAntennaAddControlMessage](#rxantennaaddcontrolmessage). Each
+frequency segment contains a center frequency in Hz (0 indicates use
+of physical layer configuration parameter `frequency`), duration in
+microseconds, and offset from the start-of-transmission in
+microseconds.
+
+`MIMOTransmitPropertiesControlMessage` is a physical layer
+*compatibility mode 2* control message.
 
 ```cpp
 namespace EMANE
@@ -220,10 +311,20 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/mimotransmitpropertiescontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/mimotransmitpropertiescontrolmessage.h">emane/include/emane/controls/mimotransmitpropertiescontrolmessage.h</a></p><br>
 
+## MIMOTxWhileRxInterferenceControlMessage
 
-## `MIMOTxWhileRxInterferenceControlMessage`
+The `MIMOTxWhileRxInterferenceControlMessage` is sent by a radio model
+to the physical layer to communicate any self transmit interference
+associated with an outbound over-the-air message using
+`processDownstreamPacket`. `MIMOTxWhileRxInterferenceControlMessage`
+contains a frequency group index and power level in mW to apply as
+received interference to each specified receive antenna.
+
+`MIMOTxWhileRxInterferenceControlMessage` is a physical layer
+*compatibility mode 2* control message.
+
 
 ```cpp
 namespace EMANE
@@ -265,154 +366,20 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/mimotxwhilerxinterferencecontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/mimotxwhilerxinterferencecontrolmessage.h">emane/include/emane/controls/mimotxwhilerxinterferencecontrolmessage.h</a></p><br>
 
+## ReceivePropertiesControlMessage
 
+The `ReceivePropertiesControlMessage` is sent by the physical layer to
+a radio model to communicate receive properties associated with a
+received over-the-air message using `processUpstreamPacket`.
+`ReceivePropertiesControlMessage` contains the start-of-transmission
+in microseconds since the epoch, propagation delay in microseconds,
+overall message span in microseconds, and receiver sensitivity in dBm.
 
-## `OTATransmitterControlMessage`
+`ReceivePropertiesControlMessage` is a physical layer *compatibility
+mode 1* control message.
 
-```cpp
-namespace EMANE
-{
-  namespace Controls
-  {
-    using OTATransmitters = std::set<NEMId>;
-
-
-    class OTATransmitterControlMessage : public ControlMessage
-    {
-    public:
-      static
-      OTATransmitterControlMessage * create(const Serialization & serialization);
-
-      static
-      OTATransmitterControlMessage * create(const OTATransmitters & transmitters);
-
-      OTATransmitterControlMessage * clone() const override;
-
-      ~OTATransmitterControlMessage();
-
-      const OTATransmitters & getOTATransmitters() const;
-
-      std::string serialize() const override;
-
-      enum {IDENTIFIER = EMANE_CONTROL_MEASSGE_OTA_TRANSMITTER};
-
-    };
-  }
-}
-```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/otatransmittercontrolmessage.h</p><br>
-
-
-## `R2RINeighborMetricControlMessage`
-
-```cpp
-namespace EMANE
-{
-  namespace Controls
-  {
-
-    class R2RINeighborMetricControlMessage : public ControlMessage
-
-    {
-    public:
-      static
-      R2RINeighborMetricControlMessage * create(const Serialization & serialization);
-
-      static
-      R2RINeighborMetricControlMessage * create(const R2RINeighborMetrics & neighborMetrics);
-
-      R2RINeighborMetricControlMessage * clone() const override;
-
-      ~R2RINeighborMetricControlMessage();
-
-      const R2RINeighborMetrics & getNeighborMetrics() const;
-
-      std::string serialize() const override;
-
-      enum {IDENTIFIER = EMANE_CONTROL_MEASSGE_R2RI_NEIGHBOR_METRIC};
-
-    };
-  }
-}
-```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/r2rineighbormetriccontrolmessage.h</p><br>
-
-
-## `R2RIQueueMetricControlMessage`
-
-```cpp
-namespace EMANE
-{
-  namespace Controls
-  {
-    class R2RIQueueMetricControlMessage : public ControlMessage
-    {
-    public:
-      static
-      R2RIQueueMetricControlMessage * create(const Serialization & serialization);
-
-      static
-      R2RIQueueMetricControlMessage * create(const R2RIQueueMetrics & queueMetrics);
-
-      R2RIQueueMetricControlMessage * clone() const override;
-
-      ~R2RIQueueMetricControlMessage();
-
-      const R2RIQueueMetrics & getQueueMetrics() const;
-
-      std::string serialize() const override;
-
-      enum {IDENTIFIER = EMANE_CONTROL_MEASSGE_R2RI_QUEUE_METRIC};
-
-    };
-  }
-}
-```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/r2riqueuemetriccontrolmessage.h</p><br>
-
-
-## `R2RISelfMetricControlMessage`
-
-```cpp
-namespace EMANE
-{
-  namespace Controls
-  {
-   class R2RISelfMetricControlMessage : public ControlMessage
-    {
-    public:
-      static
-      R2RISelfMetricControlMessage * create(const Serialization & serialization);
-
-      static
-      R2RISelfMetricControlMessage * create(std::uint64_t u64BroadcastDataRatebps,
-                                            std::uint64_t u64MaxDataRatebps,
-                                            const Microseconds & reportInteral);
-
-      R2RISelfMetricControlMessage * clone() const override;
-
-      ~R2RISelfMetricControlMessage();
-
-      std::uint64_t getBroadcastDataRatebps() const;
-
-      std::uint64_t getMaxDataRatebps() const;
-
-      const Microseconds & getReportInterval() const;
-
-      Serialization serialize() const override;
-
-      enum {IDENTIFIER = EMANE_CONTROL_MEASSGE_R2RI_SELF_METRIC};
-
-    };
-  }
-}
-```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/r2riselfmetriccontrolmessage.h</p><br>
-
-
-## `ReceivePropertiesControlMessage`
 
 ```cpp
 namespace EMANE
@@ -446,10 +413,27 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/receivepropertiescontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/receivepropertiescontrolmessage.h">emane/include/emane/controls/receivepropertiescontrolmessage.h</a></p><br>
 
+## RxAntennaAddControlMessage
 
-## `RxAntennaAddControlMessage`
+The `RxAntennaAddControlMessage` is sent by a radio model to the
+physical layer to add a receive antenna.  `RxAntennaAddControlMessage`
+contains the antenna receive frequencies of interest and an antenna
+object with a unique antenna index, antenna type: ideal omni (fixed
+gain) or antenna pattern defined (profile id and pointing), receive
+bandwidth, and spectrum mask.
+
+The unique antenna index is used to reference an antenna during an
+[`RxAntennaUpdateControlMessage`](#rxantennaupdatecontrolmessage) or
+[`RxAntennaRemoveControlMessage`](#rxantennaremovecontrolmessage). It
+is also how per antenna receive power information is identified when
+communicating received over-the-air transmissions to the radio model
+via
+[`MIMOReceivePropertiesControlMessage`](#mimoreceivepropertiescontrolmessage).
+
+`RxAntennaAddControlMessage` is a physical layer *compatibility mode
+2* control message.
 
 ```cpp
 namespace EMANE
@@ -481,10 +465,19 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/rxantennaaddcontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/rxantennaaddcontrolmessage.h">emane/include/emane/controls/rxantennaaddcontrolmessage.h</a></p><br>
 
+## RxAntennaRemoveControlMessage
 
-## `RxAntennaRemoveControlMessage`
+The `RxAntennaRemoveControlMessage` is sent by a radio model to the
+physical layer to remove a receive antenna.  `RxAntennaRemoveControlMessage`
+contains the unique antenna index identifying the receive antenna to remove.
+
+The unique antenna index is assigned to a receive antenna during an
+[`RxAntennaAddControlMessage`](#rxantennaaddcontrolmessage).
+
+`RxAntennaRemoveControlMessage` is a physical layer *compatibility mode
+2* control message.
 
 ```cpp
 namespace EMANE
@@ -509,10 +502,22 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/rxantennaremovecontrolmessage.h</p><br>
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/rxantennaremovecontrolmessage.h">emane/include/emane/controls/rxantennaremovecontrolmessage.h</a></p><br>
 
+## RxAntennaUpdateControlMessage
 
-## `RxAntennaUpdateControlMessage`
+The `RxAntennUpdateControlMessage` is sent by a radio model to the
+physical layer to update receive antenna properties.
+`RxAntennaUpdateControlMessage` contains an antenna object with an
+antenna index matching the target receive antenna to update, antenna
+type: ideal omni (fixed gain) or antenna pattern defined (profile id
+and pointing), receive bandwidth, and spectrum mask.
+
+The unique antenna index is assigned to a receive antenna during an
+[`RxAntennaAddControlMessage`](#rxantennaaddcontrolmessage).
+
+`RxAntennaUpdateControlMessage` is a physical layer *compatibility mode
+2* control message.
 
 ```cpp
 namespace EMANE
@@ -537,8 +542,7 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/rxantennaupdatecontrolmessage.h</p><br>
-
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/rxantennaupdatecontrolmessage.h">emane/include/emane/controls/rxantennaupdatecontrolmessage.h</a></p><br>
 
 ## `SpectrumFilterAddControlMessage`
 
@@ -587,8 +591,7 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/spectrumfilteraddcontrolmessage.h</p><br>
-
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/spectrumfilteraddcontrolmessage.h">emane/include/emane/controls/spectrumfilteraddcontrolmessage.h</a></p><br>
 
 ## `SpectrumFilterDataControlMessage`
 
@@ -615,8 +618,7 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/spectrumfilterdatacontrolmessage.h</p><br>
-
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/spectrumfilterdatacontrolmessage.h">emane/include/emane/controls/spectrumfilterdatacontrolmessage.h</a></p><br>
 
 ## `SpectrumFilterRemoveControlMessage`
 
@@ -649,8 +651,7 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/spectrumfilterremovecontrolmessage.h</p><br>
-
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/spectrumfilterremovecontrolmessage.h">emane/include/emane/controls/spectrumfilterremovecontrolmessage.h</a></p><br>
 
 ## `TimestampControlMessage`
 
@@ -677,8 +678,7 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/timestampcontrolmessage.h</p><br>
-
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/timestampcontrolmessage.h">emane/include/emane/controls/timestampcontrolmessage.h</a></p><br>
 
 ## `TransmitterControlMessage`
 
@@ -705,8 +705,7 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/transmittercontrolmessage.h</p><br>
-
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/transmittercontrolmessage.h">emane/include/emane/controls/transmittercontrolmessage.h</a></p><br>
 
 ## `TxWhileRxInterferenceControlMessage`
 
@@ -733,5 +732,4 @@ namespace EMANE
   }
 }
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/include/emane/controls/txwhilerxinterferencecontrolmessage.h</p><br>
-
+<p style="float:right;font-family:courier;font-size:75%"><a href="https://github.com/adjacentlink/emane/blob/master/include/emane/controls/txwhilerxinterferencecontrolmessage.h">emane/include/emane/controls/txwhilerxinterferencecontrolmessage.h</a></p><br>
