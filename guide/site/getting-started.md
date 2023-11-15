@@ -120,23 +120,23 @@ index. All bundles are signed using the Adjacent Link code signing
 All software dependencies are available using standard
 distribution repositories.
 
-At the time of this writing, the latest *emane* version is 1.4.1.
+At the time of this writing, the latest *emane* version is 1.5.1.
 
 ### Fedora Linux
 
 To use `wget` to download the latest release bundle for Fedora Linux:
 
 ```text
-$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.f37.x86_64.tar.gz
-$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.f37.x86_64.tar.gz.asc
-$ gpg2 --verify emane-1.4.1-release-1.f37.x86_64.tar.gz.asc
+$ wget https://adjacentlink.com/downloads/emane/emane-1.5.1-release-1.f39.x86_64.tar.gz
+$ wget https://adjacentlink.com/downloads/emane/emane-1.5.1-release-1.f39.x86_64.tar.gz.asc
+$ gpg2 --verify emane-1.5.1-release-1.f39.x86_64.tar.gz.asc
 ```
 
 To unpack and install bundle software:
 
 ```text
-$ tar zxvf emane-1.4.1-release-1.f37.x86_64.tar.gz
-$ sudo dnf install $(find emane-1.4.1-release-1 -name '*.rpm' -print | egrep -v '(devel|debug)')
+$ tar zxvf emane-1.5.1-release-1.f39.x86_64.tar.gz
+$ sudo dnf install $(find emane-1.5.1-release-1 -name '*.rpm' -print | egrep -v '(devel|debug)')
 ```
 
 ### Rocky Linux
@@ -145,18 +145,18 @@ To use `wget` to download the latest release bundle for Rocky Linux
 and verify the release signature with *gpg2*:
 
 ```text
-$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.el8.x86_64.tar.gz
-$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.el8.x86_64.tar.gz.asc
-$ gpg2 --verify emane-1.4.1-release-1.el8.x86_64.tar.gz.asc
+$ wget https://adjacentlink.com/downloads/emane/emane-1.5.1-release-1.el8.x86_64.tar.gz
+$ wget https://adjacentlink.com/downloads/emane/emane-1.5.1-release-1.el8.x86_64.tar.gz.asc
+$ gpg2 --verify emane-1.5.1-release-1.el8.x86_64.tar.gz.asc
 ```
 
 To unpack and install bundle software:
 
 ```text
-$ tar zxvf emane-1.4.1-release-1.el8.x86_64.tar.gz
+$ tar zxvf emane-1.5.1-release-1.el8.x86_64.tar.gz
 $ dnf install epel-release 
 $ dnf config-manager --set-enabled powertools
-$ sudo dnf install $(find emane-1.4.1-release-1 -name '*.rpm' -print | egrep -v '(devel|debug)')
+$ sudo dnf install $(find emane-1.5.1-release-1 -name '*.rpm' -print | egrep -v '(devel|debug)')
 ```
 
 At the time of this writing, the lxc rpm distributed via Rocky 8
@@ -226,17 +226,17 @@ To use `wget` to download the latest release bundle for Ubuntu and
 verify the release signature with *gpg2*:
 
 ```text
-$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.ubuntu-20_04.amd64.tar.gz
-$ wget https://adjacentlink.com/downloads/emane/emane-1.4.1-release-1.ubuntu-20_04.amd64.tar.gz.asc
-$ gpg2 --verify emane-1.4.1-release-1.ubuntu-20_04.amd64.tar.gz.asc
+$ wget https://adjacentlink.com/downloads/emane/emane-1.5.1-release-1.ubuntu-22_04.amd64.tar.gz
+$ wget https://adjacentlink.com/downloads/emane/emane-1.5.1-release-1.ubuntu-22_04.amd64.tar.gz.asc
+$ gpg2 --verify emane-1.5.1-release-1.ubuntu-22_04.amd64.tar.gz.asc
 ```
 
 To unpack and install bundle software:
 
 ```text
-$ tar zxvf emane-1.4.1-release-1.ubuntu-20_04.amd64.tar.gz
-$ cd emane-1.4.1-release-1/debs/ubuntu-20_04/amd64
-$ sudo dpkg -i $(find emane-1.4.1-release-1 -name '*.deb' -print | egrep -v '(dev|debug)')
+$ tar zxvf emane-1.5.1-release-1.ubuntu-22_04.amd64.tar.gz
+$ cd emane-1.5.1-release-1/debs/ubuntu-22_04/amd64
+$ sudo dpkg -i $(find emane-1.5.1-release-1 -name '*.deb' -print | egrep -v '(dev|debug)')
 $ apt-get install -f
 ```
 
