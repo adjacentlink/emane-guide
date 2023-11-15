@@ -17,7 +17,7 @@ cd "$top_dir/$node_name"
 . ./functions
 
 % if gateway_ip_addr:
-route add default gw ${CIDRNotation.address(gateway_ip_addr)}
+ip route add default via ${CIDRNotation.address(gateway_ip_addr)}
 % endif
 
 % if ipv6_gateway_ip_addr:
