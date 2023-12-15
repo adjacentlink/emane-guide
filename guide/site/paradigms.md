@@ -71,7 +71,7 @@ Numeric configuration item types may be any of the following:
 Non-numeric configuration item types are limited to:
 
 * `std::string`
-* [`INETAddr`](https://github.com/adjacentlink/emane/blob/master/include/emane/inetaddr.h#L43)
+* [`INETAddr`](https://github.com/adjacentlink/emane/blob/master/include/emane/inetaddr.h#L44)
 
 Both calls have parameters to specify a description string, zero or
 more default values, minimum and maximum occurrence counts
@@ -305,7 +305,7 @@ Numeric statistic types may be any of the following:
 Non-numeric statistic types are limited to:
 
 * `std::string`
-* [`INETAddr`](https://github.com/adjacentlink/emane/blob/master/include/emane/inetaddr.h#L43)
+* [`INETAddr`](https://github.com/adjacentlink/emane/blob/master/include/emane/inetaddr.h#L44)
 
 Both calls have parameters to specify the statistic name, properties,
 and an optional description string.

@@ -303,6 +303,8 @@ of the spectrum which internally maps to a dedicated physical layer
 the antenna's frequency of interest set using a series of energy
 recorders to keep track of encountered signal energy over time.
 
+![](images/spectrumservice.png){:width="90%"; .centered}
+
 Energy recorders use a logical wheel of bins, where bin width in
 microseconds is set using the configuration parameter:
 `noisebinsize`. Each over-the-air transmission is checked for
@@ -653,20 +655,20 @@ spurs. Each spectral mask must have a unique non-zero id.
   </mask>
   <mask id='2'>
     <primary>
-      <width hz='500K' dBr='-50'/>
+      <width hz='500K' dBr='-60'/>
       <width hz='500K' dBr='-30'/>
       <width hz='1M' dBr='0'/>
       <width hz='500K' dBr='-30'/>
-      <width hz='500K' dBr='-50'/>
+      <width hz='500K' dBr='-60'/>
     </primary>
   </mask>
   <mask id='3'>
     <primary>
-      <width hz='500K' dBr='-50'/>
+      <width hz='500K' dBr='-60'/>
       <width hz='500K' dBr='-30'/>
       <width hz='1M' dBr='0'/>
       <width hz='500K' dBr='-30'/>
-      <width hz='500K' dBr='-50'/>
+      <width hz='500K' dBr='-60'/>
      </primary>
      <spurs>
       <spur offset_from_center_hz='1G'>
@@ -685,6 +687,9 @@ spurs. Each spectral mask must have a unique non-zero id.
 
 2. `<spur>` elements contain an offset from the center transmit
    frequency in Hz.
+
+![](images/spectralmask.png){:width="50%"; .centered}
+<p style="text-align:center;font-size:75%">Visualization of mask id 2 shown above.</p><br>
 
 By default, the physical layer uses a square mask across the entire
 transmit bandwidth. When using spectral masks, the transmit bandwidth
@@ -723,7 +728,7 @@ sendDownstreamControl({SpectrumFilterAddControlMessage::create(1, // unique filt
 
 Spectrum filters are added per receive antenna using a unique filter
 index for a given center frequency (Hz) and bandwidth (hz), along with
-an optional sub-bandwidth (Hz) length that subdivides spectral energy
+an optional sub-band width (Hz) length that subdivides spectral energy
 into sub-band width bins of specified size for each time bin in the
 filter energy window. Additionally, optional match criteria can be
 supplied to allow for more precise control of which energy is
