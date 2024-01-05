@@ -66,7 +66,7 @@ nexthop_table.field_names = ['Reporter'] + sorted(node_ids)
 def id_from_address(address):
     node_id = 0
     if address.startswith('02:02:00:00'):
-        mac = [int(x) for x in address.split(':')]
+        mac = [int(x,base=16) for x in address.split(':')]
         node_id = mac[4] * 256 + mac[5]
 
     return node_id
