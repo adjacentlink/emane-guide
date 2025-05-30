@@ -1176,7 +1176,16 @@ The arrow directions indicate positive angles.
     Values:  precomputed
     ```
 
-31. **`rxsensitivitypromiscuousmodeenable`**: Defines whether over-
+31. **`radiosilenceenable`**: Defines whether transmission is allowed.
+    When enabledover-the-air (downstream) messages will be dropped.
+    
+    ```no-highlighting
+    Default: yes                   Required: no                    Modifiable: yes                 
+    Type:    bool                  Occurrs:  [1,1]                 Range:      [false,true]        
+    Values:  false
+    ```
+
+32. **`rxsensitivitypromiscuousmodeenable`**: Defines whether over-
     the-air messages are sent upstream if below receiver sensitivity.
     Compatibility mode  > 1 only. Messages sent upstream without a
     MIMOReceivePropertiesControlMessage.
@@ -1187,7 +1196,7 @@ The arrow directions indicate positive angles.
     Values:  false
     ```
 
-32. **`spectralmaskindex`**: Defines the spectral mask index used for
+33. **`spectralmaskindex`**: Defines the spectral mask index used for
     all transmissions. Set to 0 to use the emulator default square
     spectral mask.
     
@@ -1197,7 +1206,7 @@ The arrow directions indicate positive angles.
     Values:  0
     ```
 
-33. **`stats.observedpowertableenable`**: Defines whether the observed
+34. **`stats.observedpowertableenable`**: Defines whether the observed
     power table will be populated. Large number of antenna (MIMO) and/or
     frequency segments will increase processing load when populating.
     
@@ -1207,7 +1216,7 @@ The arrow directions indicate positive angles.
     Values:  true
     ```
 
-34. **`stats.receivepowertableenable`**: Defines whether the receive
+35. **`stats.receivepowertableenable`**: Defines whether the receive
     power table will be populated. Large number of antenna (MIMO) and/or
     frequency segments will increase processing load when populating.
     
@@ -1217,7 +1226,7 @@ The arrow directions indicate positive angles.
     Values:  true
     ```
 
-35. **`subid`**: Defines the emulator PHY subid used by multiple NEM
+36. **`subid`**: Defines the emulator PHY subid used by multiple NEM
     definitions. Once instantiated, these NEMs may be using the same
     frequency. In order to differentiate between emulator PHY instances
     for different waveforms, the subid is used as part of the unique
@@ -1229,7 +1238,7 @@ The arrow directions indicate positive angles.
     Type:    uint16                Occurrs:  [1,1]                 Range:      [1,65535]           
     ```
 
-36. **`systemnoisefigure`**: Defines the system noise figure in dB and
+37. **`systemnoisefigure`**: Defines the system noise figure in dB and
     is used to determine the receiver sensitivity.
     
     ```no-highlighting
@@ -1238,7 +1247,7 @@ The arrow directions indicate positive angles.
     Values:  4.000000
     ```
 
-37. **`timesyncthreshold`**: Defines the time sync detection threshold
+38. **`timesyncthreshold`**: Defines the time sync detection threshold
     in microseconds. If a received OTA message is more than this
     threshold, the message reception time will be used as the source
     transmission time instead of the time contained in the Common PHY
@@ -1251,7 +1260,7 @@ The arrow directions indicate positive angles.
     Values:  10000
     ```
 
-38. **`txpower`**: Defines the transmit power in dBm.
+39. **`txpower`**: Defines the transmit power in dBm.
     
     ```no-highlighting
     Default: yes                   Required: no                    Modifiable: yes                 

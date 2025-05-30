@@ -638,7 +638,7 @@ When used with the Bent Pipe radio model:
     ```no-highlighting
     Default: no                    Required: yes                   Modifiable: yes                 
     Type:    string                Occurrs:  [1,65535]           
-    Regex:   ^\d+:na|(\d+|\d+-\d+)(;(\d+|\d+-\d+)){0,}$
+    Regex:   ^\d+:(na|(\d+|\d+-\d+)(;(\d+|\d+-\d+)){0,})$
     ```
 
 25. **`transponder.transmit.ubend.delay`**: Defines per transponder

@@ -147,7 +147,7 @@ pattern.
   <!-- Antenna Pattern generated from Antenna Test Lab Co Example 9: Ka Band Sector Horn -->
   <!-- https://antennatestlab.com/antenna-examples/example-9-ka-band-sector-horn-spherical-and-polar-gain-patterns -->
   <antennapattern>
-    <elevation min="-89" max="-90">
+    <elevation min="-90" max="-90">
       <bearing min="0" max="359">
         <gain value="-15.75"/>
       </bearing>

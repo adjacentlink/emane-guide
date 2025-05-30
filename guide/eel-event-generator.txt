@@ -50,7 +50,7 @@ Laboratory](http://www.nrl.navy.mil/itd/ncs).
 
 > \<time\> \<moduleID\> \<eventType\> \<type-specific fields ...\>
 
-\[[Emulation Schema Description](http://downloads.pf.itd.nrl.navy.mil/docs/mnmtools/EmulationScriptSchemaDescription.pdf), Protean Research Group\]
+\[Emulation Schema Description, NRL Protean Research Group\]
 
 
 The EEL Event Generator loads EEL sentence parsing plugins to parse
@@ -71,13 +71,23 @@ There are four EEL sentence parsing plugins:
 1. Pathloss Parser - Parses pathloss sentences and builds the resulting event.
 
    ~{{verbatim type=txt --
-   <time> nem:<Id> pathloss nem:<Id>,<pathloss>[,<reversePathloss>] [nem:<Id>,<pathloss>[,<reversePathloss>]]...}}~
+   <time> nem:<SrcId> pathloss [nem:<DestId>,<pathloss>[,<reversePathloss>]]+}}~
 
    Where,  
    *pathoss* is the pathloss in dB  
    *reversePathloss* is the reverse pathloss in dB
 
-2. Location Parser - Parses location sentences and builds the resulting event.
+2. PathlossEx Parser - Parses pathlossex sentences and builds the resulting event.
+
+   ~{{verbatim type=txt --
+   <time> nem:<SrcId> pathlossex [nem:<DestId>[,<frequency>:<pathloss>[:<reversePathloss>]]+]+ }}~
+
+   Where,  
+   *frequency* is the transmit center frequency in Hz  
+   *pathoss* is the pathloss in dB  
+   *reversePathloss* is the reverse pathloss in dB
+
+3. Location Parser - Parses location sentences and builds the resulting event.
 
    ~{{verbatim type=txt --
    <time> nem:<Id> location gps <latitude>,<longitude>,<altitude>[,msl|agl]}}~
@@ -96,14 +106,14 @@ There are four EEL sentence parsing plugins:
     *yaw* is the yaw in degrees
 
    ~{{verbatim type=txt --
-   <time> nem:<Id> velocity <azimuth>,<elevation>,<magnitude>*}}~
+   <time> nem:<Id> velocity <azimuth>,<elevation>,<magnitude>}}~
 
     Where,  
     *azimuth* is the azimuth in degrees  
     *elevation* is the elevation in degrees  
     *magnitude* is the mgnitude in meters/second  
 
-3. Antenna Profile Parser - Parses antenna profile sentences and builds the resulting event.
+4. Antenna Profile Parser - Parses antenna profile sentences and builds the resulting event.
 
    ~{{verbatim type=txt --
    <time> nem:<Id> antennaprofile <profileId>,<azimuth>,<elevation>}}~
@@ -113,13 +123,13 @@ There are four EEL sentence parsing plugins:
    *azimuth* is the antenna azimuth in degrees  
    *elevation* is the antenna elevation degrees
 
-4. Comm Effect Parser - Parses comm effect sentences and builds the resulting event.
+5. Comm Effect Parser - Parses comm effect sentences and builds the resulting event.
 
    ~{{verbatim type=txt --
-   <time> nem:<Id> commeffect nem:<Id>,<CommEffectEntryList> [nem:<Id>,<CommEffectEntryList>]...
+   <time> nem:<Id> commeffect [nem:<Id>,<CommEffectEntryList>]+
     
-   CommEffectEntryList := <latencySeconds>,<jitterSeconds>,<probabilityLoss>,<probabilityDuplication>,
-                           <unicastBitRate>,<multicastBitRate>}}~
+   CommEffectEntryList := <latencySeconds>,<jitterSeconds>,<probabilityLoss>,
+                          <probabilityDuplication>,<unicastBitRate>,<multicastBitRate>}}~
 
     Where,  
     *latencySeconds* is the latency seconds (float)  
@@ -129,10 +139,10 @@ There are four EEL sentence parsing plugins:
     *unicastBitRate* is the unicast bit rate in bits/second (uint64)  
     *multicastBitRate* is the multicast bit rate in bits/second (uint64)
 
-5. Fading Selection Parser - Parses fading selection sentences and builds the resulting event.
+6. Fading Selection Parser - Parses fading selection sentences and builds the resulting event.
 
    ~{{verbatim type=txt --
-    <time> nem:<Id> fadingselection nem:<Id>,'none'|'nakagami' [nem:<Id>,'none'|'nakagami']...}}~
+    <time> nem:<Id> fadingselection [nem:<Id>,'none'|'nakagami']+}}~
    
 ### Example Sentences
 
@@ -171,6 +181,7 @@ There are four EEL sentence parsing plugins:
     <item value="commeffect:eelloadercommeffect:delta"/>
     <item value="location,velocity,orientation:eelloaderlocation:delta"/>
     <item value="pathloss:eelloaderpathloss:delta"/>
+    <item value="pathlossex:eelloaderpathlossex:delta"/>
     <item value="antennaprofile:eelloaderantennaprofile:delta"/>
     <item value="fadingselection:eelloaderfadingselection:delta"/>
   </paramlist>

@@ -111,6 +111,7 @@ events by event id.
 | 104       | IEEE802.11abg One Hop |
 | 105       | TDMA Schedule         |
 | 106       | Fading Selection      |
+| 107       | PathlossEx            |
 
 OpenTestPoint probes for *EMANE* publish statistic and statistic table
 measurements on OpenTestPoint time boundaries, once every 5
@@ -356,6 +357,53 @@ for more information.
 
 ```text
 $ emaneevent-pathloss 1:5 200 -i letce0
+```
+
+## PathlossExEvent
+
+A `PathlossExEvent` (*Pathloss Extended*) is used to set one or more
+pathloss values used at a receiving *NEM* for over-the-air
+transmissions from one or more specified source *NEMs*, where each
+pathloss value is paired with a transmit frequency.
+
+A frequency of 0 Hz can be used to specify a default pathloss. If a
+default is present, its associated pathloss will be used when no exact
+frequency match is found. When no match is found and no default is
+present, the transmission is dropped and the appropriate physical
+layer drop table entry is incremented.
+
+*NEMs* must know the pathloss for transmitting *NEMs* if any of the
+following physical layer [configuration parameters](physical-layer#configuration) are set
+accordingly:
+
+1. `propagationmodel` is `precomuted`
+
+```protobuf
+package EMANEMessage;
+option optimize_for = SPEED;
+message PathlossExEvent
+{
+  message Pathloss
+  {
+    message Entry
+    {
+      required uint64 frequencyHz = 1;
+      required float pathlossdB = 2;
+    }
+    required uint32 nemId = 1;
+    repeated Entry entries = 2;
+  }
+  repeated Pathloss pathlosses = 1;
+}
+```
+<p style="float:right;font-family:courier;font-size:75%">emane/src/libemane/pathlossexevent.proto</p><br>
+
+The `emaneeventex-pathloss` command line tool can be used to set the
+pathloss between one or more *NEMs*. See `emaneevent-pathlossex --help`
+for more information.
+
+```text
+$ emaneevent-pathlossex 1:5 2400000000:70 0:75 -i letce0
 ```
 
 ## FadingSelectionEvent

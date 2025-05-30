@@ -447,6 +447,12 @@ Below is a snippet of statistic table registration from the [Physical Layer](phy
                                             StatisticProperties::NONE,
                                             "Shows the precomputed pathloss information received");
 
+  pPathlossExTable_ =
+    statisticRegistrar.registerTable<PathlossExKey>("PathlossExEventInfoTable",
+                                                    {"NEM","Frequency","Pathloss"},
+                                                    StatisticProperties::NONE,
+                                                    "Shows the per frequency precomputed pathloss information received");
+
   pAntennaProfileTable_ =
     statisticRegistrar.registerTable<NEMId>("AntennaProfileEventInfoTable",
                                             {"NEM","Antenna Profile","Antenna Azimuth","Antenna Elevation"},
@@ -460,7 +466,7 @@ Below is a snippet of statistic table registration from the [Physical Layer](phy
                                             "Shows the selected fading model information received");
 
 ```
-<p style="float:right;font-family:courier;font-size:75%">emane/src/libemane/eventtablepublisher.cc lines: <a href="https://github.com/adjacentlink/emane/blob/master/src/libemane/eventtablepublisher.cc#L47-L64">47-64</a></p><br>
+<p style="float:right;font-family:courier;font-size:75%">emane/src/libemane/eventtablepublisher.cc lines: <a href="https://github.com/adjacentlink/emane/blob/master/src/libemane/eventtablepublisher.cc#L66-L89">66-89</a></p><br>
 
 These registered statistic tables provide the current event
 information used by the model. Each table uses an *NEM id* key and is
