@@ -61,7 +61,7 @@ referenced the *emane-guide* are as follows:
   [https://github.com/adjacentlink/emane-control-port-tutorial](https://github.com/adjacentlink/emane-control-port-tutorial)
 
 * The
-  (*letce2-tutorial*)[https://github.com/adjacentlink/letce2-tutorial]
+  [*letce2-tutorial*](https://github.com/adjacentlink/letce2-tutorial)
   provides an overview of the *Lightweight Experiment Template
   Configuration Environment* (*letce2*) and covers how to define and
   execute experiments.
